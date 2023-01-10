@@ -14,5 +14,45 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+.box-shadow[b-ba0w5qqfzh] {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+html .mb-3 {
+    margin-bottom: 0rem !important;
+}
+.navbar {
+    align-items: center;
+    padding-top: 0.625rem;
+    padding-right: 50px;
+    padding-bottom: 0.625rem;
+    padding-left: 50px;
+    height: 80px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #215fac !important;
+}
+.navbar-nav {
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    justify-content: center;
+    column-gap: 20px;
+    position: static;
+    float: none;
+    list-style: none;
+}
+.navbar a {
+    color: white !important;
+}
+.navbar-brand{
+    font-size:36px;
 }
