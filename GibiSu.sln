@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GibiSu", "GibiSu.csproj", "{4F17AE6B-E969-4952-AEBA-3377B01DFC0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F17AE6B-E969-4952-AEBA-3377B01DFC0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F17AE6B-E969-4952-AEBA-3377B01DFC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F17AE6B-E969-4952-AEBA-3377B01DFC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F17AE6B-E969-4952-AEBA-3377B01DFC0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {55748F8D-40BC-40E5-8E96-37D652EE53BE}
+	EndGlobalSection
+EndGlobal
