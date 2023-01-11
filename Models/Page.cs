@@ -9,7 +9,6 @@ namespace GibiSu.Models
     {
         [Key] 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [DisplayName("Url")]
         [StringLength(100, ErrorMessage = "En fazla 100 karakter")]
         public string Url { get; set; }
 

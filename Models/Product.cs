@@ -33,6 +33,7 @@ namespace GibiSu.Models
         [Column(TypeName = "image")]
         public byte[] Image { get; set; }
 
+        [Required(ErrorMessage = "Bu alan zorunludur.")]
         [DisplayName("Satışa Kapalı")]
         public bool IsInactive { get; set; }
 

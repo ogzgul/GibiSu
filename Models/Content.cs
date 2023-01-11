@@ -26,9 +26,11 @@ namespace GibiSu.Models
         [Column(TypeName = "image")]
         public byte[]? Image { get; set; }
 
+        [Required(ErrorMessage = "Bu alan gerekli")]
         [DisplayName("Yeri")]
         public short Order { get; set; }
 
+        [Required(ErrorMessage = "Bu alan gerekli")]
         [DisplayName("Sayfa")]
         public string PageUrl { get; set; }
 
