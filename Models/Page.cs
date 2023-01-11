@@ -9,7 +9,6 @@ namespace GibiSu.Models
     {
         [Key] 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Required(ErrorMessage = "Bu alan gerekli")]
         [DisplayName("Url")]
         [StringLength(100, ErrorMessage = "En fazla 100 karakter")]
         public string Url { get; set; }
@@ -23,10 +22,11 @@ namespace GibiSu.Models
         [Column(TypeName = "image")]
         public byte[] Banner { get; set; }
 
-
-
         [DisplayName("Menü (opsiyonel)")]
         public short? MenuId { get; set; }
+
+        [Required(ErrorMessage = "Bu alan zorunludur.")]
+        List<Content> Contents { get; set; }
 
         [DisplayName("Menü")]
         [ForeignKey("MenuId")]
