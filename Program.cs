@@ -9,6 +9,7 @@ namespace GibiSu
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
+			ApplicationDbContext context;
 
 			// Add services to the container.
 			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -46,7 +47,9 @@ namespace GibiSu
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
 			app.MapRazorPages();
-			
+			context = app.Services.GetService<ApplicationDbContext>();
+			context.Database.Migrate(); 
+
 			app.Run();
 		}
 	}
