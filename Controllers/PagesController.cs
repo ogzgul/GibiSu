@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace GibiSu.Controllers
 {
     public class PagesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        ApplicationDbContext context;
         public PagesController(ApplicationDbContext context)
         {
             _context = context;
@@ -26,18 +27,18 @@ namespace GibiSu.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        ApplicationDbContext context;
         // GET: Pages/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            Page page = _context.Pages.Where(p => p.Url == id).Include(p => p.Contents.OrderBy(c => c.Order)).FirstOrDefault();
             if (id == null || _context.Pages == null)
             {
                 return NotFound();
             }
 
-            var page = await _context.Pages
-                .Include(p => p.Menu)
-                .FirstOrDefaultAsync(m => m.Url == id);
+            page = await _context.Pages
+               .Include(p => p.Menu)
+               .FirstOrDefaultAsync(m => m.Url == id);
             if (page == null)
             {
                 return NotFound();
@@ -58,11 +59,22 @@ namespace GibiSu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Url,Banner,MenuId")] Page page)
+        public async Task<IActionResult> Create([Bind("Url,FormImage,MenuId")] Page page)
         {
+            ModelState.Remove("Banner");
+            ModelState.Remove("Contents");
+
+            MemoryStream memoryStream;
 
             if (ModelState.IsValid)
             {
+                if (page.FormImage != null)
+                {
+                    memoryStream = new MemoryStream();
+                    page.FormImage.CopyTo(memoryStream);
+                    page.Banner = memoryStream.ToArray();
+                }
+
                 _context.Add(page);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -157,14 +169,14 @@ namespace GibiSu.Controllers
             {
                 _context.Pages.Remove(page);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PageExists(string id)
         {
-          return _context.Pages.Any(e => e.Url == id);
+            return _context.Pages.Any(e => e.Url == id);
         }
     }
 }
