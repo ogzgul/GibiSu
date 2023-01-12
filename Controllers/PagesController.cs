@@ -60,6 +60,7 @@ namespace GibiSu.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Url,Banner,MenuId")] Page page)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(page);
