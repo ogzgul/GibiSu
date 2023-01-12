@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Banner)
+                @Html.DisplayNameFor(model => model.FormImage)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Menu)
@@ -25,7 +25,11 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Banner)
+                    @if(item.Banner!= null)
+                    {
+                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.Banner)"/>
+                    }
+                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Menu.Name)

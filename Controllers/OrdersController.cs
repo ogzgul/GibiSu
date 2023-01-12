@@ -10,98 +10,90 @@ using GibiSu.Models;
 
 namespace GibiSu.Controllers
 {
-    public class ContentsController : Controller
+    public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ContentsController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Contents
+        // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Contents.Include(c => c.Page);
+            var applicationDbContext = _context.Orders.Include(o => o.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Contents/Details/5
+        // GET: Orders/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null || _context.Contents == null)
+            if (id == null || _context.Orders == null)
             {
                 return NotFound();
             }
 
-            var content = await _context.Contents
-                .Include(c => c.Page)
+            var order = await _context.Orders
+                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (content == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(content);
+            return View(order);
         }
 
-        // GET: Contents/Create
+        // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url");
+            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
-        // POST: Contents/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Text,FormImage,Order,PageUrl")] Content content)
+        public async Task<IActionResult> Create([Bind("Id,OrderDate,TotalPrice,DeliveryDate,Address,PhoneNumber,UserId")] Order order)
         {
-            MemoryStream memoryStream;
-            ModelState.Remove("Image");
             if (ModelState.IsValid)
             {
-                if(content.FormImage != null)
-                {
-                    memoryStream = new MemoryStream();
-                    content.FormImage.CopyTo(memoryStream);
-                    content.Image = memoryStream.ToArray();
-                }
-                _context.Add(content);
+                _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url", content.PageUrl);
-            return View(content);
+            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", order.UserId);
+            return View(order);
         }
 
-        // GET: Contents/Edit/5
+        // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null || _context.Contents == null)
+            if (id == null || _context.Orders == null)
             {
                 return NotFound();
             }
 
-            var content = await _context.Contents.FindAsync(id);
-            if (content == null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
-            ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url", content.PageUrl);
-            return View(content);
+            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", order.UserId);
+            return View(order);
         }
 
-        // POST: Contents/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Text,Image,Order,PageUrl")] Content content)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,OrderDate,TotalPrice,DeliveryDate,Address,PhoneNumber,UserId")] Order order)
         {
-            if (id != content.Id)
+            if (id != order.Id)
             {
                 return NotFound();
             }
@@ -110,12 +102,12 @@ namespace GibiSu.Controllers
             {
                 try
                 {
-                    _context.Update(content);
+                    _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContentExists(content.Id))
+                    if (!OrderExists(order.Id))
                     {
                         return NotFound();
                     }
@@ -126,51 +118,51 @@ namespace GibiSu.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url", content.PageUrl);
-            return View(content);
+            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", order.UserId);
+            return View(order);
         }
 
-        // GET: Contents/Delete/5
+        // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null || _context.Contents == null)
+            if (id == null || _context.Orders == null)
             {
                 return NotFound();
             }
 
-            var content = await _context.Contents
-                .Include(c => c.Page)
+            var order = await _context.Orders
+                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (content == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(content);
+            return View(order);
         }
 
-        // POST: Contents/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            if (_context.Contents == null)
+            if (_context.Orders == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Contents'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
             }
-            var content = await _context.Contents.FindAsync(id);
-            if (content != null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order != null)
             {
-                _context.Contents.Remove(content);
+                _context.Orders.Remove(order);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContentExists(long id)
+        private bool OrderExists(long id)
         {
-          return _context.Contents.Any(e => e.Id == id);
+          return _context.Orders.Any(e => e.Id == id);
         }
     }
 }

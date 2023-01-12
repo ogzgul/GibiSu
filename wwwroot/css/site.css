@@ -14,20 +14,14 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    background-color: #215fac !important;
 }
 .box-shadow[b-ba0w5qqfzh] {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
-html .mb-3 {
-    margin-bottom: 0rem !important;
-}
+
 .navbar {
     align-items: center;
-    padding-top: 0.625rem;
-    padding-right: 50px;
-    padding-bottom: 0.625rem;
-    padding-left: 50px;
     height: 80px;
     position: relative;
     display: flex;
@@ -39,11 +33,6 @@ html .mb-3 {
     flex-direction: row;
     align-items: center;
     display: flex;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
     justify-content: center;
     column-gap: 20px;
     position: static;
@@ -56,3 +45,94 @@ html .mb-3 {
 .navbar-brand{
     font-size:36px;
 }
+
+.col6Img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+    font-family: 'object-fit: cover;';
+}
+
+.content-container {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+    justify-content: center;
+    margin-top: 19%;
+    color: white;
+    
+}
+
+.mid-content {
+    background-color: #215fac !important;
+}
+
+.textMid {
+    padding: 5%;
+    padding-left: 35%;
+}
+
+.card-body {
+    display: block;
+    position: absolute;
+    top: 94px;
+}
+
+.card {
+    border:0;
+}
+
+.socialmediaIconn{
+    font-size:30px;
+    color:white!important;
+    text-decoration:none;
+}
+
+.menu-item{
+    opacity: .65;
+}
+
+#backtotop {
+    background: #fff;
+    border-radius: 50%;
+    border: 0;
+    bottom: 20px;
+    cursor: pointer;
+    display: none;
+    height: 58px;
+    position: fixed;
+    right: 20px;
+    text-indent: -9999px;
+    width: 55px;
+    z-index: 300;
+}
+
+    #backtotop:after {
+        border-color: #215fac!important;
+        position: absolute;
+        content: "";
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-right: 2px solid;
+        border-top: 2px solid;
+        opacity: 1;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: rotate(-45deg) translate(0,-50%);
+        -o-transform: rotate(-45deg) translate(0,-50%);
+        transform: rotate(-45deg) translate(0,-50%);
+        margin-top: 2px;
+        margin-left: -2px;
+    }

@@ -26,15 +26,18 @@ namespace GibiSu.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        ApplicationDbContext context;
         // GET: Pages/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            Page page = context.Pages.Where(p => p.Url == id).Include(p => p.Contents.OrderBy(p => p.Order)).FirstOrDefault();
+
             if (id == null || _context.Pages == null)
             {
                 return NotFound();
             }
 
-            var page = await _context.Pages
+            page = await _context.Pages
                 .Include(p => p.Menu)
                 .FirstOrDefaultAsync(m => m.Url == id);
             if (page == null)

@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using GibiSu.Data;
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext context
+@{
+    List<Menu> menus = context.Menus.Include(t => t.Pages).ToList();
+    List<Page> pages = context.Pages.Where(c => c.Url == null).ToList();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,41 +17,101 @@
 	<link rel="stylesheet" href="~/GibiSu.styles.css" asp-append-version="true" />
 	<link href="~/font-awesome/css/all.css" rel="stylesheet" />
 	<link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Gibi</a>
+    <div class="position-relative">        
+       <div class="position-fixed " style="z-index:1000; right:0px; top:75px;">
+            <img src="https://d6tizftlrpuof.cloudfront.net/themes/production/nestle-waters-button-095e535bf54b3ef0961638d40f3b1830.png" width="40" height="130">
+       </div>
+       
+    </div>
+    <header class="fixed-top">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
+            <div class="container-fluid ">
+                <a class="navbar-brand py-1" asp-area="" asp-controller="Home" asp-action="Index"> <img width="60px" src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt="" > </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1 justify-content-center">
+                        @foreach (Menu menu in menus)
+                        {
+                            <li class="nav-item" style="display:relative">
+                                <a id="menuCat-@menu.Id.ToString()" class="box nav-link text-dark dropdown-toggle nav-link " onclick="mybtn(this.id)">
+                                    @menu.Name.ToString()
+                                </a>                               
+                            </li>
+                        }                      
+                    </ul>   
                 </div>
+                    <i style="color:white;" class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                    <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid" style="padding:0px;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+    <section class="">
+        <!-- Footer -->
+        <footer class="text-white text-center text-md-start">
+            <!-- Grid container -->
+            <div class="container p-4">
+                <!--Grid row-->
+                <div class="row">
+                    <!--Grid column-->
+                    <div style=" border-right: 1px solid white;" class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                        <p>
+                            Gelecekten Gelen Lezzet Gibi'Suu!
+                        </p>
+                        <br />
+                        <a class="socialmediaIconn">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                        <a class="socialmediaIconn">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a class="socialmediaIconn">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a class="socialmediaIconn">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase"><a style="text-decoration:none;" href="#!" class="text-white">Kullanım Koşulları</a></h5>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - GibiSu - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+                        <ul class="list-unstyled mb-0 ">
+                            <li class="menu-item">
+                                <a style="text-decoration:none;" href="#!" class="text-white">Bilgi Toplumu Hizmetleri</a>
+                            </li>
+                            <li class="menu-item">
+                                <a style="text-decoration:none;" href="#!" class="text-white">Çerez Bildirimi</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#!" style="text-decoration:none;" class="text-white">Kişisel Verilerin Korunması ve Gizlilik Bildirimi</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright -->
+            <div class="text-end p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2020 Copyright:
+                <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+    </section>
+    <button id="backtotop" style="display: inline-block;">Back to top</button>
+    <a id="_evh-link" tabindex="0" style="position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; cursor: pointer; line-height: 1.5; text-decoration: none; background: rgb(0, 107, 175); font-size: 0.75em; color: rgb(255, 255, 255); z-index: 2147483600; bottom: 0px; right: 1em; font-family: sans-serif;"><span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">Gizlilik Ayarları</span><img id="_evh-newvendor-indicator" src="//c.evidon.com/sitenotice/images/evidon-change-alert.png" alt="New vendors have been added to this site" style="display: none; position: absolute; left: -10px; top: -10px; width: 23px; height: 23px;"></a>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
