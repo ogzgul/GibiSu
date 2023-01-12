@@ -59,6 +59,8 @@ namespace GibiSu.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,OrderDate,TotalPrice,DeliveryDate,Address,PhoneNumber,UserId")] Order order)
         {
+            order.OrderDate= DateTime.Now;
+           // order.TotalPrice = OrderProduct
             if (ModelState.IsValid)
             {
                 _context.Add(order);

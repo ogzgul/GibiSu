@@ -30,14 +30,12 @@ namespace GibiSu.Controllers
         // GET: Pages/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            Page page = context.Pages.Where(p => p.Url == id).Include(p => p.Contents.OrderBy(p => p.Order)).FirstOrDefault();
-
             if (id == null || _context.Pages == null)
             {
                 return NotFound();
             }
 
-            page = await _context.Pages
+            var page = await _context.Pages
                 .Include(p => p.Menu)
                 .FirstOrDefaultAsync(m => m.Url == id);
             if (page == null)
@@ -62,6 +60,7 @@ namespace GibiSu.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Url,Banner,MenuId")] Page page)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(page);

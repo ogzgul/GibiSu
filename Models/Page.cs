@@ -25,7 +25,7 @@ namespace GibiSu.Models
         public short? MenuId { get; set; }
 
         [Required(ErrorMessage = "Bu alan zorunludur.")]
-        public List<Content> Contents { get; set; }
+        List<Content> Contents { get; set; }
 
         [DisplayName("Menü")]
         [ForeignKey("MenuId")]
