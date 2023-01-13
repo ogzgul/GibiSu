@@ -36,6 +36,6 @@ namespace GibiSu.Models
 
         [DisplayName("Sayfa")]
         [ForeignKey("PageUrl")]
-        public Page Page { get; set; }
+        public Page? Page { get; set; }
     }
 }
