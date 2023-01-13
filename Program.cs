@@ -44,12 +44,12 @@ namespace GibiSu
 			app.UseAuthorization();
 
             app.MapControllerRoute(
-				name: "pages",
-                pattern: "/{*id}",
-                defaults: new { controller = "Pages", action = "Details" });
-            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapControllerRoute(
+				name: "pages",
+				pattern: "/{*id}",
+				defaults: new { controller = "Pages", action = "Details" });
             app.MapRazorPages();
 
 			//context = app.Services.GetService<ApplicationDbContext>();
