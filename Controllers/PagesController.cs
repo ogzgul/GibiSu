@@ -14,7 +14,6 @@ namespace GibiSu.Controllers
     public class PagesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        ApplicationDbContext context;
         public PagesController(ApplicationDbContext context)
         {
             _context = context;
