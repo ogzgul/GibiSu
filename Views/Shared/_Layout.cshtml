@@ -20,17 +20,22 @@
 	<link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
 
 </head>
-<body>
+
+<body onscroll="scrollX()" id="body">
+    <div onclick="ghostt()" id="ghosttt" style="display:none; position: fixed;z-index: 9999;inset: 0px;background: rgb(85, 85, 85);opacity: 0.8;">
+    </div>
+   
+
     <div class="position-relative">        
        <div class="position-fixed " style="z-index:1000; right:0px; top:75px;">
-            <img src="https://d6tizftlrpuof.cloudfront.net/themes/production/nestle-waters-button-095e535bf54b3ef0961638d40f3b1830.png" width="40" height="130">
+            <img style="cursor:pointer;" onclick="ghostt()" src="https://d6tizftlrpuof.cloudfront.net/themes/production/nestle-waters-button-095e535bf54b3ef0961638d40f3b1830.png" width="40" height="130">
        </div>
        
     </div>
     <header class="fixed-top">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid ">
-                <a class="navbar-brand py-1" asp-area="" asp-controller="Home" asp-action="Index"> <img width="60" src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt="" > </a>
+                <a onclick="Barant()" class="navbar-brand py-1" @*asp-area="" asp-controller="Home" asp-action="Index"*@> <img width="60" src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt="" > </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -79,7 +84,7 @@
                         <a class="socialmediaIconn" href="https://www.instagram.com/barant004/">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <a class="socialmediaIconn">
+                        <a class="socialmediaIconn" href="">
                             <i class="fa-brands fa-youtube"></i>
                         </a>
                     </div>
@@ -111,8 +116,86 @@
         </footer>
         <!-- Footer -->
     </section>
-    <button id="backtotop" style="display: inline-block;"> <a href="#">Back to top</a> </button>
-    <a id="_evh-link" tabindex="0" style="position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; cursor: pointer; line-height: 1.5; text-decoration: none; background: rgb(0, 107, 175); font-size: 0.75em; color: rgb(255, 255, 255); z-index: 2147483600; bottom: 0px; right: 1em; font-family: sans-serif;"><span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">Gizlilik Ayarları</span><img id="_evh-newvendor-indicator" src="//c.evidon.com/sitenotice/images/evidon-change-alert.png" alt="New vendors have been added to this site" style="display: none; position: absolute; left: -10px; top: -10px; width: 23px; height: 23px;"></a>
+    <button  id="backtotop" @*style="display: inline-block;*@"> <a href="#">Back to top</a> </button>
+    <a  id="feedback" tabindex="0" style="position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; cursor: pointer; line-height: 1.5; text-decoration: none; background: rgb(0, 107, 175); font-size: 0.75em; color: rgb(255, 255, 255); z-index: 2147483600; bottom: 0px; right: 1em; font-family: sans-serif;"><span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">Gizlilik Ayarları</span><img id="_evh-newvendor-indicator" src="//c.evidon.com/sitenotice/images/evidon-change-alert.png" alt="New vendors have been added to this site" style="display: none; position: absolute; left: -10px; top: -10px; width: 23px; height: 23px;"></a>
+    
+    <div id="ghostt" tabindex="0" style="display:none; position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; line-height: 1.5; text-decoration: none; background: white; font-size: 0.75em; z-index: 2147483600; top: 50%; right: 50em; font-family: sans-serif;">
+        <span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">
+        <p class="text-muted">
+                Web sitemizi nasıl buldunuz?
+        </p>
+        
+        
+    </span>
+        <a>
+            <i style="font-size: 25px; color: yellowgreen;" class="fa-solid fa-face-smile"></i>
+        </a>
+        <a>
+            <i style="font-size: 25px; color: yellowgreen;" class="fa-solid fa-face-angry"></i>
+        </a>
+        <a>
+            <i style="font-size: 25px; color: yellowgreen;" class="fa-solid fa-face-smile"></i>
+        </a>
+    </div>
+
+    <!--Barant004-->
+    <div id="barantt" style="position: absolute; top: 73px; display: none; left: 47px; z-index: 2000;">
+        <div class="card" style="width: 18rem;">
+            <img src="https://i.ibb.co/f8xkSm0/Whats-App-Image-2023-01-13-at-10-22-53.jpg">
+            <div class="card-body">
+                <p style="color:blueviolet;">#Barant004-Gelecekten Gelen Lezzet</p>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function ghostt(){
+            var ghost = document.getElementById("ghosttt");
+            var ghost2 = document.getElementById("ghostt");
+            var bodyy = document.getElementById("body");
+            if(ghost.style.display != "none" ){
+                ghost.style.display="none";
+                bodyy.style.overflow = "visible";
+            }else{
+                ghost.style.display = "block";
+                bodyy.style.overflow = "hidden";
+            }
+            if (ghost2.style.display != "none") {
+                ghost2.style.display = "none";
+            } else {
+                ghost2.style.display = "block";
+            }
+        }
+
+        function scrollX(){
+           
+            var scrollx = document.getElementById("backtotop");
+            var limit = 300;
+            var st = $(this).scrollTop();
+            
+            if (st <= limit) {
+                
+                scrollx.style.opacity = "0";
+                
+                
+            }
+            else{
+                scrollx.style.opacity = "1";
+                
+            }
+        }
+       
+        function Barant(){
+            var barant = document.getElementById("barantt");
+            if(barant.style.display != "none"){
+                barant.style.display = "none";
+
+            }else{
+                barant.style.display = "block";
+            }
+        }
+    </script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
