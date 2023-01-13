@@ -1,30 +1,39 @@
 ﻿@model GibiSu.Models.Page
+@using Microsoft.EntityFrameworkCore
 
 @{
     ViewData["Title"] = "Details";
+    List<Content> contents = Model.Contents.OrderBy(c=> c.Order).ToList();
 }
 
 <h1>Details</h1>
 
-<div>
+<div id="@ViewData["pageName"]">
     <h4>Page</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Banner)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Banner)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Menu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Menu.Name)
-        </dd>
-    </dl>
+    <div>
+         <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)" />
+    </div>
+    @foreach (var item in contents)
+    {
+        @if (item.Title != null)
+        {
+            <div class="@ViewData["pageName"]-Title">@item.Title
+            </div>
+        }
+        @if (item.Text != null)
+        { 
+            <div>@item.Text
+                    </div>
+        }
+        @if (item.Image != null)
+        {
+            <div><img src="data:image/jpeg;base64, @Convert.ToBase64String(item.Image)" />
+            </div>
+        }
+        
+    }
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Url">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
