@@ -136,3 +136,11 @@ body {
         margin-top: 2px;
         margin-left: -2px;
     }
+.contentF {
+    margin-top: 6%;
+}
+
+.responsive {
+    width: 100%;
+    height: auto;
+}
