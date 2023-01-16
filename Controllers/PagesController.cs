@@ -26,6 +26,12 @@ namespace GibiSu.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> Sayfalar()
+        {
+            var applicationDbContext = _context.Pages.Include(p => p.Menu);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Pages/Details/5
         public async Task<IActionResult> Details(string id)
         {

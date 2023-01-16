@@ -8,7 +8,7 @@
 
 <h1>Details</h1>
 
-<div id="@ViewData["pageName"]">
+<div >
     <h4>Page</h4>
     <hr />
     <div>
@@ -18,7 +18,7 @@
     {
         @if (item.Title != null)
         {
-            <div class="@ViewData["pageName"]-Title">@item.Title
+            <div class="Title">@item.Title
             </div>
         }
         @if (item.Text != null)

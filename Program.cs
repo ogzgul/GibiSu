@@ -45,7 +45,7 @@ namespace GibiSu
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Pages}/{action=Index}/{id?}");
             app.MapControllerRoute(
                 name: "pages",
                 pattern: "/{*id}",
