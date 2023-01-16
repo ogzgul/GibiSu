@@ -6,34 +6,49 @@
     List<Content> contents = Model.Contents.OrderBy(c=> c.Order).ToList();
 }
 
-<h1>Details</h1>
-
-<div >
-    <h4>Page</h4>
-    <hr />
-    <div>
+<div>
+    <div class="Banner container-fluid">
          <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)" />
     </div>
     @foreach (var item in contents)
     {
+        <div class="container-fluid" style="background-color:white;">
         @if (item.Title != null)
         {
-            <div class="Title">@item.Title
+            <div class="Title">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-10">
+                            <h1> @item.Title </h1>
+                            </div> 
+                        </div>
+                    </div>
             </div>
         }
         @if (item.Text != null)
         { 
-            <div>@item.Text
+            <div class="Text">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-10">
+                            <p> @item.Text </p>
+                            </div> 
+                        </div>
                     </div>
+            </div>
         }
         @if (item.Image != null)
         {
-            <div><img src="data:image/jpeg;base64, @Convert.ToBase64String(item.Image)" />
-            </div>
-        }
-        
+         <div class="Image">
+             <div class="container">
+                   <div class="row justify-content-md-center">
+                        <div class="col-md-10">
+                            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.Image)" />
+                        </div> 
+                   </div>
+              </div>
+        </div>
+        } 
+        </div>
     }
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
