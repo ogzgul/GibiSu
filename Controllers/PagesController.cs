@@ -29,7 +29,8 @@ namespace GibiSu.Controllers
         // GET: Pages/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            Page page = _context.Pages.Where(p=>p.Url == id).Include(p => p.Contents.OrderBy(c=>c.Order)).FirstOrDefault();
+            ViewData["pageName"] = id;
+            Page page = _context.Pages.Where(p => p.Url == id).Include(p => p.Contents.OrderBy(c => c.Order)).FirstOrDefault();
             if (id == null || _context.Pages == null)
             {
                 return NotFound();
@@ -177,5 +178,7 @@ namespace GibiSu.Controllers
         {
             return _context.Pages.Any(e => e.Url == id);
         }
+
+        
     }
 }
