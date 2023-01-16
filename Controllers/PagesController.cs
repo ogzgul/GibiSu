@@ -178,5 +178,7 @@ namespace GibiSu.Controllers
         {
             return _context.Pages.Any(e => e.Url == id);
         }
+
+        
     }
 }
