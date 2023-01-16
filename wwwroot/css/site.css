@@ -143,3 +143,31 @@ body {
 .contentF{
     margin-top:6%;
 }
+
+.Banner {
+    padding-right: var(--bs-gutter-x,0rem);
+    padding-left: var(--bs-gutter-x,0rem);
+}
+
+    .Banner img {
+        width: 100%;
+    }
+
+.Title {
+    padding: 20px 0 20px;
+}
+
+    .Title h1 {
+        text-align: center;
+        font-size: 54px;
+        color: #215fac
+    }
+
+.Text p {
+    color: #6e757b;
+    line-height: 2.5;
+}
+.Image img{
+    width:100%;
+    margin-bottom:10px;
+}
