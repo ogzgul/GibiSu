@@ -1,21 +1,22 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     background-color: #215fac !important;
 }
+
 .box-shadow[b-ba0w5qqfzh] {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
@@ -29,6 +30,7 @@ body {
     justify-content: space-between;
     background-color: #215fac !important;
 }
+
 .navbar-nav {
     flex-direction: row;
     align-items: center;
@@ -39,11 +41,13 @@ body {
     float: none;
     list-style: none;
 }
+
 .navbar a {
     color: white !important;
 }
-.navbar-brand{
-    font-size:36px;
+
+.navbar-brand {
+    font-size: 36px;
 }
 
 .col6Img {
@@ -71,7 +75,6 @@ body {
     justify-content: center;
     margin-top: 19%;
     color: white;
-    
 }
 
 .mid-content {
@@ -83,23 +86,23 @@ body {
     padding-left: 35%;
 }
 
-.card-body {
+.layout-card-body {
     display: block;
     position: absolute;
     top: 94px;
 }
 
 .card {
-    border:0;
+    border: 0;
 }
 
-.socialmediaIconn{
-    font-size:30px;
-    color:white!important;
-    text-decoration:none;
+.socialmediaIconn {
+    font-size: 30px;
+    color: white !important;
+    text-decoration: none;
 }
 
-.menu-item{
+.menu-item {
     opacity: .65;
 }
 
@@ -109,7 +112,6 @@ body {
     border: 0;
     bottom: 20px;
     cursor: pointer;
-    display: none;
     height: 58px;
     position: fixed;
     right: 20px;
@@ -119,7 +121,7 @@ body {
 }
 
     #backtotop:after {
-        border-color: #215fac!important;
+        border-color: #215fac !important;
         position: absolute;
         content: "";
         display: inline-block;
@@ -127,7 +129,6 @@ body {
         height: 10px;
         border-right: 2px solid;
         border-top: 2px solid;
-        opacity: 1;
         top: 50%;
         left: 50%;
         -webkit-transform: rotate(-45deg) translate(0,-50%);
@@ -136,10 +137,23 @@ body {
         margin-top: 2px;
         margin-left: -2px;
     }
-.responsive{
-        width:100%;
-        height:auto
+
+.responsive {
+    width: 100%;
+    height: auto
 }
-.contentF{
-    margin-top:6%;
+
+.contentF {
+    margin-top: 6%;
+}
+
+.card-img-top { /*Product*/
+    width: 100%;
+    height: 25vh;
+    object-fit: fill;
+}
+
+.button-cart:hover { /*Product*/
+    background-color: white;
+    color: blue;
 }

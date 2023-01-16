@@ -52,7 +52,7 @@ namespace GibiSu.Data.Migrations
 
                     b.HasIndex("PageUrl");
 
-                    b.ToTable("Contents");
+                    b.ToTable("Contents", (string)null);
                 });
 
             modelBuilder.Entity("GibiSu.Models.Menu", b =>
@@ -70,7 +70,7 @@ namespace GibiSu.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Menus", (string)null);
                 });
 
             modelBuilder.Entity("GibiSu.Models.Order", b =>
@@ -107,7 +107,7 @@ namespace GibiSu.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("GibiSu.Models.OrderProduct", b =>
@@ -131,7 +131,7 @@ namespace GibiSu.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("OrderProducts", (string)null);
                 });
 
             modelBuilder.Entity("GibiSu.Models.Page", b =>
@@ -151,7 +151,7 @@ namespace GibiSu.Data.Migrations
 
                     b.HasIndex("MenuId");
 
-                    b.ToTable("Pages");
+                    b.ToTable("Pages", (string)null);
                 });
 
             modelBuilder.Entity("GibiSu.Models.Product", b =>
@@ -189,7 +189,7 @@ namespace GibiSu.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
