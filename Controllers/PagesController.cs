@@ -23,7 +23,8 @@ namespace GibiSu.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Pages.Include(p => p.Menu);
-            return View(await applicationDbContext.ToListAsync());
+            Page page = _context.Pages.Include(p => p.Contents.OrderBy(c => c.Order)).Where(d=>d.Url=="Index").FirstOrDefault();
+            return View(page);
         }
 
         public async Task<IActionResult> Sayfalar()

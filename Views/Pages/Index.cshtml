@@ -1,117 +1,108 @@
-﻿@{
+﻿@model GibiSu.Models.Page
+@using Microsoft.EntityFrameworkCore
+@{
     ViewData["Title"] = "Home Page";
+    List<Content> contents = Model.Contents.OrderBy(c => c.Order).ToList();
 }
 <div>
-    <img class="responsive" loading="lazy" src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/static_carousel_media_desktop/public/2021-10/Surdurulebilirlik.jpg?itok=TAilD9oh">
+    <img class="responsive" loading="lazy" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)">
 
 </div>
+
+@foreach (var item in contents){
 <div class="row mid-content" style="--bs-gutter-x: 0rem;">
-    <div class="col-6 text-center content-container">
-        <div>
-            <h1>
-                Neden GibiSu?
-            </h1>
-        </div>
+        @if(item.Order %2== 1)
+        {
+            
+       
+        <div class="col-6 text-center content-container">
+            @if (item.Title != null){
+                <div>
+                    <h1>
+                        @item.Title
+                    </h1>
+                </div>
+            }
+
+
+            @if (item.Text != null){
         <div class="description">
             <p>
-                Uludağ’ın zirvesinden gelen doğal kaynak suyunu, lezzetini ve tazeliğini koruyarak el değmeden şişeliyoruz, gerçekleştirdiğimiz özel analizler ile eşsiz lezzetini güvence altına alıyoruz.
+                @item.Text
             </p>
         </div>
+            }
         <div><a href="/neden-erikli" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
-    </div>
-    <div class="col-6">
-        <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/static_2_column/public/2021-10/Untitled-1.jpg?itok=BDf8ul3c" width="570" height="570" alt="forest" loading="lazy" class="col6Img" typeof="foaf:Image">
-    </div>
-</div>
-<div class="row mid-content " style="--bs-gutter-x: 0rem;">
-    <div class="col-6">
-        <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/static_2_column/public/2021-10/Untitled-1.jpg?itok=BDf8ul3c" width="570" height="570" alt="forest" loading="lazy" class="col6Img" typeof="foaf:Image">
-    </div>
-    <div class="col-6 text-center content-container">
-        <div>
-            <h1>
-                Neden GibiSu?
-            </h1>
         </div>
-        <div class="description">
-            <p>
-                Uludağ’ın zirvesinden gelen doğal kaynak suyunu, lezzetini ve tazeliğini koruyarak el değmeden şişeliyoruz, gerçekleştirdiğimiz özel analizler ile eşsiz lezzetini güvence altına alıyoruz.
-            </p>
-        </div>
-        <div><a href="/neden-erikli" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
+            @if (item.Image != null){
+            <div class="col-6">
+                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.Image)" width="570" height="570" alt="forest" loading="lazy" class="col6Img" typeof="foaf:Image">
+            </div>
+            }
+        }
+        else if(item.Order !=50 && item.Order != 100)
+        {
+            @if (item.Image != null){
+            <div class="col-6">
+                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.Image)" width="570" height="570" alt="forest" loading="lazy" class="col6Img" typeof="foaf:Image">
+            </div>
+            }
+            <div class="col-6 text-center content-container">
+                @if (item.Title != null)
+                {
+                    <div>
+                        <h1>
+                            @item.Title
+                        </h1>
+                    </div>
+                }
+                @if (item.Text != null)
+                {
+                    <div class="description">
+                        <p>
+                            @item.Text
+                        </p>
+                    </div>
+                }
+                <div><a href="/neden-erikli" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
+            </div>
+        }
     </div>
-</div>
+
+if(item.Order == 50){
 <div class="container-fluid" style="background-color:white">
     <div class="row justify-content-center">
+        @if (item.Text != null){
         <div class="col-10">
-            <p class="text-align-center textMid text-muted"><strong>Uludağ’ın zirvesinden gelen eşsiz lezzet</strong></p>
+            <p class="text-align-center textMid text-muted"><strong>@item.Text</strong></p>
         </div>
+        }
     </div>
 </div>
+    }
+}
+
 <div class="container">
     <div class="row" style="--bs-gutter-x:0rem; margin-top:8px;">
+        @foreach (var item1 in contents)
+        {
+            if (item1.Order == 100)
+            {
         <div class="col-4">
-            <div class="card">
+            <div class="card mt-3 mb-3">
                 <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/grid_system/public/2021-10/1_0.jpg?itok=a_xSeR_R" />
                 <div class="card-body layout-card-body">
-                    <h5 class="card-title"><a href="/">Abonelik</a></h5>
-                    <p class="card-text">GibiSu Abonesi Olmak İçin Tıklayın.</p>
-                    <a href="/neden-erikli" class="btn btn-primary ">Devam</a>
+                        <h5 class="card-title"><a href="/">@item1.Title</a></h5>
+                        <p class="card-text">@item1.Text</p>
+                        <a href="/neden-erikli" class="btn btn-primary ">Devam</a>
                 </div>
             </div>
         </div>
-        <div class="col-4">
-            <div class="card">
-                <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/grid_system/public/2021-10/1_0.jpg?itok=a_xSeR_R" />
-                <div class="card-body layout-card-body">
-                    <h5 class="card-title"><a href="/">Abonelik</a></h5>
-                    <p class="card-text">GibiSu Abonesi Olmak İçin Tıklayın.</p>
-                    <a href="/neden-erikli" class="btn btn-primary ">Devam</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/grid_system/public/2021-10/1_0.jpg?itok=a_xSeR_R" />
-                <div class="card-body layout-card-body">
-                    <h5 class="card-title"><a href="/">Abonelik</a></h5>
-                    <p class="card-text">GibiSu Abonesi Olmak İçin Tıklayın.</p>
-                    <a href="/neden-erikli" class="btn btn-primary ">Devam</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 mt-5 mb-5">
-            <div class="card">
-                <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/grid_system/public/2021-10/1_0.jpg?itok=a_xSeR_R" />
-                <div class="card-body layout-card-body">
-                    <h5 class="card-title"><a href="/">Abonelik</a></h5>
-                    <p class="card-text">GibiSu Abonesi Olmak İçin Tıklayın.</p>
-                    <a href="/neden-erikli" class="btn btn-primary ">Devam</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 mt-5 mb-5">
-            <div class="card">
-                <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/grid_system/public/2021-10/1_0.jpg?itok=a_xSeR_R" />
-                <div class="card-body layout-card-body">
-                    <h5 class="card-title"><a href="/">Abonelik</a></h5>
-                    <p class="card-text">GibiSu Abonesi Olmak İçin Tıklayın.</p>
-                    <a href="/neden-erikli" class="btn btn-primary ">Devam</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 mt-5 mb-5">
-            <div class="card">
-                <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/grid_system/public/2021-10/1_0.jpg?itok=a_xSeR_R" />
-                <div class="card-body layout-card-body">
-                    <h5 class="card-title"><a href="/">Abonelik</a></h5>
-                    <p class="card-text">GibiSu Abonesi Olmak İçin Tıklayın.</p>
-                    <a href="/neden-erikli" class="btn btn-primary ">Devam</a>
-                </div>
-            </div>
-        </div>
+            }
+        }
     </div>
 </div>
+
 <div class="container-fluid" style="background-color:white; height:1px;">
     <br />
 </div>
