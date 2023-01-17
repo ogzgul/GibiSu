@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h1>Admin Paneli</h1>
+
+<div>
+    <label>Menüler</label>
+    <a asp-controller="Menus" asp-action="Create">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </a>
+
+    <a asp-controller="Menus" asp-action="Index">
+        <i class="fa fa-list" aria-hidden="true"></i>
+    </a>
+</div>
+
+<div>
+    <label>Sayfalar</label>
+    <a asp-controller="Pages" asp-action="Create">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </a>
+
+    <a asp-controller="Pages" asp-action="Index">
+        <i class="fa fa-list" aria-hidden="true"></i>
+    </a>
+</div>
+
+<div>
+    <label>İçerikler</label>
+    <a asp-controller="Contents" asp-action="Create">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </a>
+
+    <a asp-controller="Contents" asp-action="Index">
+        <i class="fa fa-list" aria-hidden="true"></i>
+    </a>
+</div>
+
+<div>
+    <label>Ürünler</label>
+    <a asp-controller="Products" asp-action="Create">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </a>
+
+    <a asp-controller="Products" asp-action="Index">
+        <i class="fa fa-list" aria-hidden="true"></i>
+    </a>
+</div>
