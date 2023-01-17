@@ -4,6 +4,7 @@ using GibiSu.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GibiSu.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230117095740_TopPageDelete")]
+    partial class TopPageDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,9 +49,6 @@ namespace GibiSu.Data.Migrations
                     b.Property<string>("Title")
                         .HasMaxLength(100)
                         .HasColumnType("nchar(100)");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -144,6 +143,7 @@ namespace GibiSu.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<byte[]>("Banner")
+                        .IsRequired()
                         .HasColumnType("image");
 
                     b.Property<short?>("MenuId")

@@ -1,6 +1,7 @@
 using GibiSu.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GibiSu
 {
@@ -9,7 +10,7 @@ namespace GibiSu
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            //ApplicationDbContext context;
+            ApplicationDbContext context;
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -52,8 +53,17 @@ namespace GibiSu
                 defaults: new { controller = "Pages", action = "Details" });
             app.MapRazorPages();
 
-            //context = app.Services.GetService<ApplicationDbContext>();
-            //context.Database.Migrate(); 
+            context = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetService <ApplicationDbContext> ();
+            context.Database.Migrate(); 
+            Models.Page homePage = new Models.Page();
+            if (homePage.Url != "index")
+            {
+                homePage.Url = "index";
+                homePage.Title = "Ana Sayfa";
+                context.Add(homePage);
+                context.SaveChangesAsync();
+            }
+            
 
             System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("tr-TR");
             System.Globalization.CultureInfo.CurrentCulture = culture;

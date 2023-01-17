@@ -5,7 +5,11 @@
 
     string content;
 }
-
+<script>
+    function SepeteEkle(id) {
+        $.get("@Url.Action("Create","Orders")?productId=" + id);
+    }
+</script>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -35,7 +39,7 @@
                             <p style="font-weight:700; text-align:center">@item.Price TL</p>
                         </div>
                         <div style="text-align:center">
-                            <button class="btn btn-primary button-cart" type="button">
+                            <button onclick="SepeteEkle(@item.Id)" class="btn btn-primary button-cart" type="button">
                                 <i class="fa fa-shopping-cart me-1"></i>
                                 Sepete Ekle
                             </button>

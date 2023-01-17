@@ -31,6 +31,10 @@ namespace GibiSu.Models
         public short Order { get; set; }
 
         [Required(ErrorMessage = "Bu alan gerekli")]
+        [DisplayName("Tür")]
+        public byte Type { get; set; }
+
+        [Required(ErrorMessage = "Bu alan gerekli")]
         [DisplayName("Sayfa")]
         public string PageUrl { get; set; }
 

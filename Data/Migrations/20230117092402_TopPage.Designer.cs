@@ -4,6 +4,7 @@ using GibiSu.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GibiSu.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230117092402_TopPage")]
+    partial class TopPage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,9 +49,6 @@ namespace GibiSu.Data.Migrations
                     b.Property<string>("Title")
                         .HasMaxLength(100)
                         .HasColumnType("nchar(100)");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -144,6 +143,7 @@ namespace GibiSu.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<byte[]>("Banner")
+                        .IsRequired()
                         .HasColumnType("image");
 
                     b.Property<short?>("MenuId")
@@ -154,9 +154,14 @@ namespace GibiSu.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nchar(100)");
 
+                    b.Property<string>("TopPageUrl")
+                        .HasColumnType("nvarchar(100)");
+
                     b.HasKey("Url");
 
                     b.HasIndex("MenuId");
+
+                    b.HasIndex("TopPageUrl");
 
                     b.ToTable("Pages");
                 });
@@ -474,7 +479,13 @@ namespace GibiSu.Data.Migrations
                         .WithMany("Pages")
                         .HasForeignKey("MenuId");
 
+                    b.HasOne("GibiSu.Models.Page", "TopPage")
+                        .WithMany()
+                        .HasForeignKey("TopPageUrl");
+
                     b.Navigation("Menu");
+
+                    b.Navigation("TopPage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

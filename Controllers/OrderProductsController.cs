@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
+using System.Security.Claims;
 
 namespace GibiSu.Controllers
 {

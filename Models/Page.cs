@@ -20,12 +20,10 @@ namespace GibiSu.Models
 
         [DisplayName("Banner")]
         [NotMapped]
-        [Required(ErrorMessage = "Bu alan zorunludur.")]
-        public IFormFile FormImage { get; set; }
+        public IFormFile? FormImage { get; set; }
 
-        [Required(ErrorMessage = "Bu alan zorunludur.")]
         [Column(TypeName = "image")]
-        public byte[] Banner { get; set; }
+        public byte[]? Banner { get; set; }
 
         [DisplayName("Menü (opsiyonel)")]
         public short? MenuId { get; set; }

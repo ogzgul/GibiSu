@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
+using System.Security.Claims;
 
 namespace GibiSu.Controllers
 {
@@ -49,6 +50,19 @@ namespace GibiSu.Controllers
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            return View();
+        }
+
+        // GET: Orders/Create
+        public IActionResult Create(int productId)
+        {
+            Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["UserId"] = "kadir";
+            ViewData["ProductId"] = productId;
+            ViewData["Amount"] = 1;
+            ViewData["Price"] = product.Price;
+            ViewData["TotalPrice"] = 1 * product.Price;
             return View();
         }
 
