@@ -34,6 +34,7 @@ namespace GibiSu.Models
         [DisplayName("Menü")]
         [ForeignKey("MenuId")]
         public Menu? Menu { get; set; }
+   
 
     }
 }

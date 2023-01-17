@@ -73,7 +73,7 @@ body {
     align-items: center;
     align-content: space-between;
     justify-content: center;
-    margin-top: 19%;
+    margin-top: 10%;
     color: white;
 }
 
@@ -156,73 +156,6 @@ body {
     margin-top:6%;
 }
 
-.privacyTop {
-    display: none;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    min-height: 300px;
-    padding: 0px;
-    background: rgb(255, 255, 255);
-    border: 0px solid transparent;
-    box-sizing: border-box;
-    z-index: 2147483647;
-    box-shadow: rgb(0 0 0 / 20%) 0px 8px 8px;
-}
-
-.privacyTop1 {
-    display: inline-block;
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-    background: transparent;
-    width: 226px !important;
-    height: auto !important;
-    overflow: hidden !important;
-}
-
-.privacyImg {
-    display: block;
-    margin: 1em auto;
-    width: 170px;
-    height: auto;
-    background: transparent;
-    color: rgb(255, 255, 255);
-    border: none;
-    padding: 0px;
-}
-.PrivacyBodyTop {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    height: 30px;
-    padding-left: 6px;
-}
-.PrivacyBody {
-    display: block;
-    box-sizing: border-box;
-    overflow-y: scroll;
-    background: rgb(255, 255, 255);
-}
-
-.PrivacyContent {
-    display: block;
-    margin: 0px 0px 0.75em;
-    font-size: 0.8em;
-    line-height: 1.5;
-    color: rgb(0, 0, 0);
-    font-family: sans-serif;
-    text-align: left;
-    padding: 0px 1em !important;
-    word-wrap: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 9;
-    -webkit-box-orient: vertical;
-}
-}
-
 .Banner {
     padding-right: var(--bs-gutter-x,0rem);
     padding-left: var(--bs-gutter-x,0rem);
@@ -249,4 +182,79 @@ body {
 .Image img{
     width:100%;
     margin-bottom:10px;
+}
+
+.PrivacyTop {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    min-height: 300px;
+    padding: 0px;
+    background: rgb(255, 255, 255);
+    border: 0px solid transparent;
+    box-sizing: border-box;
+    z-index: 2147483647;
+    box-shadow: rgb(0 0 0 / 20%) 0px 8px 8px;
+}
+.PrivacyImg {
+    display: inline-block;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    background: transparent;
+    width: 226px !important;
+    height: auto !important;
+}
+.PrivacyBody {
+    position: absolute;
+    inset: 0px 0px 0px 227px;
+    vertical-align: top;
+}
+.PrivacyClose {
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 12px;
+    width: 12px;
+    cursor: pointer;
+    z-index: 100;
+    border: 0px;
+    padding: 0px;
+    background: transparent;
+}
+.PrivacyCon {
+    width:75%;
+    height:100px;
+    position: absolute;
+    top: 36px;
+  
+    right: 0px;
+    display: block;
+    box-sizing: border-box;
+  
+    padding: 8px 8px 100px;
+    background: rgb(255, 255, 255);
+}
+.PrivacyContent {
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    background: rgb(255, 255, 255);
+}
+
+.PrivacyText {
+    display: block;
+    margin: 0px 0px 0.75em;
+    font-size: 0.8em;
+    line-height: 1.5;
+    color: rgb(0, 0, 0);
+    font-family: sans-serif;
+    text-align: left;
+    padding: 0px 1em !important;
 }

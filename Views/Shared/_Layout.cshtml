@@ -24,15 +24,59 @@
 <body onscroll="scrollX()" id="body">
     <div onclick="ghostt()" id="ghosttt" style="display:none; position: fixed;z-index: 9999;inset: 0px;background: rgb(85, 85, 85);opacity: 0.8;">
     </div>
-
-
+    <!--Privacy Start-->
+    <div id="PrivacyTop" class="PrivacyTop">
+        <div class="PrivacyImg">
+            <div id="evidon-prefdiag-nav-spacerdiv1" style="display: block; height: 20px;"></div>
+            <img src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt="Logo Image" style="display: block; margin: 1em auto; width: 170px; height: auto; background: transparent; color: rgb(255, 255, 255); border: none; padding: 0px;">
+            <div id="evidon-prefdiag-nav-spacerdiv2" style="display: block; height: 20px;"></div>
+            <nav id="evidon-navigation-wrapper-element" aria-labelledby="evidon-navigation-label"><div id="evidon-navigation-label" style="display: none;">Privacy dialog navigation</div>
+                <ul id="evidon-navigation-list" style="list-style: none; margin: 0px; padding: 0px;">
+                    <li style="width: 100%;">
+                        <div id="evidon-prefdiag-nav-0" data-id="0" class="evidon-prefdiag-sidebarlink" role="button" tabindex="0" style="padding: 12px; cursor: pointer; display: block; box-sizing: content-box; font-family: sans-serif; font-size: 0.8em; line-height: 1.5; margin: 0px; text-align: left; background: rgb(255, 255, 255); color: rgb(0, 0, 0); white-space: normal !important;">Gizlilik Ayarları</div>
+                    </li>
+                    <li style="width: 100%;">
+                        <div id="evidon-prefdiag-nav-1" data-id="1" class="evidon-prefdiag-sidebarlink" role="button" tabindex="0" style="padding: 12px; cursor: pointer; display: block; box-sizing: content-box; font-family: sans-serif; color: rgb(102, 102, 102); font-size: 0.8em; line-height: 1.5; margin: 0px; text-align: left; white-space: normal !important;"><div>Gizlilik Politikası
+                            <img src="//c.evidon.com/sitenotice/images/new-window-w.png" alt="Link opens in a new tab" style="width: 14px; height: 12px; margin: 0px 0px 2px 12px; vertical-align: middle;"></div></div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="PrivacyBody">
+            <button onclick="PrivacyClose()" class="PrivacyClose">x</button>
+        </div>
+        <div class="PrivacyCon">
+            <div class="PrivacyContent">
+                <h1 style="display: block; text-align: center;margin: 0px 0px 0.75em;font-size: 0.9em; font-weight: 600; font-family: sans-serif; color: rgb(0, 0, 0); line-height: 1.5;">
+                    Topladığımız bilgiler
+                </h1>
+                <div class="PrivacyText">
+                    Web sitemizde hem Erikli Su ve Meşrubat San. ve Tic. A.Ş. ("Erikli") olarak bizim ve hem de iş ortaklarımızın topladığı bilgiler hakkında şeffaf olmak istiyoruz. 
+                    <br />
+                    <br />
+                    Biz ve iş ortaklarımız, sitemizdeki deneyiminizi iyileştirmek, bilgi toplamak, ilgi alanlarınıza uygun reklamlar göstermek ve sosyal medyada içerik paylaşabilmeniz için çerezler kullanıyoruz.
+                    Web sitemizde hem Erikli Su ve Meşrubat San. ve Tic. A.Ş. ("Erikli") olarak bizim ve hem de iş ortaklarımızın topladığı bilgiler hakkında şeffaf olmak istiyoruz.
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    Biz ve iş ortaklarımız, sitemizdeki deneyiminizi iyileştirmek, bilgi toplamak, ilgi alanlarınıza uygun reklamlar göstermek ve sosyal medyada içerik paylaşabilmeniz için çerezler kullanıyoruz.
+                    Web sitemizde hem Erikli Su ve Meşrubat San. ve Tic. A.Ş. ("Erikli") olarak bizim ve hem de iş ortaklarımızın topladığı bilgiler hakkında şeffaf olmak istiyoruz.
+                    <br />
+                    Created By.Ogz
+                </div>
+            </div>
+            
+        </div>
+        <div id="evidon-prefdiag-tabfooter" class="evidon-prefdiag-tabfooter" style="position: absolute; bottom: 13px; left: 214px; right: 3px; text-align: right; border-top: 1px solid rgb(211, 211, 211); padding: 4px 0px; background: rgb(255, 255, 255); display: block;"><button id="evidon-prefdiag-decline" class="evidon-prefdiag-declinebtn" aria-label="İptal" style="margin: 0px; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; width: 50%; height: 100%; text-decoration: underline;">İptal</button><button id="evidon-prefdiag-accept" class="evidon-prefdiag-acceptbtn" aria-label="Çerez iznini geri al" style="display: inline-block; margin: 0px; width: 50%; height: 100%; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; text-decoration: underline;">Çerez iznini geri al</button></div>
+    </div>
+    <!--Privacy End-->
     <div class="position-relative">
         <div class="position-fixed " style="z-index:1000; right:0px; top:75px;">
             <img style="cursor:pointer;" onclick="ghostt()" src="https://d6tizftlrpuof.cloudfront.net/themes/production/nestle-waters-button-095e535bf54b3ef0961638d40f3b1830.png" width="40" height="130">
         </div>
 
     </div>
-    <!--Feedback-->
     <header class="fixed-top">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid ">
@@ -118,7 +162,7 @@
         <!-- Footer -->
     </section>
     <button id="backtotop" @*style="display: inline-block;*@"> <a href="#">Back to top</a> </button>
-    <a id="feedback" tabindex="0" style="position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; cursor: pointer; line-height: 1.5; text-decoration: none; background: rgb(0, 107, 175); font-size: 0.75em; color: rgb(255, 255, 255); z-index: 2147483600; bottom: 0px; right: 1em; font-family: sans-serif;"><span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">Gizlilik Ayarları</span><img id="_evh-newvendor-indicator" src="//c.evidon.com/sitenotice/images/evidon-change-alert.png" alt="New vendors have been added to this site" style="display: none; position: absolute; left: -10px; top: -10px; width: 23px; height: 23px;"></a>
+    <a onclick="PrivacyClose()" tabindex="0" style="position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; cursor: pointer; line-height: 1.5; text-decoration: none; background: rgb(0, 107, 175); font-size: 0.75em; color: rgb(255, 255, 255); z-index: 2147483600; bottom: 0px; right: 1em; font-family: sans-serif;"><span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">Gizlilik Ayarları</span><img id="_evh-newvendor-indicator" src="//c.evidon.com/sitenotice/images/evidon-change-alert.png" alt="New vendors have been added to this site" style="display: none; position: absolute; left: -10px; top: -10px; width: 23px; height: 23px;"></a>
 
     <div id="ghostt" tabindex="0" style="display:none; position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; line-height: 1.5; text-decoration: none; background: white; font-size: 0.75em; z-index: 2147483600; top: 50%; right: 50em; font-family: sans-serif;">
         <span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">
@@ -142,13 +186,12 @@
     <!--Barant004-->
     <div id="barantt" style="position: absolute; top: 73px; display: none; left: 47px; z-index: 2000;">
         <div class="card" style="width: 18rem;">
-            <img src="https://i.ibb.co/f8xkSm0/Whats-App-Image-2023-01-13-at-10-22-53.jpg">
+            <a asp-area="" asp-controller="Pages" asp-action="Index"><img height="383px" src="https://i.ibb.co/f8xkSm0/Whats-App-Image-2023-01-13-at-10-22-53.jpg"></a>
             <div class="card-body layout-card-body">
-                <p style="color:blueviolet;">#Barant004-Gelecekten Gelen Lezzet</p>
+                <p style="color:blueviolet;">#Barant004-Tek Seferlik Değil Ömürlük Lezzet..</p>
             </div>
         </div>
     </div>
-     <!--Barant004-->
     <script>
 
         function ghostt() {
@@ -187,6 +230,16 @@
             }
         }
 
+        function PrivacyClose() {
+            var PrivacyTop = document.getElementById("PrivacyTop");
+            if (PrivacyTop.style.display != "block") {
+                PrivacyTop.style.display = "block";
+
+            } else {
+                PrivacyTop.style.display = "none";
+            }
+        }
+
         function Barant() {
             var barant = document.getElementById("barantt");
             if (barant.style.display != "none") {
@@ -196,17 +249,6 @@
                 barant.style.display = "block";
             }
         }
-
-        function privacyTop(){
-            var privacy = document.getElementById("privacyTop");
-             if(privacy.style.display != "block"){
-                privacy.style.display = "block";
-
-            }else{
-                privacy.style.display = "none";
-            }
-        }
-
     </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
