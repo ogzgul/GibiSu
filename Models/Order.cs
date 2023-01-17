@@ -10,7 +10,7 @@ namespace GibiSu.Models
         public long Id { get; set; }
 
         [DisplayName("Sipariş Tarihi")]
-        public DateTime OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
 
         [DisplayName("Toplam Fiyat")]
         public float TotalPrice { get; set; }
@@ -35,5 +35,7 @@ namespace GibiSu.Models
         [DisplayName("Müşteri")]
         [ForeignKey("UserId")]
         public ApplicationUser? User { get; set; }
+
+        public List<OrderProduct> OrderProducts { get; set; }
     }
 }

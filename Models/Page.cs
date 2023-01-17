@@ -12,6 +12,12 @@ namespace GibiSu.Models
         [StringLength(100, ErrorMessage = "En fazla 100 karakter")]
         public string Url { get; set; }
 
+        [Column(TypeName = "nchar(100)")]
+        [DisplayName("İsim")]
+        [Required(ErrorMessage = "Bu alan zorunludur.")]
+        [StringLength(100, ErrorMessage = "En fazla 100 karakter")]
+        public string Title { get; set; }
+
         [DisplayName("Banner")]
         [NotMapped]
         [Required(ErrorMessage = "Bu alan zorunludur.")]
