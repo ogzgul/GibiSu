@@ -4,10 +4,12 @@
     ViewData["Title"] = "Home Page";
     List<Content> contents = Model.Contents.OrderBy(c => c.Order).ToList();
 }
+
 <div>
     <img class="responsive" loading="lazy" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)">
 
 </div>
+
 
 @foreach (var item in contents){
 <div class="row mid-content" style="--bs-gutter-x: 0rem;">
