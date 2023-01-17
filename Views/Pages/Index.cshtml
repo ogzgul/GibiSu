@@ -6,8 +6,9 @@
 }
 
 <div>
+     @if (Model.Banner != null){
     <img class="responsive" loading="lazy" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)">
-
+     }
 </div>
 
 @foreach (var item in contents){
