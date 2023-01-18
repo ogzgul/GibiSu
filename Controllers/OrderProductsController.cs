@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
 using System.Security.Claims;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace GibiSu.Controllers
 {
@@ -56,29 +57,43 @@ namespace GibiSu.Controllers
         }
 
         // GET: OrderProducts/Create
-        public IActionResult Create(int productId)
+        public IActionResult AddCart(int productId)
         {
             ProductCount ++;
             if (ProductCount == 1)
             {
                 string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                Order order = new Order();
+                Order order = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
+                
                 Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
-                OrderProduct card = new OrderProduct();
-                card.ProductId = productId;
-                card.OrderId = order.Id;
-                card.Price = product.Price;
-                card.Amount = 1;
-                card.TotalPrice = product.Price * card.Amount;
-                order.TotalPrice = card.TotalPrice;
-                order.OrderDate = null;
-                order.Address = "boş";
-                order.PhoneNumber = "boş";
-                order.UserId = "admin";
-                if (ModelState.IsValid)
+                OrderProduct cart = _context.OrderProducts.Where(o => o.ProductId == productId).FirstOrDefault();
+                if (cart == null)
                 {
-                    _context.Add(order);
-                    _context.SaveChangesAsync();
+                    cart = new OrderProduct();
+                    cart.ProductId = productId;
+                    cart.OrderId = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).Select(o => o.Id).FirstOrDefault();
+                    cart.Price = product.Price;
+                    cart.Amount = 1;
+                    cart.TotalPrice = product.Price * cart.Amount;
+                    if (ModelState.IsValid)
+                    {
+                        _context.Add(cart);
+                        _context.SaveChanges();
+                    }
+                }
+                if (order == null)
+                {
+                    order = new Order();
+                    order.TotalPrice = cart.TotalPrice;
+                    order.OrderDate = null;
+                    order.Address = "boş";
+                    order.PhoneNumber = "boş";
+                    order.UserId = userName;
+                    if (ModelState.IsValid)
+                    {
+                        _context.Add(order);
+                        _context.SaveChanges();
+                    }
                 }
             }
             else { 

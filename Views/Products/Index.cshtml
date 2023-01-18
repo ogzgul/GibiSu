@@ -7,7 +7,7 @@
 }
 <script>
     function SepeteEkle(id) {
-        $.get("@Url.Action("Create","OrderProducts")?productId=" + id);
+        $.get("@Url.Action("AddCart","OrderProducts")?productId=" + id);
     }
 </script>
 <p>
