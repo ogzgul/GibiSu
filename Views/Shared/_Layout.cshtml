@@ -99,7 +99,7 @@
                                 <ul   style="display:none">
                                     @foreach (Page pageis in menu.Pages)
                                     {   
-                                        <li ><a >@pageis.Title</a></li>
+                                        <li ><a href="/@pageis.Url" >@pageis.Title</a></li>
                                     }
 
                                 </ul>
@@ -109,7 +109,7 @@
                         @foreach (Page pageis in pages)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark">@pageis.Title</a>
+                                <a href="/@pageis.Url" class="nav-link text-dark">@pageis.Title</a>
                             </li>
                         }
                     </ul>
@@ -156,20 +156,15 @@
                         @foreach (Menu menu in menus)
                         {
                             @if(menu.Name.Trim() == "footer"){
-                                
-                                    <h5 class="text-uppercase"><a style="text-decoration:none;" href="/kullanim-kosullari" class="text-white">Kullanım Koşulları</a></h5>
+                                    @*<h5 class="text-uppercase"><a style="text-decoration:none;" href="/kullanim-kosullari" class="text-white">Kullanım Koşulları</a></h5>*@
                                     <ul class="list-unstyled mb-0 ">
                                     @foreach (Page pageis in menu.Pages)
                                     {
                                         <li class="menu-item">
-                                        
                                             <a style="text-decoration:none;" href="/@pageis.Url" class="text-white">@pageis.Title</a>
-                                           
                                         </li>
                                          }
-                                   
                                     </ul>
-                                
                             }
                         }
                     </div>
@@ -192,8 +187,6 @@
             <p class="text-muted">
                 Web sitemizi nasıl buldunuz?
             </p>
-
-
         </span>
         <a>
             <i style="font-size: 25px; color: yellowgreen;" class="fa-solid fa-face-smile"></i>
