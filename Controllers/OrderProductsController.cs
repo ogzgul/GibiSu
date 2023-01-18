@@ -65,7 +65,7 @@ namespace GibiSu.Controllers
             if (newOrder == null)
             {
                 newOrder = new Order();
-                newOrder.TotalPrice = product.Price;
+                newOrder.TotalPrice = 0;
                 newOrder.OrderDate = null;
                 newOrder.Address = "boş";
                 newOrder.PhoneNumber = "boş";
@@ -95,7 +95,7 @@ namespace GibiSu.Controllers
                 cart.Amount++;
             }
             cart.TotalPrice = product.Price * cart.Amount;
-            newOrder.TotalPrice = newOrder.TotalPrice + cart.TotalPrice;
+            newOrder.TotalPrice = newOrder.TotalPrice + product.Price;
             _context.SaveChanges();
 
             return View();
