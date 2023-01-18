@@ -53,19 +53,6 @@ namespace GibiSu.Controllers
             return View();
         }
 
-        // GET: Orders/Create
-        public IActionResult Create(int productId)
-        {
-            Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ViewData["UserId"] = "kadir";
-            ViewData["ProductId"] = productId;
-            ViewData["Amount"] = 1;
-            ViewData["Price"] = product.Price;
-            ViewData["TotalPrice"] = 1 * product.Price;
-            return View();
-        }
-
         // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

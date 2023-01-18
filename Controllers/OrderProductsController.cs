@@ -14,7 +14,7 @@ namespace GibiSu.Controllers
     public class OrderProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        static int ProductCount=0;
         public OrderProductsController(ApplicationDbContext context)
         {
             _context = context;
@@ -52,6 +52,46 @@ namespace GibiSu.Controllers
         {
             ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Address");
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Description");
+            return View();
+        }
+
+        // GET: OrderProducts/Create
+        public IActionResult Create(int productId)
+        {
+            ProductCount ++;
+            if (ProductCount == 1)
+            {
+                string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                Order order = new Order();
+                Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
+                OrderProduct card = new OrderProduct();
+                card.ProductId = productId;
+                card.OrderId = order.Id;
+                card.Price = product.Price;
+                card.Amount = 1;
+                card.TotalPrice = product.Price * card.Amount;
+                order.TotalPrice = card.TotalPrice;
+                order.OrderDate = null;
+                order.Address = "boş";
+                order.PhoneNumber = "boş";
+                order.UserId = "admin";
+                if (ModelState.IsValid)
+                {
+                    _context.Add(order);
+                    _context.SaveChangesAsync();
+                }
+            }
+            else { 
+                Order order= _context.Orders.Where(o => o.OrderDate == null).FirstOrDefault();
+                Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
+                OrderProduct card = new OrderProduct();
+                card.ProductId = productId;
+                card.OrderId = order.Id;
+                card.Price = product.Price;
+                card.Amount = 1;
+                card.TotalPrice = product.Price * card.Amount;
+                order.TotalPrice = order.TotalPrice + card.TotalPrice;
+            }
             return View();
         }
 

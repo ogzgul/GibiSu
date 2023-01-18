@@ -8,7 +8,9 @@
 
 <div>
     <div class="Banner container-fluid">
+        @if (Model.Banner != null){
          <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)" />
+        }
     </div>
     @foreach (var item in contents)
     {
