@@ -55,16 +55,29 @@ namespace GibiSu
             app.MapRazorPages();
 
             context = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetService <ApplicationDbContext> ();
-            context.Database.Migrate(); 
-            Models.Page homePage = new Models.Page();
-            if (homePage.Url != "index")
+            context.Database.Migrate();
+            
+            Models.Menu menu = context.Menus.Where(m => m.Name == "footer").FirstOrDefault();
+            if (menu == null)
             {
+                menu=new Menu();
+                menu.Name = "footer";
+                context.Add(menu);
+                context.SaveChanges();
+            }
+            Models.Page homePage = context.Pages.Where(m => m.Url == "index").FirstOrDefault();
+           
+            if (homePage == null)
+            {
+                homePage=new Page();
                 homePage.Url = "index";
                 homePage.Title = "Ana Sayfa";
                 context.Add(homePage);
-                context.SaveChangesAsync();
+                context.SaveChanges();
             }
+
             
+
 
             System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("tr-TR");
             System.Globalization.CultureInfo.CurrentCulture = culture;

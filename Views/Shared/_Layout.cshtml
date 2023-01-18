@@ -3,7 +3,7 @@
 @inject ApplicationDbContext context
 @{
     List<Menu> menus = context.Menus.Include(t => t.Pages).ToList();
-    List<Page> pages = context.Pages.Where(c => c.Url == null).ToList();
+    List<Page> pages = context.Pages.Where(c => c.MenuId == null).ToList();
 }
 
 <!DOCTYPE html>
@@ -89,10 +89,25 @@
                     <ul class="navbar-nav flex-grow-1 justify-content-center">
                         @foreach (Menu menu in menus)
                         {
+                            @if(menu.Name != "footer"){
                             <li class="nav-item" style="display:relative">
                                 <a id="menuCat-@menu.Id.ToString()" class="box nav-link text-dark dropdown-toggle nav-link " onclick="mybtn(this.id)">
                                     @menu.Name.ToString()
                                 </a>
+                                <ul   style="display:none">
+                                    @foreach (Page pageis in menu.Pages)
+                                    {   
+                                        <li ><a > @pageis.Title </a> </li>
+                                    }
+
+                                </ul>
+                            </li>
+                            }
+                        }
+                        @foreach (Page pageis in pages)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark">@pageis.Title</a>
                             </li>
                         }
                     </ul>
@@ -136,19 +151,25 @@
                     <!--Grid column-->
                     <!--Grid column-->
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase"><a style="text-decoration:none;" href="/kullanim-kosullari" class="text-white">Kullanım Koşulları</a></h5>
-
-                        <ul class="list-unstyled mb-0 ">
-                            <li class="menu-item">
-                                <a style="text-decoration:none;" href="#!" class="text-white">Bilgi Toplumu Hizmetleri</a>
-                            </li>
-                            <li class="menu-item">
-                                <a style="text-decoration:none;" href="#!" class="text-white">Çerez Bildirimi</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#!" style="text-decoration:none;" class="text-white">Kişisel Verilerin Korunması ve Gizlilik Bildirimi</a>
-                            </li>
-                        </ul>
+                        @foreach (Menu menu in menus)
+                        {
+                            @if(menu.Name == "footer"){
+                                
+                                    <h5 class="text-uppercase"><a style="text-decoration:none;" href="/kullanim-kosullari" class="text-white">Kullanım Koşulları</a></h5>
+                                    <ul class="list-unstyled mb-0 ">
+                                    @foreach (Page pageis in menu.Pages)
+                                    {
+                                        <li class="menu-item">
+                                        
+                                            <a style="text-decoration:none;" href="/@pageis.Url" class="text-white">@pageis.Title</a>
+                                           
+                                        </li>
+                                         }
+                                   
+                                    </ul>
+                                
+                            }
+                        }
                     </div>
                 </div>
             </div>
