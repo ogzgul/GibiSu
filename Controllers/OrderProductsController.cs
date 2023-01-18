@@ -59,54 +59,45 @@ namespace GibiSu.Controllers
         // GET: OrderProducts/Create
         public IActionResult AddCart(int productId)
         {
-            ProductCount ++;
-            if (ProductCount == 1)
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
+            Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
+            if (newOrder == null)
             {
-                string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                Order order = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
-                
-                Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
-                OrderProduct cart = _context.OrderProducts.Where(o => o.ProductId == productId).FirstOrDefault();
-                if (cart == null)
+                newOrder = new Order();
+                newOrder.TotalPrice = product.Price;
+                newOrder.OrderDate = null;
+                newOrder.Address = "boş";
+                newOrder.PhoneNumber = "boş";
+                newOrder.UserId = userName;
+                if (ModelState.IsValid)
                 {
-                    cart = new OrderProduct();
-                    cart.ProductId = productId;
-                    cart.OrderId = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).Select(o => o.Id).FirstOrDefault();
-                    cart.Price = product.Price;
-                    cart.Amount = 1;
-                    cart.TotalPrice = product.Price * cart.Amount;
-                    if (ModelState.IsValid)
-                    {
-                        _context.Add(cart);
-                        _context.SaveChanges();
-                    }
-                }
-                if (order == null)
-                {
-                    order = new Order();
-                    order.TotalPrice = cart.TotalPrice;
-                    order.OrderDate = null;
-                    order.Address = "boş";
-                    order.PhoneNumber = "boş";
-                    order.UserId = userName;
-                    if (ModelState.IsValid)
-                    {
-                        _context.Add(order);
-                        _context.SaveChanges();
-                    }
+                    _context.Add(newOrder);
+                    _context.SaveChanges();
                 }
             }
-            else { 
-                Order order= _context.Orders.Where(o => o.OrderDate == null).FirstOrDefault();
-                Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
-                OrderProduct card = new OrderProduct();
-                card.ProductId = productId;
-                card.OrderId = order.Id;
-                card.Price = product.Price;
-                card.Amount = 1;
-                card.TotalPrice = product.Price * card.Amount;
-                order.TotalPrice = order.TotalPrice + card.TotalPrice;
+            ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
+            OrderProduct cart = _context.OrderProducts.Where(o => o.ProductId == productId).Where(o => o.OrderId == newOrder.Id).FirstOrDefault();
+            if (cart == null)
+            {
+                cart = new OrderProduct();
+                cart.ProductId = productId;
+                cart.OrderId = newOrder.Id;
+                cart.Price = product.Price;
+                cart.Amount = 1;
+                if (ModelState.IsValid)
+                {
+                    _context.Add(cart);
+                }
             }
+            else
+            {
+                cart.Amount++;
+            }
+            cart.TotalPrice = product.Price * cart.Amount;
+            newOrder.TotalPrice = newOrder.TotalPrice + cart.TotalPrice;
+            _context.SaveChanges();
+
             return View();
         }
 
