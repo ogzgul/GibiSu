@@ -10,6 +10,9 @@ namespace GibiSu
     {
         public static void Main(string[] args)
         {
+
+
+
             var builder = WebApplication.CreateBuilder(args);
             ApplicationDbContext context;
 
