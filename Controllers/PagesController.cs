@@ -112,8 +112,12 @@ namespace GibiSu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Url,Banner,MenuId")] Page page)
+        public async Task<IActionResult> Edit(string id, [Bind("Url,Banner,MenuId,Title")] Page page)
         {
+            ModelState.Remove("Banner");
+            ModelState.Remove("Contents");
+
+            MemoryStream memoryStream;
             if (id != page.Url)
             {
                 return NotFound();
@@ -121,6 +125,12 @@ namespace GibiSu.Controllers
 
             if (ModelState.IsValid)
             {
+                if (page.FormImage != null)
+                {
+                    memoryStream = new MemoryStream();
+                    page.FormImage.CopyTo(memoryStream);
+                    page.Banner = memoryStream.ToArray();
+                }
                 try
                 {
                     _context.Update(page);

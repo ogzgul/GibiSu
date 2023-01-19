@@ -1,9 +1,13 @@
 ﻿@using GibiSu.Data;
 @using Microsoft.EntityFrameworkCore
 @inject ApplicationDbContext context
+@using System.Security.Claims;
 @{
     List<Menu> menus = context.Menus.Include(t => t.Pages).ToList();
     List<Page> pages = context.Pages.Where(c => c.MenuId == null).ToList();
+    string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    List<OrderProduct> carts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.OrderDate == null).Where(o => o.Order.UserId == userName).ToList();
+    int ProductCount=0;
 }
 
 <!DOCTYPE html>
@@ -115,8 +119,10 @@
                     </ul>
                 </div>
                 <a style="margin-right:15px; text-decoration-line:none;" href="/orderproducts">
-                    <i class="fa " style="font-size:20px">&#xf07a;</i>
-                    <span class='badge badge-warning' id='lblCartCount'> 100 </span>
+                    @if (ProductCount==0) {
+                        <i class="fa " style="font-size:20px">&#xf07a;</i>
+                        <span class='badge badge-warning' id='lblCartCount'> 100 </span>
+                    }
                 </a>
                 <i style="color:white;" class="fa-sharp fa-solid fa-magnifying-glass"></i>
                 <partial name="_LoginPartial" />

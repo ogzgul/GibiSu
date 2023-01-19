@@ -76,7 +76,7 @@ namespace GibiSu.Controllers
                     _context.SaveChanges();
                 }
             }
-            int ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
+            //int ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
             OrderProduct cart = _context.OrderProducts.Where(o => o.ProductId == productId).Where(o => o.OrderId == newOrder.Id).FirstOrDefault();
             if (cart == null)
             {
