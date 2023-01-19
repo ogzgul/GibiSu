@@ -215,5 +215,15 @@ namespace GibiSu.Controllers
         {
           return _context.OrderProducts.Any(e => e.ProductId == id);
         }
+        public int CountPlus(int productid)
+        {
+            OrderProduct orderProduct = _context.OrderProducts.Where(p => p.ProductId == productid).FirstOrDefault();
+
+            orderProduct.Amount = orderProduct.Amount + 1;
+            _context.Update(orderProduct);
+            _context.SaveChanges();
+            return orderProduct.Amount;
+
+        }
     }
 }

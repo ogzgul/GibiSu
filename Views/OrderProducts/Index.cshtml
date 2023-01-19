@@ -3,57 +3,46 @@
 @{
     ViewData["Title"] = "Index";
 }
+<script>
+    function CountUp(pid) {
+        $.get("@Url.Action("CountPlus","OrderProducts")?productid=" + pid, function (pcount) {
+            $("#PCount-" + pid).html(pcount);
+        });
+    }
+</script>
 
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order.Address)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container my-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        @foreach (var item in Model)
+        {
+            <div class="col mb-sm-2">
+
+                <div class="card mb-4 shadow">
+                    <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Product.Image)' class="card-img-top" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Product.Name</h5>
+                        <div class="text-align:center">
+                            <p style="font-weight:700; text-align:center">@item.Product.Price TL</p>
+                        </div>
+                        <div style="text-align:center">
+                            <button onclick="CountUp(@item.ProductId)" class="btn btn-primary button-cart" title="Arttır" type="button">
+                                <span id="PCount-@item.ProductId.ToString()">@item.Amount</span>
+                            </button> 
+                                <input type="text" value="1">
+                            <button class="btn btn-primary button-cart" type="button">
+                                <i class="fa fa-shopping-cart me-1">Sepeti Onayla</i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
