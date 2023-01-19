@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
 using System.Security.Claims;
-using Microsoft.Extensions.Hosting;
 
 namespace GibiSu.Controllers
 {
@@ -57,42 +56,47 @@ namespace GibiSu.Controllers
         }
 
         // GET: OrderProducts/Create
-        public IActionResult Create(int productId)
+        public IActionResult AddCart(int productId)
         {
-            ProductCount ++;
-            if (ProductCount == 1)
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
+            Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
+            if (newOrder == null)
             {
-                string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                Order order = new Order();
-                Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
-                OrderProduct card = new OrderProduct();
-                card.ProductId = productId;
-                card.OrderId = order.Id;
-                card.Price = product.Price;
-                card.Amount = 1;
-                card.TotalPrice = product.Price * card.Amount;
-                order.TotalPrice = card.TotalPrice;
-                order.OrderDate = null;
-                order.Address = "boş";
-                order.PhoneNumber = "boş";
-                order.UserId = "admin";
+                newOrder = new Order();
+                newOrder.TotalPrice = 0;
+                newOrder.OrderDate = null;
+                newOrder.Address = "boş";
+                newOrder.PhoneNumber = "boş";
+                newOrder.UserId = userName;
                 if (ModelState.IsValid)
                 {
-                    _context.Add(order);
-                    _context.SaveChangesAsync();
+                    _context.Add(newOrder);
+                    _context.SaveChanges();
                 }
             }
-            else { 
-                Order order= _context.Orders.Where(o => o.OrderDate == null).FirstOrDefault();
-                Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
-                OrderProduct card = new OrderProduct();
-                card.ProductId = productId;
-                card.OrderId = order.Id;
-                card.Price = product.Price;
-                card.Amount = 1;
-                card.TotalPrice = product.Price * card.Amount;
-                order.TotalPrice = order.TotalPrice + card.TotalPrice;
+            ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
+            OrderProduct cart = _context.OrderProducts.Where(o => o.ProductId == productId).Where(o => o.OrderId == newOrder.Id).FirstOrDefault();
+            if (cart == null)
+            {
+                cart = new OrderProduct();
+                cart.ProductId = productId;
+                cart.OrderId = newOrder.Id;
+                cart.Price = product.Price;
+                cart.Amount = 1;
+                if (ModelState.IsValid)
+                {
+                    _context.Add(cart);
+                }
             }
+            else
+            {
+                cart.Amount++;
+            }
+            cart.TotalPrice = product.Price * cart.Amount;
+            newOrder.TotalPrice = newOrder.TotalPrice + product.Price;
+            _context.SaveChanges();
+
             return View();
         }
 
