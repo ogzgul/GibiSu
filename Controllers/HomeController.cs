@@ -1,6 +1,7 @@
 ﻿using GibiSu.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace GibiSu.Controllers
 {
@@ -13,9 +14,13 @@ namespace GibiSu.Controllers
 			_logger = logger;
 		}
 
+
+
+
 		public IActionResult Index()
 		{
-			return View();
+
+            return View();
 		}
 
 		public IActionResult Privacy()

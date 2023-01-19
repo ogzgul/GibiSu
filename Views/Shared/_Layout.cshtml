@@ -15,6 +15,13 @@
     
 }
 
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +38,9 @@
 </head>
 
 <body onscroll="scrollX()" id="body">
+
+
+
     <div onclick="ghostt()" id="ghosttt" style="display:none; position: fixed;z-index: 9999;inset: 0px;background: rgb(85, 85, 85);opacity: 0.8;">
     </div>
     <!--Privacy Start-->
@@ -39,14 +49,19 @@
             <div id="evidon-prefdiag-nav-spacerdiv1" style="display: block; height: 20px;"></div>
             <img src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt="Logo Image" style="display: block; margin: 1em auto; width: 170px; height: auto; background: transparent; color: rgb(255, 255, 255); border: none; padding: 0px;">
             <div id="evidon-prefdiag-nav-spacerdiv2" style="display: block; height: 20px;"></div>
-            <nav id="evidon-navigation-wrapper-element" aria-labelledby="evidon-navigation-label"><div id="evidon-navigation-label" style="display: none;">Privacy dialog navigation</div>
+            <nav id="evidon-navigation-wrapper-element" aria-labelledby="evidon-navigation-label">
+                <div id="evidon-navigation-label" style="display: none;">Privacy dialog navigation</div>
                 <ul id="evidon-navigation-list" style="list-style: none; margin: 0px; padding: 0px;">
                     <li style="width: 100%;">
                         <div id="evidon-prefdiag-nav-0" data-id="0" class="evidon-prefdiag-sidebarlink" role="button" tabindex="0" style="padding: 12px; cursor: pointer; display: block; box-sizing: content-box; font-family: sans-serif; font-size: 0.8em; line-height: 1.5; margin: 0px; text-align: left; background: rgb(255, 255, 255); color: rgb(0, 0, 0); white-space: normal !important;">Gizlilik Ayarları</div>
                     </li>
                     <li style="width: 100%;">
-                        <div id="evidon-prefdiag-nav-1" data-id="1" class="evidon-prefdiag-sidebarlink" role="button" tabindex="0" style="padding: 12px; cursor: pointer; display: block; box-sizing: content-box; font-family: sans-serif; color: rgb(102, 102, 102); font-size: 0.8em; line-height: 1.5; margin: 0px; text-align: left; white-space: normal !important;"><div>Gizlilik Politikası
-                            <img src="//c.evidon.com/sitenotice/images/new-window-w.png" alt="Link opens in a new tab" style="width: 14px; height: 12px; margin: 0px 0px 2px 12px; vertical-align: middle;"></div></div>
+                        <div id="evidon-prefdiag-nav-1" data-id="1" class="evidon-prefdiag-sidebarlink" role="button" tabindex="0" style="padding: 12px; cursor: pointer; display: block; box-sizing: content-box; font-family: sans-serif; color: rgb(102, 102, 102); font-size: 0.8em; line-height: 1.5; margin: 0px; text-align: left; white-space: normal !important;">
+                            <div>
+                                Gizlilik Politikası
+                                <img src="//c.evidon.com/sitenotice/images/new-window-w.png" alt="Link opens in a new tab" style="width: 14px; height: 12px; margin: 0px 0px 2px 12px; vertical-align: middle;">
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </nav>
@@ -60,7 +75,7 @@
                     Topladığımız bilgiler
                 </h1>
                 <div class="PrivacyText">
-                    Web sitemizde hem Erikli Su ve Meşrubat San. ve Tic. A.Ş. ("Erikli") olarak bizim ve hem de iş ortaklarımızın topladığı bilgiler hakkında şeffaf olmak istiyoruz. 
+                    Web sitemizde hem Erikli Su ve Meşrubat San. ve Tic. A.Ş. ("Erikli") olarak bizim ve hem de iş ortaklarımızın topladığı bilgiler hakkında şeffaf olmak istiyoruz.
                     <br />
                     <br />
                     Biz ve iş ortaklarımız, sitemizdeki deneyiminizi iyileştirmek, bilgi toplamak, ilgi alanlarınıza uygun reklamlar göstermek ve sosyal medyada içerik paylaşabilmeniz için çerezler kullanıyoruz.
@@ -75,7 +90,7 @@
                     Created By.Ogz
                 </div>
             </div>
-            
+
         </div>
         <div id="evidon-prefdiag-tabfooter" class="evidon-prefdiag-tabfooter" style="position: absolute; bottom: 13px; left: 214px; right: 3px; text-align: right; border-top: 1px solid rgb(211, 211, 211); padding: 4px 0px; background: rgb(255, 255, 255); display: block;"><button id="evidon-prefdiag-decline" class="evidon-prefdiag-declinebtn" aria-label="İptal" style="margin: 0px; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; width: 50%; height: 100%; text-decoration: underline;">İptal</button><button id="evidon-prefdiag-accept" class="evidon-prefdiag-acceptbtn" aria-label="Çerez iznini geri al" style="display: inline-block; margin: 0px; width: 50%; height: 100%; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; text-decoration: underline;">Çerez iznini geri al</button></div>
     </div>
@@ -99,21 +114,22 @@
                         @foreach (Menu menu in menus)
                         {
                             <li class="nav-item" style="display:relative">
-                            @if(menu.Name.Trim() != "footer"){
-                                <a class="box nav-link text-dark dropdown-toggle nav-link ">
-                                    @menu.Name.Trim()
-                                </a>
-                                    }
-                                    
-                                <ul   style="display:none">
+                                @if (menu.Name.Trim() != "footer")
+                                {
+                                    <a class="box nav-link text-dark dropdown-toggle nav-link ">
+                                        @menu.Name.Trim()
+                                    </a>
+                                }
+
+                                <ul style="display:none">
                                     @foreach (Page pageis in menu.Pages)
-                                    {   
-                                        <li ><a href="/@pageis.Url" >@pageis.Title</a></li>
+                                    {
+                                        <li><a href="/@pageis.Url">@pageis.Title</a></li>
                                     }
 
                                 </ul>
                             </li>
-                            
+
                         }
                         @foreach (Page pageis in pages)
                         {
@@ -172,16 +188,17 @@
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                         @foreach (Menu menu in menus)
                         {
-                            @if(menu.Name.Trim() == "footer"){
-                                    @*<h5 class="text-uppercase"><a style="text-decoration:none;" href="/kullanim-kosullari" class="text-white">Kullanım Koşulları</a></h5>*@
-                                    <ul class="list-unstyled mb-0 ">
+                            @if (menu.Name.Trim() == "footer")
+                            {
+                                @*<h5 class="text-uppercase"><a style="text-decoration:none;" href="/kullanim-kosullari" class="text-white">Kullanım Koşulları</a></h5>*@
+                                <ul class="list-unstyled mb-0 ">
                                     @foreach (Page pageis in menu.Pages)
                                     {
                                         <li class="menu-item">
                                             <a style="text-decoration:none;" href="/@pageis.Url" class="text-white">@pageis.Title</a>
                                         </li>
-                                         }
-                                    </ul>
+                                    }
+                                </ul>
                             }
                         }
                     </div>
@@ -225,6 +242,44 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <div id="Cookies" style=" display:block; background-color:white; width:300px; height:250px;">
+        <div>
+            <h1 onclick="kukivarmi('red')">Reddet</h1>
+        </div>
+        <div>
+            <h1 onclick="kukivarmi('kabul')">Kabul Et</h1>
+        </div>
+    </div>
+
+
+    <script>
+        function kukivarmi(a) {
+            $.post("@Url.Action("kuki","Pages")?a="+a);
+
+        }
+    </script>
+
+
+        @*    @inject IHttpContextAccessor httpContextAccessor;
+    @{
+    if (httpContextAccessor != null)
+    {
+    CookieOptions options = new CookieOptions();
+    options.Expires = DateTime.Now.AddMonths(1);
+    options.IsEssential = true;
+    options.Path = "/";
+    httpContextAccessor.HttpContext.Response.Cookies.Append("MyCookie", "", options);
+    }
+    }
+    </div>*@
+
+
+
+
     <script>
 
         function ghostt() {
