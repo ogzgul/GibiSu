@@ -7,7 +7,12 @@
     List<Page> pages = context.Pages.Where(c => c.MenuId == null).ToList();
     string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
     List<OrderProduct> carts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.OrderDate == null).Where(o => o.Order.UserId == userName).ToList();
-    int ProductCount=0;
+    int ProductCount = 0;
+    foreach(OrderProduct cart in carts)
+    {
+        ProductCount = ProductCount + cart.Amount;
+    }
+    
 }
 
 <!DOCTYPE html>
@@ -119,9 +124,11 @@
                     </ul>
                 </div>
                 <a style="margin-right:15px; text-decoration-line:none;" href="/orderproducts">
-                    @if (ProductCount==0) {
+                    
                         <i class="fa " style="font-size:20px">&#xf07a;</i>
-                        <span class='badge badge-warning' id='lblCartCount'> 100 </span>
+                    @if (ProductCount != 0)
+                    {
+                        <span class='badge badge-warning' id='lblCartCount'> @ProductCount </span>
                     }
                 </a>
                 <i style="color:white;" class="fa-sharp fa-solid fa-magnifying-glass"></i>
