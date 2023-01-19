@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<GibiSu.Models.OrderProduct>
-@using GibiSu.Data;
 @using Microsoft.EntityFrameworkCore;
-@inject ApplicationDbContext context;
 @{
     ViewData["Title"] = "Index";
     long orderId = Model.Select(o => o.OrderId).FirstOrDefault();

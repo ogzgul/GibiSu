@@ -28,6 +28,10 @@ namespace GibiSu.Models
         [DisplayName("Menü (opsiyonel)")]
         public short? MenuId { get; set; }
 
+        [Required(ErrorMessage = "Bu alan gerekli")]
+        [DisplayName("Yeri")]
+        public byte Order { get; set; }
+
         [Required(ErrorMessage = "Bu alan zorunludur.")]
         public List<Content> Contents { get; set; }
 

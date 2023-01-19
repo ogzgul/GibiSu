@@ -8,15 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace GibiSu.Controllers
 {
     public class OrderProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public OrderProductsController(ApplicationDbContext context)
+        UserManager<ApplicationUser> _userManager;
+
+        public OrderProductsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: OrderProducts
@@ -62,13 +66,23 @@ namespace GibiSu.Controllers
             string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
             Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
+           
+            
             if (newOrder == null)
             {
+                ApplicationUser applicationUser = _userManager.FindByIdAsync(userName).Result;
                 newOrder = new Order();
                 newOrder.TotalPrice = 0;
                 newOrder.OrderDate = null;
-                newOrder.Address = "boş";
-                newOrder.PhoneNumber = "boş";
+                newOrder.Address = applicationUser.Address;
+                if (applicationUser.PhoneNumber == null)
+                {
+                    newOrder.PhoneNumber = "0";
+                }
+                else
+                {
+                    newOrder.PhoneNumber = applicationUser.PhoneNumber;
+                }
                 newOrder.UserId = userName;
                 if (ModelState.IsValid)
                 {
@@ -95,7 +109,8 @@ namespace GibiSu.Controllers
                 cart.Amount+=amount;
             }
             cart.TotalPrice = product.Price * cart.Amount;
-            newOrder.TotalPrice = newOrder.TotalPrice + product.Price;
+            newOrder.TotalPrice = newOrder.TotalPrice + cart.TotalPrice;
+            newOrder.OrderProducts.Add(cart);
             _context.SaveChanges();
 
             return View();

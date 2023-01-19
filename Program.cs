@@ -73,6 +73,7 @@ namespace GibiSu
             if (homePage == null)
             {
                 homePage=new Page();
+                homePage.Order = 100;
                 homePage.Url = "index";
                 homePage.Title = "Ana Sayfa";
                 context.Add(homePage);

@@ -30,12 +30,12 @@ namespace GibiSu.Models
         public string PhoneNumber { get; set; }
 
         [DisplayName("Müşteri")]
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         [DisplayName("Müşteri")]
         [ForeignKey("UserId")]
         public ApplicationUser? User { get; set; }
 
-        public List<OrderProduct> OrderProducts { get; set; }
+        public List<OrderProduct>? OrderProducts { get; set; }
     }
 }

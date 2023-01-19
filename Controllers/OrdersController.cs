@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace GibiSu.Controllers
 {
@@ -94,18 +95,22 @@ namespace GibiSu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,OrderDate,TotalPrice,DeliveryDate,Address,PhoneNumber,UserId")] Order order)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,OrderDate,TotalPrice,DeliveryDate,Address,PhoneNumber,UserId,OrderProducts")] Order order)
         {
             if (id != order.Id)
             {
                 return NotFound();
             }
-
+            var order2 = _context.Orders.First(o => o.Id == id);
+            order.OrderDate=DateTime.Now;
+            order.TotalPrice = order2.TotalPrice;
+            order.UserId = order2.UserId;
+            order.OrderProducts= _context.OrderProducts.Where(o=> o.OrderId==id).ToList();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(order);
+                    _context.Entry(order2).CurrentValues.SetValues(order);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
