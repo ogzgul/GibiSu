@@ -6,42 +6,52 @@
 <script>
     function CountUp(pid) {
         $.get("@Url.Action("CountPlus","OrderProducts")?productid=" + pid, function (pcount) {
-            $("#PCount-" + pid).html(pcount);
+            $("#PCount-" + pid).val(pcount);
+        });
+    }
+    function CountDown(pid) {
+        $.get("@Url.Action("CountMinus","OrderProducts")?productid=" + pid, function (pcount) {
+            $("#PCount-" + pid).val(pcount);
         });
     }
 </script>
 
-<h1>Index</h1>
+<h1>Sepetim</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <div class="container my-4">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         @foreach (var item in Model)
         {
-            <div class="col mb-sm-2">
-
-                <div class="card mb-4 shadow">
+            <div class="col">
+                <div class="product-card card shadow">
                     <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Product.Image)' class="card-img-top" />
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Product.Name</h5>
-                        <div class="text-align:center">
-                            <p style="font-weight:700; text-align:center">@item.Product.Price TL</p>
+                    <div class="card-body mt-2">
+                        <div style="text-align: center" class="product-card-title">
+                            @item.Product.Name
                         </div>
-                        <div style="text-align:center">
-                            <button onclick="CountUp(@item.ProductId)" class="btn btn-primary button-cart" title="Arttır" type="button">
-                                <span id="PCount-@item.ProductId.ToString()">@item.Amount</span>
-                            </button> 
-                                <input type="text" value="1">
-                            <button class="btn btn-primary button-cart" type="button">
-                                <i class="fa fa-shopping-cart me-1">Sepeti Onayla</i>
+                        <div class="product-card-price">@item.Price TL</div>
+                        <div style="text-align: center; margin-bottom: 10px">
+                            <button class="cart-count-btn btn btn-primary" onclick="CountDown(@item.ProductId)">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <span>
+                                <input disabled id="PCount-@item.ProductId.ToString()"
+                                   type="number"
+                                   style="width: 50px; border-radius: 10px" value="@item.Amount" />
+                            </span>
+                            <button class="cart-count-btn btn btn-primary" onclick="CountUp(@item.ProductId)">
+                                <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
-
+                        <div style="text-align: center">
+                            <span>
+                                <button class="button-card-cart btn btn-primary">
+                                    <i class="fa-solid fa-cart-shopping"></i>Sepeti Onayla
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
-
             </div>
         }
     </div>

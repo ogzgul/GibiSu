@@ -14,7 +14,6 @@ namespace GibiSu.Controllers
     public class OrderProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        static int ProductCount=0;
         public OrderProductsController(ApplicationDbContext context)
         {
             _context = context;
@@ -23,7 +22,9 @@ namespace GibiSu.Controllers
         // GET: OrderProducts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Product);
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.OrderDate == null).Where(o => o.Order.UserId == userName);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -75,7 +76,7 @@ namespace GibiSu.Controllers
                     _context.SaveChanges();
                 }
             }
-            ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
+            //int ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
             OrderProduct cart = _context.OrderProducts.Where(o => o.ProductId == productId).Where(o => o.OrderId == newOrder.Id).FirstOrDefault();
             if (cart == null)
             {
@@ -224,7 +225,17 @@ namespace GibiSu.Controllers
             _context.Update(orderProduct);
             _context.SaveChanges();
             return orderProduct.Amount;
-
+        } 
+        public int CountMinus(int productid)
+        {
+            OrderProduct orderProduct = _context.OrderProducts.Where(p => p.ProductId == productid).FirstOrDefault();
+            if (orderProduct.Amount > 0)
+            {
+                orderProduct.Amount = orderProduct.Amount - 1;
+            }
+            _context.Update(orderProduct);
+            _context.SaveChanges();
+            return orderProduct.Amount;
         }
     }
 }
