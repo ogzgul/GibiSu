@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
 using System.Security.Claims;
+using Microsoft.Extensions.Hosting;
 
 namespace GibiSu.Controllers
 {
@@ -210,6 +211,16 @@ namespace GibiSu.Controllers
         private bool OrderProductExists(int id)
         {
           return _context.OrderProducts.Any(e => e.ProductId == id);
+        }
+        public int CountPlus(int productid)
+        {
+            OrderProduct orderProduct = _context.OrderProducts.Where(p => p.ProductId == productid).FirstOrDefault();
+
+            orderProduct.Amount = orderProduct.Amount + 1;
+            _context.Update(orderProduct);
+            _context.SaveChanges();
+            return orderProduct.Amount;
+
         }
     }
 }
