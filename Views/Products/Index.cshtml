@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<GibiSu.Models.Product>
-
+@using GibiSu.Data;
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext context
+@using System.Security.Claims;
 @{
     ViewData["Title"] = "Index";
-
+    string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    List<OrderProduct> carts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.OrderDate == null).Where(o => o.Order.UserId == userName).ToList();
     string content;
 }
 <script>
@@ -50,17 +54,25 @@
                             @content
                         </p>
                         <div style="text-align: center; margin-bottom: 10px">
+                            @foreach (var cart in carts)
+                            {
+                                @if (cart.ProductId == item.Id)
+                                {
                             <button class="cart-count-btn btn btn-primary" onclick="CountDown(@item.Id)">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
+                            
                             <span>
-                                <input disabled
+                                   <input id="PCount-@item.Id.ToString()" disabled
                                    type="number"
-                                   style="width: 50px; border-radius: 10px" value="" />
+                                   style="width: 50px; border-radius: 10px" value="@cart.Amount" />
                             </span>
+                                
                             <button class="cart-count-btn btn btn-primary" onclick="CountUp(@item.Id)">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
+                                }
+                            }
                         </div>
                         <div style="text-align: center">
                             <span>
