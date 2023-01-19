@@ -6,7 +6,12 @@
 <script>
     function CountUp(pid) {
         $.get("@Url.Action("CountPlus","OrderProducts")?productid=" + pid, function (pcount) {
-            $("#PCount-" + pid).html(pcount);
+            $("#PCount-" + pid).val(pcount);
+        });
+    }
+    function CountDown(pid) {
+        $.get("@Url.Action("CountMinus","OrderProducts")?productid=" + pid, function (pcount) {
+            $("#PCount-" + pid).val(pcount);
         });
     }
 </script>
@@ -31,9 +36,10 @@
                         </div>
                         <div style="text-align:center">
                             <button onclick="CountUp(@item.ProductId)" class="btn btn-primary button-cart" title="Arttır" type="button">
-                                <span id="PCount-@item.ProductId.ToString()">@item.Amount</span>
-                            </button> 
-                                <input type="text" value="1">
+                            </button>
+                            <input disabled id="PCount-@item.ProductId.ToString()" type="text" value="@item.Amount"/>
+                            <button onclick="CountDown(@item.ProductId)" class="btn btn-primary button-cart" title="Arttır" type="button">
+                            </button>
                             <button class="btn btn-primary button-cart" type="button">
                                 <i class="fa fa-shopping-cart me-1">Sepeti Onayla</i>
                             </button>

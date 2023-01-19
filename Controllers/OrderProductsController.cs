@@ -224,7 +224,17 @@ namespace GibiSu.Controllers
             _context.Update(orderProduct);
             _context.SaveChanges();
             return orderProduct.Amount;
-
+        } 
+        public int CountMinus(int productid)
+        {
+            OrderProduct orderProduct = _context.OrderProducts.Where(p => p.ProductId == productid).FirstOrDefault();
+            if (orderProduct.Amount > 0)
+            {
+                orderProduct.Amount = orderProduct.Amount - 1;
+            }
+            _context.Update(orderProduct);
+            _context.SaveChanges();
+            return orderProduct.Amount;
         }
     }
 }
