@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<GibiSu.Models.OrderProduct>
-
+@using GibiSu.Data;
+@using Microsoft.EntityFrameworkCore;
+@inject ApplicationDbContext context;
 @{
     ViewData["Title"] = "Index";
+    long orderId = Model.Select(o => o.OrderId).FirstOrDefault();
 }
 <script>
     function CountUp(pid) {
@@ -43,16 +46,16 @@
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
-                        <div style="text-align: center">
-                            <span>
-                                <button class="button-card-cart btn btn-primary">
-                                    <i class="fa-solid fa-cart-shopping"></i>Sepeti Onayla
-                                </button>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>
         }
     </div>
+</div>
+<div style="text-align: center">
+    <span>
+        <button onclick="location.href='/orders/edit/@orderId'" class="button-card-cart btn btn-primary">
+            <i class="fa-solid fa-cart-shopping"></i>Sepeti Onayla
+        </button>
+    </span>
 </div>

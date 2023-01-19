@@ -57,7 +57,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: OrderProducts/Create
-        public IActionResult AddCart(int productId)
+        public IActionResult AddCart(int productId, int amount)
         {
             string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
@@ -84,7 +84,7 @@ namespace GibiSu.Controllers
                 cart.ProductId = productId;
                 cart.OrderId = newOrder.Id;
                 cart.Price = product.Price;
-                cart.Amount = 1;
+                cart.Amount = amount;
                 if (ModelState.IsValid)
                 {
                     _context.Add(cart);
@@ -92,7 +92,7 @@ namespace GibiSu.Controllers
             }
             else
             {
-                cart.Amount++;
+                cart.Amount+=amount;
             }
             cart.TotalPrice = product.Price * cart.Amount;
             newOrder.TotalPrice = newOrder.TotalPrice + product.Price;

@@ -1,27 +1,27 @@
 ﻿@model IEnumerable<GibiSu.Models.Product>
 @using GibiSu.Data;
-@using Microsoft.EntityFrameworkCore
-@inject ApplicationDbContext context
-@using System.Security.Claims;
+@using Microsoft.EntityFrameworkCore;
 @{
-    ViewData["Title"] = "Index";
-    string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    List<OrderProduct> carts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.OrderDate == null).Where(o => o.Order.UserId == userName).ToList();
-    string content;
+    ViewData["Title"] = "Index";string content;
 }
 <script>
     function SepeteEkle(id) {
-        $.get("@Url.Action("AddCart","OrderProducts")?productId=" + id);
+        var input = document.getElementById("PCount-" + id).value;
+        $.get("@Url.Action("AddCart","OrderProducts")?productId=" + id+"&amount="+ input);
     }
-    function CountUp(pid) {
-        $.get("@Url.Action("CountPlus","OrderProducts")?productid=" + pid, function (pcount) {
-            $("#PCount-" + pid).val(pcount);
-        });
+    function CountUp(pId) {
+        var input= document.getElementById("PCount-"+pId);
+        var total = 1;
+        total += parseInt(input.value);
+        document.getElementById("PCount-"+pId).value = total;
     }
-    function CountDown(pid) {
-        $.get("@Url.Action("CountMinus","OrderProducts")?productid=" + pid, function (pcount) {
-            $("#PCount-" + pid).val(pcount);
-        });
+    function CountDown(pId) {
+        var input = document.getElementById("PCount-" + pId);
+        var total = -1;
+        total += parseInt(input.value);
+        if(total > 0){
+        document.getElementById("PCount-" + pId).value = total;
+        }
     }
 </script>
 <p>
@@ -54,25 +54,16 @@
                             @content
                         </p>
                         <div style="text-align: center; margin-bottom: 10px">
-                            @foreach (var cart in carts)
-                            {
-                                @if (cart.ProductId == item.Id)
-                                {
                             <button class="cart-count-btn btn btn-primary" onclick="CountDown(@item.Id)">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
-                            
                             <span>
-                                   <input id="PCount-@item.Id.ToString()" disabled
-                                   type="number"
-                                   style="width: 50px; border-radius: 10px" value="@cart.Amount" />
+                                <input id="PCount-@item.Id.ToString()" disabled type="number" 
+                                style="width: 50px; border-radius: 10px" value="1" />
                             </span>
-                                
                             <button class="cart-count-btn btn btn-primary" onclick="CountUp(@item.Id)">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
-                                }
-                            }
                         </div>
                         <div style="text-align: center">
                             <span>
