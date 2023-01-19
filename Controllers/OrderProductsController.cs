@@ -8,14 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
 using System.Security.Claims;
-using static NuGet.Packaging.PackagingConstants;
 
 namespace GibiSu.Controllers
 {
     public class OrderProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        static int ProductCount=0;
         public OrderProductsController(ApplicationDbContext context)
         {
             _context = context;
@@ -76,7 +74,7 @@ namespace GibiSu.Controllers
                     _context.SaveChanges();
                 }
             }
-            ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
+            int ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
             OrderProduct cart = _context.OrderProducts.Where(o => o.ProductId == productId).Where(o => o.OrderId == newOrder.Id).FirstOrDefault();
             if (cart == null)
             {
