@@ -14,6 +14,8 @@ namespace GibiSu.Controllers
     public class OrderProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ApplicationUser _context2;
+
         public OrderProductsController(ApplicationDbContext context)
         {
             _context = context;
