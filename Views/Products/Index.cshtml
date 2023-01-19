@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<GibiSu.Models.Product>
+@using GibiSu.Data;
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext context
 
 @{
     ViewData["Title"] = "Index";
-
+    List<Menu> menus = context.Menus.Include(t => t.Pages).ToList();
+    List<Page> pages = context.Pages.Where(c => c.MenuId == null).ToList();
     string content;
 }
 <script>
