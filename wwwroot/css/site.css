@@ -336,3 +336,14 @@ body {
     padding-bottom: 5px;
     padding-top: 5px;
 }
+#registerForm{
+    padding-left:50px;
+    width:30%;
+}
+.logsub{
+    margin-top:15px;
+    margin-bottom:10px;
+}
+.logsub1 {
+    padding-left: 50px;
+}
