@@ -30,6 +30,7 @@ namespace GibiSu.Controllers
                 cookieOptions.Expires = DateTime.Now.AddDays(1);
                 cookieOptions.Path = "/";
                 Response.Cookies.Append("isim1", "isim2", cookieOptions);
+                
             }
             else if (a=="red")
             {
