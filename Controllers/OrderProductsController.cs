@@ -9,6 +9,7 @@ using GibiSu.Data;
 using GibiSu.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis;
 
 namespace GibiSu.Controllers
 {
@@ -110,7 +111,6 @@ namespace GibiSu.Controllers
             }
             cart.TotalPrice = product.Price * cart.Amount;
             newOrder.TotalPrice = newOrder.TotalPrice + cart.TotalPrice;
-            newOrder.OrderProducts.Add(cart);
             _context.SaveChanges();
 
             return View();
@@ -234,20 +234,27 @@ namespace GibiSu.Controllers
         }
         public int CountPlus(int productid)
         {
-            OrderProduct orderProduct = _context.OrderProducts.Where(p => p.ProductId == productid).FirstOrDefault();
-
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault(); 
+            OrderProduct orderProduct = _context.OrderProducts.Where(o=>o.OrderId== newOrder.Id).Where(p => p.ProductId == productid).FirstOrDefault();
             orderProduct.Amount = orderProduct.Amount + 1;
+            orderProduct.TotalPrice = orderProduct.Price * orderProduct.Amount;
+            newOrder.TotalPrice = newOrder.TotalPrice + orderProduct.Price * 1;
             _context.Update(orderProduct);
             _context.SaveChanges();
             return orderProduct.Amount;
         } 
         public int CountMinus(int productid)
         {
-            OrderProduct orderProduct = _context.OrderProducts.Where(p => p.ProductId == productid).FirstOrDefault();
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
+            OrderProduct orderProduct = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Where(p => p.ProductId == productid).FirstOrDefault();
             if (orderProduct.Amount > 0)
             {
                 orderProduct.Amount = orderProduct.Amount - 1;
             }
+            orderProduct.TotalPrice = orderProduct.Price * orderProduct.Amount;
+            newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.Price * 1;
             _context.Update(orderProduct);
             _context.SaveChanges();
             return orderProduct.Amount;
