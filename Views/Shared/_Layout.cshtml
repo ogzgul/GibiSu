@@ -14,14 +14,6 @@
     }
     
 }
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,9 +30,6 @@
 </head>
 
 <body onscroll="scrollX()" id="body">
-
-
-
     <div onclick="ghostt()" id="ghosttt" style="display:none; position: fixed;z-index: 9999;inset: 0px;background: rgb(85, 85, 85);opacity: 0.8;">
     </div>
     <!--Privacy Start-->
@@ -242,44 +231,37 @@
             </div>
         </div>
     </div>
-
-
-
-
-    <div id="Cookies" style=" display:block; background-color:white; width:300px; height:250px;">
-        <div>
-            <h1 onclick="kukivarmi('red')">Reddet</h1>
+    @if(ViewData["cookieExists"]==null)
+        {
+        <!--Cookie Start-->
+        <div id="cookiee" style="position: fixed; width: 100%; background: rgb(255, 255, 255); color: rgb(0, 0, 0); bottom: 0px; left: 0px; border: 0px solid transparent; padding: 1em 1em 1.25em; box-sizing: border-box; text-align: center; box-shadow: rgba(0, 0, 0, 0.1) 0px -8px 8px; font-size: 14px; z-index: 2147483601 !important;">
+            <div style="display: block; font-size: 1em; text-align: center; margin: 0px 0px 0.5em; font-family: sans-serif; font-weight: bold; color: rgb(0, 0, 0); line-height: 1.5;">
+                Bu sitedeki çerezler hakkında
+            </div>
+            <div style="display: block; margin: 0px 0px 1em; font-family: sans-serif; color: rgb(0, 0, 0); font-size: 0.85em; text-align: center; line-height: 1.5;">
+                Gibi Su ve Meşrubat San. ve Tic. A.Ş. ("Gibi") olarak biz ve iş ortaklarımız, sitemizdeki deneyiminizi iyileştirmek ve ilgi alanlarınıza uygun reklamlar göstermek için çerezleri kullanıyoruz. Kabul Et butonuna tıklamanız çerezlerin kullanımı için izin verdiğiniz anlamına gelmektedir. Daha fazla bilgi için
+                <a style="font-weight:bold;color:black" href="/kisisel-verilerin-korunmasi">
+                    Gizlilik Politikamızı
+                </a> inceleyebilirsiniz.
+                <a style="font-weight:bold;color:black" href="#">
+                    Gizlilik Ayarlarına
+                </a>
+                tıklayarak çerez tercihlerinizi değiştirebilirsiniz.
+            </div>
+            <button style="display: inline; border: 0px; background: transparent; color: rgb(0, 0, 0); padding: 1em; cursor: pointer; border-radius: 0px; font-size: 0.85em; font-family: sans-serif; margin: 0px 0px 0px 1em; text-decoration: underline;">
+                <strong onclick="kukivarmi('kabul')">Kabul Et</strong>
+            </button>
         </div>
-        <div>
-            <h1 onclick="kukivarmi('kabul')">Kabul Et</h1>
-        </div>
-    </div>
 
-
+        }
+    
     <script>
         function kukivarmi(a) {
             $.post("@Url.Action("kuki","Pages")?a="+a);
-
+            $("#cookiee").css("display", "none");
         }
     </script>
-
-
-        @*    @inject IHttpContextAccessor httpContextAccessor;
-    @{
-    if (httpContextAccessor != null)
-    {
-    CookieOptions options = new CookieOptions();
-    options.Expires = DateTime.Now.AddMonths(1);
-    options.IsEssential = true;
-    options.Path = "/";
-    httpContextAccessor.HttpContext.Response.Cookies.Append("MyCookie", "", options);
-    }
-    }
-    </div>*@
-
-
-
-
+    <!--Cookie End-->
     <script>
 
         function ghostt() {
@@ -317,7 +299,6 @@
 
             }
         }
-
         function PrivacyClose() {
             var PrivacyTop = document.getElementById("PrivacyTop");
             if (PrivacyTop.style.display != "block") {
@@ -337,8 +318,9 @@
                 barant.style.display = "block";
             }
         }
-    </script>
 
+        
+    </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
