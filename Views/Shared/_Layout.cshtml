@@ -12,16 +12,7 @@
     {
         ProductCount = ProductCount + cart.Amount;
     }
-    
 }
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,11 +27,7 @@
     <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
 
 </head>
-
 <body onscroll="scrollX()" id="body">
-
-
-
     <div onclick="ghostt()" id="ghosttt" style="display:none; position: fixed;z-index: 9999;inset: 0px;background: rgb(85, 85, 85);opacity: 0.8;">
     </div>
     <!--Privacy Start-->
@@ -147,7 +134,16 @@
                         <span class='badge badge-warning' id='lblCartCount'> @ProductCount </span>
                     }
                 </a>
-                <i style="color:white;" class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                <div class="dropdown">
+                    <button onclick="OpenSearch()" class="btn btn-primary " data-toggle="dropdown" style="background-color:transparent;">
+                        <i style="color:white; " class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <div class="dropdown-menu" id="searchmenu" style="display: none;">
+                        <label>Anahtar Kelimler</label>
+                        <input style="border-radius:3px;border: solid 1px grey;" placeholder="Ara" />
+                        <input class="sub" type="submit" value="Search" />
+                    </div>
+                </div>
                 <partial name="_LoginPartial" />
             </div>
         </nav>
@@ -335,8 +331,18 @@
 
             } else {
                 barant.style.display = "block";
-            }
+            } 
+           
         }
+         function OpenSearch() {
+            var menu = document.getElementById("searchmenu");
+                if (menu.style.display != "none") {
+                    menu.style.display = "none";
+
+            } else {
+                    menu.style.display = "block";
+            }
+         }
     </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

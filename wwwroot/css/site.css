@@ -313,3 +313,26 @@ body {
     vertical-align: top;
     margin-left: -10px;
 }
+.dropdown-menu {
+    margin-top: 5px;
+    padding: 20px;
+    right: 0px;
+}
+.dropdown-menu label {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.btn:focus {
+    box-shadow:none;
+}
+.sub {
+    margin-top: 15px;
+    background-color: #215fac;
+    color: white;
+    border: aliceblue;
+    border-radius: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
