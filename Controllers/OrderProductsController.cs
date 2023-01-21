@@ -10,6 +10,7 @@ using GibiSu.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GibiSu.Controllers
 {
@@ -67,8 +68,8 @@ namespace GibiSu.Controllers
             string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
             Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
-           
-            
+
+
             if (newOrder == null)
             {
                 ApplicationUser applicationUser = _userManager.FindByIdAsync(userName).Result;
@@ -107,10 +108,11 @@ namespace GibiSu.Controllers
             }
             else
             {
-                cart.Amount+=amount;
+                cart.Amount += amount;
             }
             cart.TotalPrice = product.Price * cart.Amount;
             newOrder.TotalPrice = newOrder.TotalPrice + cart.TotalPrice;
+            _context.Update(newOrder);
             _context.SaveChanges();
 
             return View();
@@ -209,8 +211,35 @@ namespace GibiSu.Controllers
             return View(orderProduct);
         }
 
-        // POST: OrderProducts/Delete/5
-        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteProduct(int productid, long orderid)
+        {
+            Order newOrder = _context.Orders.Where(o => o.Id == orderid).FirstOrDefault();
+            if (productid == null || orderid==null || _context.OrderProducts == null)
+            {
+                return NotFound();
+            }
+
+            var orderProduct = await _context.OrderProducts
+                .Include(o => o.Order)
+                .Include(o => o.Product).Where(o=> o.OrderId==orderid)
+                .FirstOrDefaultAsync(m => m.ProductId == productid);
+            if (orderProduct == null)
+            {
+                return NotFound();
+            }
+            if (_context.OrderProducts == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.OrderProducts'  is null.");
+            }
+            newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.TotalPrice;
+            _context.Update(newOrder);
+            _context.OrderProducts.Remove(orderProduct);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+            // POST: OrderProducts/Delete/5
+            [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -223,40 +252,42 @@ namespace GibiSu.Controllers
             {
                 _context.OrderProducts.Remove(orderProduct);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool OrderProductExists(int id)
         {
-          return _context.OrderProducts.Any(e => e.ProductId == id);
+            return _context.OrderProducts.Any(e => e.ProductId == id);
         }
         public int CountPlus(int productid)
         {
             string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault(); 
-            OrderProduct orderProduct = _context.OrderProducts.Where(o=>o.OrderId== newOrder.Id).Where(p => p.ProductId == productid).FirstOrDefault();
+            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
+            OrderProduct orderProduct = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Where(p => p.ProductId == productid).FirstOrDefault();
             orderProduct.Amount = orderProduct.Amount + 1;
             orderProduct.TotalPrice = orderProduct.Price * orderProduct.Amount;
-            newOrder.TotalPrice = newOrder.TotalPrice + orderProduct.Price * 1;
+            newOrder.TotalPrice = newOrder.TotalPrice + orderProduct.Price ;
             _context.Update(orderProduct);
+            _context.Update(newOrder);
             _context.SaveChanges();
             return orderProduct.Amount;
-        } 
+        }
         public int CountMinus(int productid)
         {
             string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
             OrderProduct orderProduct = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Where(p => p.ProductId == productid).FirstOrDefault();
-            if (orderProduct.Amount > 0)
+            if (orderProduct.Amount > 1)
             {
                 orderProduct.Amount = orderProduct.Amount - 1;
+                orderProduct.TotalPrice = orderProduct.Price * orderProduct.Amount;
+                newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.Price ;
+                _context.Update(newOrder);
+                _context.Update(orderProduct);
+                _context.SaveChanges();
             }
-            orderProduct.TotalPrice = orderProduct.Price * orderProduct.Amount;
-            newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.Price * 1;
-            _context.Update(orderProduct);
-            _context.SaveChanges();
             return orderProduct.Amount;
         }
     }
