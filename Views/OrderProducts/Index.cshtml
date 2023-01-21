@@ -5,25 +5,42 @@
     long orderId = Model.Select(o => o.OrderId).FirstOrDefault();
 }
 <script>
+    function DeleteProduct(pid, oid) {
+        $.get("@Url.Action("DeleteProduct","OrderProducts")?productid=" + pid + "&orderid=" + oid);
+        setTimeout(
+                  function() 
+                  {
+                document.location.reload();
+                  }, 0611);
+    }
     function CountUp(pid) {
         $.get("@Url.Action("CountPlus","OrderProducts")?productid=" + pid, function (pcount) {
             $("#PCount-" + pid).val(pcount);
+            setTimeout(
+                  function() 
+                  {
+                document.location.reload();
+                }, 0611);
         });
     }
     function CountDown(pid) {
         $.get("@Url.Action("CountMinus","OrderProducts")?productid=" + pid, function (pcount) {
             $("#PCount-" + pid).val(pcount);
+            setTimeout(
+                function () {
+                    document.location.reload();
+                }, 0611);
         });
     }
 </script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <h2 style="text-align:center;;color:white;">Sepetim</h2>
 
 <div class="container my-4">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         @foreach (var item in Model)
         {
-            <div class="col">
+            <div id="PCard-@item.ProductId.ToString()" class="col">
                 <div class="product-card card shadow">
                     <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Product.Image)' class="card-img-top" />
                     <div class="card-body mt-2">
@@ -43,6 +60,13 @@
                             <button class="cart-count-btn btn btn-primary" onclick="CountUp(@item.ProductId)">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
+                        </div>
+                        <div style="text-align: center">
+                            <span>
+                                <button onclick="DeleteProduct(@item.ProductId,@item.OrderId)" class="cart-count-btn btn btn-primary">
+                                    <i style="font-size:24px" class="fa fa-trash-o"></i>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>
