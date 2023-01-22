@@ -213,6 +213,33 @@ namespace GibiSu.Controllers
 
         public async Task<IActionResult> DeleteProduct(int productid, long orderid)
         {
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
+            if (productid == null || orderid==null || _context.OrderProducts == null)
+            {
+                return NotFound();
+            }
+
+            var orderProduct = await _context.OrderProducts
+                .Include(o => o.Order)
+                .Include(o => o.Product).Where(o=> o.OrderId==orderid)
+                .FirstOrDefaultAsync(m => m.ProductId == productid);
+            if (orderProduct == null)
+            {
+                return NotFound();
+            }
+            if (_context.OrderProducts == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.OrderProducts'  is null.");
+            }
+            newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.TotalPrice;
+            _context.OrderProducts.Remove(orderProduct);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> DeleteProduct(int productid, long orderid)
+        {
             Order newOrder = _context.Orders.Where(o => o.Id == orderid).FirstOrDefault();
             if (productid == null || orderid==null || _context.OrderProducts == null)
             {
