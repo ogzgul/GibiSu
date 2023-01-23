@@ -237,34 +237,6 @@ namespace GibiSu.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        public async Task<IActionResult> DeleteProduct(int productid, long orderid)
-        {
-            Order newOrder = _context.Orders.Where(o => o.Id == orderid).FirstOrDefault();
-            if (productid == null || orderid==null || _context.OrderProducts == null)
-            {
-                return NotFound();
-            }
-
-            var orderProduct = await _context.OrderProducts
-                .Include(o => o.Order)
-                .Include(o => o.Product).Where(o=> o.OrderId==orderid)
-                .FirstOrDefaultAsync(m => m.ProductId == productid);
-            if (orderProduct == null)
-            {
-                return NotFound();
-            }
-            if (_context.OrderProducts == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.OrderProducts'  is null.");
-            }
-            newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.TotalPrice;
-            _context.Update(newOrder);
-            _context.OrderProducts.Remove(orderProduct);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-
             // POST: OrderProducts/Delete/5
             [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
