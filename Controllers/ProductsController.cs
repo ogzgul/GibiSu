@@ -23,9 +23,16 @@ namespace GibiSu.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.Products.ToListAsync());
+            ViewData["Search"] = search;
+            var urun = from b in _context.Products
+                       select b;
+            if (!String.IsNullOrEmpty(search))
+            {
+                urun = urun.Where(x => x.Name.Contains(search));
+            }
+            return View(urun);
         }
 
         // GET: Products/Details/5
