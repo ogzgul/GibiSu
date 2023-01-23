@@ -1,10 +1,14 @@
 ﻿@model IEnumerable<GibiSu.Models.Order>
+@using Microsoft.EntityFrameworkCore;
+@using GibiSu.Data;
+@inject ApplicationDbContext context;
+@using System.Security.Claims;
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Siparişlerim</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,6 +16,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Ürünler
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderDate)
             </th>
@@ -36,6 +43,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderProducts)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OrderDate)
             </td>
