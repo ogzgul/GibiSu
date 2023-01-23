@@ -66,7 +66,7 @@ namespace GibiSu.Controllers
         public IActionResult AddCart(int productId, int amount)
         {
             string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
+            Order newOrder = _context.Orders.Include(o=> o.OrderProducts).Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
             Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
 
             if (newOrder == null)
@@ -85,33 +85,26 @@ namespace GibiSu.Controllers
                     newOrder.PhoneNumber = applicationUser.PhoneNumber;
                 }
                 newOrder.UserId = userName;
-                if (ModelState.IsValid)
-                {
-                    _context.Add(newOrder);
-                    _context.SaveChanges();
-                }
+                newOrder.OrderProducts = new List<OrderProduct>();
+                _context.Add(newOrder);
             }
-            //int ProductCount = _context.OrderProducts.Where(o => o.OrderId == newOrder.Id).Count();
-            OrderProduct cart = _context.OrderProducts.Where(o => o.ProductId == productId).Where(o => o.OrderId == newOrder.Id).FirstOrDefault();
-            if (cart == null)
+            OrderProduct orderProduct = newOrder.OrderProducts.Where(o => o.ProductId == productId).FirstOrDefault();
+            if (orderProduct == null)
             {
-                cart = new OrderProduct();
-                cart.ProductId = productId;
-                cart.OrderId = newOrder.Id;
-                cart.Price = product.Price;
-                cart.Amount = amount;
-                newOrder.TotalPrice = newOrder.TotalPrice + product.Price * cart.Amount;
-                if (ModelState.IsValid)
-                {
-                    _context.Add(cart);
-                }
+                orderProduct = new OrderProduct();
+                orderProduct.ProductId = productId;
+                orderProduct.OrderId = newOrder.Id;
+                orderProduct.Price = product.Price;
+                orderProduct.Amount = amount;
+                newOrder.TotalPrice = newOrder.TotalPrice + product.Price * orderProduct.Amount;
+                newOrder.OrderProducts.Add(orderProduct);
             }
             else
             {
                 newOrder.TotalPrice = newOrder.TotalPrice + product.Price * amount;
-                cart.Amount += amount;
+                orderProduct.Amount += amount;
             }
-            cart.TotalPrice = product.Price * cart.Amount;
+            orderProduct.TotalPrice = product.Price * orderProduct.Amount;
             _context.SaveChanges();
 
             return View();
@@ -231,6 +224,7 @@ namespace GibiSu.Controllers
                 return Problem("Entity set 'ApplicationDbContext.OrderProducts'  is null.");
             }
             newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.TotalPrice;
+            newOrder.OrderProducts.Remove(orderProduct);
             _context.OrderProducts.Remove(orderProduct);
             _context.SaveChanges();
             return View();
