@@ -18,6 +18,8 @@
     {
         askCookie = true;
     }
+    DateTime dt = DateTime.Now;
+    string year = dt.Year.ToString();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -209,7 +211,7 @@
             </div>
             <!-- Copyright -->
             <div class="text-end p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                © 2020 Copyright:
+                © @year Copyright:
                 <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
             <!-- Copyright -->
