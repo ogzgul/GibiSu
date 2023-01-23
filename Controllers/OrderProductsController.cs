@@ -69,7 +69,6 @@ namespace GibiSu.Controllers
             Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
             Product product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
 
-
             if (newOrder == null)
             {
                 ApplicationUser applicationUser = _userManager.FindByIdAsync(userName).Result;
@@ -101,6 +100,7 @@ namespace GibiSu.Controllers
                 cart.OrderId = newOrder.Id;
                 cart.Price = product.Price;
                 cart.Amount = amount;
+                newOrder.TotalPrice = newOrder.TotalPrice + product.Price * cart.Amount;
                 if (ModelState.IsValid)
                 {
                     _context.Add(cart);
@@ -108,11 +108,10 @@ namespace GibiSu.Controllers
             }
             else
             {
+                newOrder.TotalPrice = newOrder.TotalPrice + product.Price * amount;
                 cart.Amount += amount;
             }
             cart.TotalPrice = product.Price * cart.Amount;
-            newOrder.TotalPrice = newOrder.TotalPrice + cart.TotalPrice;
-            _context.Update(newOrder);
             _context.SaveChanges();
 
             return View();
@@ -213,33 +212,6 @@ namespace GibiSu.Controllers
 
         public async Task<IActionResult> DeleteProduct(int productid, long orderid)
         {
-            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Order newOrder = _context.Orders.Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
-            if (productid == null || orderid==null || _context.OrderProducts == null)
-            {
-                return NotFound();
-            }
-
-            var orderProduct = await _context.OrderProducts
-                .Include(o => o.Order)
-                .Include(o => o.Product).Where(o=> o.OrderId==orderid)
-                .FirstOrDefaultAsync(m => m.ProductId == productid);
-            if (orderProduct == null)
-            {
-                return NotFound();
-            }
-            if (_context.OrderProducts == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.OrderProducts'  is null.");
-            }
-            newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.TotalPrice;
-            _context.OrderProducts.Remove(orderProduct);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> DeleteProduct(int productid, long orderid)
-        {
             Order newOrder = _context.Orders.Where(o => o.Id == orderid).FirstOrDefault();
             if (productid == null || orderid==null || _context.OrderProducts == null)
             {
@@ -259,10 +231,9 @@ namespace GibiSu.Controllers
                 return Problem("Entity set 'ApplicationDbContext.OrderProducts'  is null.");
             }
             newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.TotalPrice;
-            _context.Update(newOrder);
             _context.OrderProducts.Remove(orderProduct);
             _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
             // POST: OrderProducts/Delete/5
@@ -296,8 +267,6 @@ namespace GibiSu.Controllers
             orderProduct.Amount = orderProduct.Amount + 1;
             orderProduct.TotalPrice = orderProduct.Price * orderProduct.Amount;
             newOrder.TotalPrice = newOrder.TotalPrice + orderProduct.Price ;
-            _context.Update(orderProduct);
-            _context.Update(newOrder);
             _context.SaveChanges();
             return orderProduct.Amount;
         }
@@ -311,8 +280,6 @@ namespace GibiSu.Controllers
                 orderProduct.Amount = orderProduct.Amount - 1;
                 orderProduct.TotalPrice = orderProduct.Price * orderProduct.Amount;
                 newOrder.TotalPrice = newOrder.TotalPrice - orderProduct.Price ;
-                _context.Update(newOrder);
-                _context.Update(orderProduct);
                 _context.SaveChanges();
             }
             return orderProduct.Amount;
