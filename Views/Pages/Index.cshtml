@@ -4,7 +4,9 @@
     ViewData["Title"] = "Home Page";
     List<Content> contents = Model.Contents.OrderBy(c => c.Order).ToList();
 }
-
+<head>
+    <title>Gibi Doğal Kaynak Suyu | Doğanın İyiliği ve Canlılığı</title>
+</head>
 <div>
      @if (Model.Banner != null){
     <img class="responsive" loading="lazy" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)">

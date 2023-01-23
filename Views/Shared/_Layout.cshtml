@@ -37,7 +37,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GibiSu</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GibiSu.styles.css" asp-append-version="true" />
@@ -141,13 +140,17 @@
                         }
                         @foreach (Page pageis in pages)
                         {
-                            <li class="nav-item">
-                                <a href="/@pageis.Url" class="nav-link text-dark">@pageis.Title</a>
-                            </li>
+                            @if (pageis.Title.Trim() != "Ana Sayfa")
+                            {
+                                <li class="nav-item">
+                                    <a href="/@pageis.Url" class="nav-link text-dark">@pageis.Title</a>
+                                 </li>
+                            }
                         }
                     </ul>
                 </div>
                 <a style="margin-right:15px; text-decoration-line:none;" href="/products">Ürünlerimiz</a>
+                <a style="margin-right:15px; text-decoration-line:none;" href="/orders">Siparişlerim</a>
                 <a style="margin-right:15px; text-decoration-line:none;" href="/orderproducts">
                     
                         <i class="fa " style="font-size:20px">&#xf07a;</i>

@@ -24,7 +24,8 @@ namespace GibiSu.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Orders.Include(o => o.User);
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationDbContext = _context.Orders.Include(o => o.User).Include(o=>o.OrderProducts).Where(o => o.UserId == userName);
             return View(await applicationDbContext.ToListAsync());
         }
 

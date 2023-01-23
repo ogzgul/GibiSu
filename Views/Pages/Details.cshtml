@@ -5,7 +5,14 @@
     ViewData["Title"] = "Details";
     List<Content> contents = Model.Contents.OrderBy(c=> c.Order).ToList();
 }
-
+<html>
+<head>
+    @if (Model.Title != "Ana Sayfa")
+    {
+        <title>@Model.Title - Fuji Dağının Zirvesinden | Gibi Su</title>
+    }
+</head>
+<body>
 <div>
     <div class="Banner container-fluid">
         @if (Model.Banner != null){
@@ -54,3 +61,5 @@
         </div>
     }
 </div>
+</body>
+</html>
