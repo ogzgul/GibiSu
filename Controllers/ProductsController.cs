@@ -30,7 +30,7 @@ namespace GibiSu.Controllers
                        select b;
             if (!String.IsNullOrEmpty(search))
             {
-                urun = urun.Where(x => x.Name.Contains(search) || x.Volume.ToString().Contains(search));
+                urun = urun.Where(x => x.Name.Contains(search) || x.Volume.ToString().Contains(search) || x.Price.ToString().Contains(search));
             }
             return View(urun);
         }
