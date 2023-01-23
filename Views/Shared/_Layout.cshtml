@@ -21,6 +21,17 @@
     DateTime dt = DateTime.Now;
     string year = dt.Year.ToString();
 }
+<!--Title Start-->
+<script>
+        let docTitle = document.title;
+        window.addEventListener("blur", () => {
+            document.title = "Come back :(";
+        })
+        window.addEventListener("focus", () => {
+            document.title = docTitle;
+        })
+</script>
+<!--Title End-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +47,8 @@
 
 </head>
 <body onscroll="scrollX()" id="body">
+  
+   
     <div onclick="ghostt()" id="ghosttt" style="display:none; position: fixed;z-index: 9999;inset: 0px;background: rgb(85, 85, 85);opacity: 0.8;">
     </div>
     <!--Privacy Start-->
@@ -276,9 +289,6 @@
             $.post("@Url.Action("kuki","Pages")?a="+a);
             $("#cookiee").css("display", "none");
         }
-
-       
-
     </script>
     <!--Cookie End-->
     <script>
