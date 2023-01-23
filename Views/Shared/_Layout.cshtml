@@ -2,6 +2,7 @@
 @using Microsoft.EntityFrameworkCore
 @inject ApplicationDbContext context
 @using System.Security.Claims;
+@inject IHttpContextAccessor Httpcontext
 @{
     List<Menu> menus = context.Menus.Include(t => t.Pages).ToList();
     List<Page> pages = context.Pages.Where(c => c.MenuId == null).ToList();
@@ -12,6 +13,13 @@
     {
         ProductCount = ProductCount + cart.Amount;
     }
+    bool askCookie = false;
+    if (Httpcontext.HttpContext.Request.Cookies["isim1"] == null)
+    {
+        askCookie = true;
+    }
+    DateTime dt = DateTime.Now;
+    string year = dt.Year.ToString();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -203,7 +211,7 @@
             </div>
             <!-- Copyright -->
             <div class="text-end p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                © 2020 Copyright:
+                © @year Copyright:
                 <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
             <!-- Copyright -->
@@ -239,8 +247,8 @@
             </div>
         </div>
     </div>
-    @if(ViewData["cookieExists"]==null)
-        {
+        @if (askCookie==true)
+    {
         <!--Cookie Start-->
         <div id="cookiee" style="position: fixed; width: 100%; background: rgb(255, 255, 255); color: rgb(0, 0, 0); bottom: 0px; left: 0px; border: 0px solid transparent; padding: 1em 1em 1.25em; box-sizing: border-box; text-align: center; box-shadow: rgba(0, 0, 0, 0.1) 0px -8px 8px; font-size: 14px; z-index: 2147483601 !important;">
             <div style="display: block; font-size: 1em; text-align: center; margin: 0px 0px 0.5em; font-family: sans-serif; font-weight: bold; color: rgb(0, 0, 0); line-height: 1.5;">
@@ -268,6 +276,9 @@
             $.post("@Url.Action("kuki","Pages")?a="+a);
             $("#cookiee").css("display", "none");
         }
+
+       
+
     </script>
     <!--Cookie End-->
     <script>

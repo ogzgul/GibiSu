@@ -18,10 +18,7 @@ namespace GibiSu.Controllers
         {
             _context = context;
         }
-
         // GET: Pages
-
-
         public void kuki(string a)
         {
             if (a=="kabul")
@@ -30,13 +27,12 @@ namespace GibiSu.Controllers
                 cookieOptions.Expires = DateTime.Now.AddDays(1);
                 cookieOptions.Path = "/";
                 Response.Cookies.Append("isim1", "isim2", cookieOptions);
-                
             }
             else if (a=="red")
             {
-                
             }
         }
+
     public async Task<IActionResult> Index()
     {
         var applicationDbContext = _context.Pages.Include(p => p.Menu);
@@ -49,6 +45,8 @@ namespace GibiSu.Controllers
         var applicationDbContext = _context.Pages.Include(p => p.Menu);
         return View(await applicationDbContext.ToListAsync());
     }
+
+  
 
     // GET: Pages/Details/5
     public async Task<IActionResult> Details(string id)
