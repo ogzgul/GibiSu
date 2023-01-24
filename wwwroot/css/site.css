@@ -314,9 +314,9 @@ body {
     margin-left: -10px;
 }
 .dropdown-menu {
-    margin-top: 5px;
+    margin-top: 20px;
     padding: 20px;
-    right: 0px;
+    right: 13px;
 }
 .dropdown-menu label {
     display: inline-block;
@@ -348,18 +348,17 @@ body {
     padding-left: 50px;
 }
 .dropdown {
-    position:relative;/*
-    margin-bottom: -15px;*/
+    position:relative;
 }
 
 .dropdown-menu {
-    background-color: #dddddd;
+    background-color: #fff;
 }
 
     .dropdown-menu a {
         color: #09193a!important;
     }
-    margin-bottom: -15px;
+    
 }
 .order-header-info {
     display: flex;
