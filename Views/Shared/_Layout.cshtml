@@ -23,14 +23,7 @@
 }
 <!--Title Start-->
 <script>
-        let docTitle = document.title;
-        window.addEventListener("blur", () => {
-            document.title = "Come back :(";
-        })
-        window.addEventListener("focus", () => {
-            document.title = docTitle;
-        });
-
+        
     function mybtn(ID) {
 
         var toggle = ID + "-list";
@@ -322,6 +315,13 @@
     </script>
     <!--Cookie End-->
     <script>
+        let docTitle = document.title;
+        window.addEventListener("blur", () => {
+            document.title = "Come back :(";
+        })
+        window.addEventListener("focus", () => {
+            document.title = docTitle;
+        });
 
         function ghostt() {
             var ghost = document.getElementById("ghosttt");
