@@ -262,10 +262,10 @@ body {
 }
 
 .card-img-top {
-    height: 250px;
+    /*height: 250px;
     width: auto;
-    max-width: 100%;
-    object-fit: fill;
+    max-width: 100%;*/
+   /*object-fit: fill;*/
     border-radius: 30px 30px 10px 10px;
 }
 
