@@ -11,12 +11,11 @@
     var orderProducts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.UserId == userName);
 }
 
-<h1>Siparişlerim</h1>
-
+<h1 style="text-align:center;color:white;margin-bottom:50px;">Siparişlerim</h1>
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th style="text-align:center;">
                 @Html.DisplayNameFor(model => model.OrderDate)
             </th>
             <th>
@@ -40,7 +39,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            <td style="text-align:center;">
                 @Html.DisplayFor(modelItem => item.OrderDate)
             </td>
             <td>

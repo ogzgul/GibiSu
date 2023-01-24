@@ -29,7 +29,27 @@
         })
         window.addEventListener("focus", () => {
             document.title = docTitle;
-        })
+        });
+
+    function mybtn(ID) {
+
+        var toggle = ID + "-list";
+
+        var y = document.getElementById(toggle);
+        if (y.style.display != "none") {
+            y.style.display = "none";
+        } else {
+            $(".boxclose").css("display", "none");
+            y.style.display = "block";
+        }
+
+        $("*").click(function (event) {
+            if (!$(event.target).is(".box")) {
+
+                return y.style.display = "none";
+            }
+        });
+    }
 </script>
 <!--Title End-->
 <!DOCTYPE html>
@@ -109,7 +129,7 @@
 
     </div>
     <header class="fixed-top">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
+        <nav id="navbar-main" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid ">
                 <a onclick="Barant()" class="navbar-brand py-1" @*asp-area="" asp-controller="Home" asp-action="Index"*@> <img width="60" src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt=""> </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -120,18 +140,23 @@
                     <ul class="navbar-nav flex-grow-1 justify-content-center">
                         @foreach (Menu menu in menus)
                         {
-                            <li class="nav-item" style="display:relative">
+                            <li class="nav-item menu-item--expanded dropdown">
                                 @if (menu.Name.Trim() != "footer")
                                 {
-                                    <a class="box nav-link text-dark dropdown-toggle nav-link ">
+                                    <a id="topMenu-@menu.Id.ToString()" class="box nav-link text-dark dropdown-toggle nav-link" onclick="mybtn(this.id)">
                                         @menu.Name.Trim()
                                     </a>
                                 }
 
-                                <ul style="display:none">
+                                <ul class="dropdown-menu show boxclose" id="topMenu-@menu.Id.ToString()-list" style="display:none; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 33px);">
                                     @foreach (Page pageis in menu.Pages)
                                     {
-                                        <li><a href="/@pageis.Url">@pageis.Title</a></li>
+                                        <li class="boxclosee dropdown-item" style="padding:0;">
+                                            @if (menu.Name.Trim() != "footer")
+                                            {
+                                                <a style="text-decoration:none;" href="/@pageis.Url">@pageis.Title</a>
+                                            }
+                                        </li>
                                     }
 
                                 </ul>

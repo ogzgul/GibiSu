@@ -348,5 +348,14 @@ body {
     padding-left: 50px;
 }
 .dropdown {
-    margin-bottom: -15px;
+    position:relative;/*
+    margin-bottom: -15px;*/
 }
+
+.dropdown-menu {
+    background-color: #dddddd;
+}
+
+    .dropdown-menu a {
+        color: #09193a!important;
+    }
