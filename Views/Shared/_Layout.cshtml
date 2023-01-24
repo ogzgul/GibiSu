@@ -23,13 +23,26 @@
 }
 <!--Title Start-->
 <script>
-        let docTitle = document.title;
-        window.addEventListener("blur", () => {
-            document.title = "Come back :(";
-        })
-        window.addEventListener("focus", () => {
-            document.title = docTitle;
-        })
+        
+    function mybtn(ID) {
+
+        var toggle = ID + "-list";
+
+        var y = document.getElementById(toggle);
+        if (y.style.display != "none") {
+            y.style.display = "none";
+        } else {
+            $(".boxclose").css("display", "none");
+            y.style.display = "block";
+        }
+
+        $("*").click(function (event) {
+            if (!$(event.target).is(".box")) {
+
+                return y.style.display = "none";
+            }
+        });
+    }
 </script>
 <!--Title End-->
 <!DOCTYPE html>
@@ -43,7 +56,7 @@
     <link rel="icon" sizes="16x16" href="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" />
     <link href="~/font-awesome/css/all.css" rel="stylesheet" />
     <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
-
+    <title>@ViewData["Title"]</title>
 </head>
 <body onscroll="scrollX()" id="body">
   
@@ -109,7 +122,7 @@
 
     </div>
     <header class="fixed-top">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
+        <nav id="navbar-main" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid ">
                 <a onclick="Barant()" class="navbar-brand py-1" @*asp-area="" asp-controller="Home" asp-action="Index"*@> <img width="60" src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt=""> </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -120,18 +133,23 @@
                     <ul class="navbar-nav flex-grow-1 justify-content-center">
                         @foreach (Menu menu in menus)
                         {
-                            <li class="nav-item" style="display:relative">
+                            <li class="nav-item menu-item--expanded dropdown">
                                 @if (menu.Name.Trim() != "footer")
                                 {
-                                    <a class="box nav-link text-dark dropdown-toggle nav-link ">
+                                    <a id="topMenu-@menu.Id.ToString()" class="box nav-link text-dark dropdown-toggle nav-link" onclick="mybtn(this.id)">
                                         @menu.Name.Trim()
                                     </a>
                                 }
 
-                                <ul style="display:none">
+                                <ul class="dropdown-menu show boxclose" id="topMenu-@menu.Id.ToString()-list" style="display:none; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 33px);">
                                     @foreach (Page pageis in menu.Pages)
                                     {
-                                        <li><a href="/@pageis.Url">@pageis.Title</a></li>
+                                        <li class="boxclosee dropdown-item" style="padding:0;">
+                                            @if (menu.Name.Trim() != "footer")
+                                            {
+                                                <a style="text-decoration:none;" href="/@pageis.Url">@pageis.Title</a>
+                                            }
+                                        </li>
                                     }
 
                                 </ul>
@@ -149,9 +167,9 @@
                         }
                     </ul>
                 </div>
-                <a style="margin-right:15px; text-decoration-line:none;" href="/products">Ürünlerimiz</a>
-                <a style="margin-right:15px; text-decoration-line:none;" href="/orders">Siparişlerim</a>
-                <a style="margin-right:15px; text-decoration-line:none;" href="/orderproducts">
+                <a style="margin-right:15px; text-decoration-line:none;" href="/urunlerimiz">Ürünlerimiz</a>
+                <a style="margin-right:15px; text-decoration-line:none;" href="/siparislerim">Siparişlerim</a>
+                <a style="margin-right:15px; text-decoration-line:none;" href="/sepetim">
                     
                         <i class="fa " style="font-size:20px">&#xf07a;</i>
                     @if (ProductCount != 0)
@@ -297,6 +315,13 @@
     </script>
     <!--Cookie End-->
     <script>
+        let docTitle = document.title;
+        window.addEventListener("blur", () => {
+            document.title = "Come back :(";
+        })
+        window.addEventListener("focus", () => {
+            document.title = docTitle;
+        });
 
         function ghostt() {
             var ghost = document.getElementById("ghosttt");

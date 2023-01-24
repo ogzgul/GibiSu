@@ -348,6 +348,17 @@ body {
     padding-left: 50px;
 }
 .dropdown {
+    position:relative;/*
+    margin-bottom: -15px;*/
+}
+
+.dropdown-menu {
+    background-color: #dddddd;
+}
+
+    .dropdown-menu a {
+        color: #09193a!important;
+    }
     margin-bottom: -15px;
 }
 .order-header-info {
