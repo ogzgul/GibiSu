@@ -353,6 +353,8 @@ body {
 
 .dropdown-menu {
     background-color: #fff;
+    padding-right: 40px;
+    padding-left: 40px;
 }
 
     .dropdown-menu a {
