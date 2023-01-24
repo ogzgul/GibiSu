@@ -136,7 +136,7 @@
                             <li class="nav-item menu-item--expanded dropdown">
                                 @if (menu.Name.Trim() != "footer")
                                 {
-                                    <a id="topMenu-@menu.Id.ToString()" class="box nav-link text-dark dropdown-toggle nav-link" onclick="mybtn(this.id)">
+                                    <a style="cursor:pointer;" id="topMenu-@menu.Id.ToString()" class="box nav-link text-dark dropdown-toggle nav-link" onclick="mybtn(this.id)">
                                         @menu.Name.Trim()
                                     </a>
                                 }
