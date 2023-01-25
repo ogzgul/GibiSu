@@ -255,17 +255,18 @@ body {
 }
 
 .product-card {
-    max-width: 300px;
+    max-width: 400px;
+    height:600px;
     border: none;
     border-radius: 30px;
     margin-bottom: 15px;
 }
 
 .card-img-top {
-    height: 250px;
+    /*height: 250px;
     width: auto;
-    max-width: 100%;
-    object-fit: fill;
+    max-width: 100%;*/
+   /*object-fit: fill;*/
     border-radius: 30px 30px 10px 10px;
 }
 
@@ -286,8 +287,15 @@ body {
     color: rgb(7, 91, 181);
     font-size: 20px;
     font-weight: 600;
+    margin-bottom: 25px;
 }
-
+.product-cart-count {
+    position: absolute;
+    top: 500px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
 .cart-count-btn {
     border-radius: 50px;
     font-size: 10px;
@@ -314,9 +322,9 @@ body {
     margin-left: -10px;
 }
 .dropdown-menu {
-    margin-top: 5px;
+    margin-top: 20px;
     padding: 20px;
-    right: 0px;
+    right: 13px;
 }
 .dropdown-menu label {
     display: inline-block;
@@ -348,5 +356,64 @@ body {
     padding-left: 50px;
 }
 .dropdown {
-    margin-bottom: -15px;
+    position:relative;
+}
+
+.dropdown-menu {
+    background-color: #fff;
+    padding-right: 40px;
+    padding-left: 40px;
+}
+
+    .dropdown-menu a {
+        color: #09193a !important;
+        padding:10px;
+    }
+.dropdownitem {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    color: #212529;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+}
+.dropdown-menu a:hover {
+    background-color: #215fac;
+    color: white !important;
+}
+.order-header-info {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.order-header{
+    display:flex;
+    border-bottom:solid 1px #e2e2e2;
+    border-radius:3px 3px 0 0;
+    background-color:#fafafa;
+    padding-top:20px;
+    padding-bottom:5px;
+    justify-content:space-evenly;
+   
+}
+.order-header-info  b{
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    color:#333;
+    width:100%;
+    font-weight:400;
+    padding-left:0;
+}
+.order {
+    border: 1px solid #e2e2e2;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-top:none;
+
 }

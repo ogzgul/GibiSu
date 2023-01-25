@@ -37,13 +37,13 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 card-row">
         @foreach (var item in Model)
         {
-            if (item.Description.Length<200)
+            if (item.Description.Length<100)
             {
                  content = item.Description;
             }
             else
             {
-                 content = item.Description.Substring(0, 200)+ "...";
+                 content = item.Description.Substring(0, 100)+ "...";
             }
        
             <div class="col">
@@ -53,31 +53,36 @@
                         <div style="text-align: center" class="product-card-title">
                             @item.Name
                         </div>
-                        <div class="product-card-price">@item.Price TL</div>
+                        <div class="product-card-price">
+                            @item.Price TL
+                        </div>
 
                         <p style="margin-top: 10px; text-align: center">
                             @content
                         </p>
-                        <div style="text-align: center; margin-bottom: 10px">
-                            <button class="cart-count-btn btn btn-primary" onclick="CountDown(@item.Id)">
-                                <i class="fa-solid fa-minus"></i>
-                            </button>
-                            <span>
-                                <input id="PCount-@item.Id.ToString()" disabled type="number" 
-                                style="width: 50px; border-radius: 10px" value="1" />
-                            </span>
-                            <button class="cart-count-btn btn btn-primary" onclick="CountUp(@item.Id)">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                        <div style="text-align: center">
-                            <span>
-                                <button class="button-card-cart btn btn-primary" onclick="SepeteEkle(@item.Id)">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                    Sepete Ekle
+                        <div class="product-cart-count">
+                            <div style="text-align: center; margin-bottom: 10px">
+                                <button class="cart-count-btn btn btn-primary" onclick="CountDown(@item.Id)">
+                                    <i class="fa-solid fa-minus"></i>
                                 </button>
-                            </span>
+                                <span>
+                                    <input id="PCount-@item.Id.ToString()" disabled type="number"
+                                       style="width: 50px; border-radius: 10px" value="1" />
+                                </span>
+                                <button class="cart-count-btn btn btn-primary" onclick="CountUp(@item.Id)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                            <div style="text-align: center">
+                                <span>
+                                    <button class="button-card-cart btn btn-primary" onclick="SepeteEkle(@item.Id)">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                        Sepete Ekle
+                                    </button>
+                                </span>
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

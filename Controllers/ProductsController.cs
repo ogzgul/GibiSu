@@ -7,12 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
+using System.IO;
+using System.Drawing;
 
 namespace GibiSu.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        System.Drawing.Imaging.EncoderParameter qualityParameter;
+        System.Drawing.Imaging.ImageCodecInfo[] allCoDecs;
+        System.Drawing.Imaging.EncoderParameters encoderParameters;
+        System.Drawing.Imaging.ImageCodecInfo jPEGCodec;
+        String basePath;
+        System.Drawing.Image streamImage;
+        System.Drawing.Image bLogImage;
 
         public ProductsController(ApplicationDbContext context)
         {
@@ -66,21 +75,35 @@ namespace GibiSu.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,IsInactive,Volume,Material,FormImage")] Product product)
         {
-            MemoryStream memoryStream;
-            ModelState.Remove("Image");
-            if (ModelState.IsValid)
+            qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+            allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+            encoderParameters = new System.Drawing.Imaging.EncoderParameters(1);
+            foreach (System.Drawing.Imaging.ImageCodecInfo coDec in allCoDecs)
             {
-                if (product.FormImage != null)
+                if (coDec.FormatDescription == "JPEG")
                 {
-                    memoryStream = new MemoryStream();
-                    product.FormImage.CopyTo(memoryStream);
-                    product.Image = memoryStream.ToArray();
-
+                    jPEGCodec = coDec;
                 }
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
+            MemoryStream memoryStream =  new MemoryStream(); 
+            encoderParameters.Param[0] = qualityParameter;
+            if (product.FormImage != null)
+            {
+                product.FormImage.CopyTo(memoryStream);
+                streamImage = System.Drawing.Image.FromStream(memoryStream);
+                bLogImage = ReSize(streamImage, 300, 250);
+                ImageConverter _imageConverter = new ImageConverter();
+                byte[] xByte = (byte[])_imageConverter.ConvertTo(bLogImage, typeof(byte[]));
+                ModelState.Remove("Image");
+                if (ModelState.IsValid)
+                {
+                    product.Image = xByte;
+                    _context.Add(product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            
             return View(product);
         }
 
@@ -175,6 +198,37 @@ namespace GibiSu.Controllers
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
+        }
+        private System.Drawing.Image ReSize(System.Drawing.Image originalImage, int newWidth, int newHeight)
+        {
+            System.Drawing.Graphics graphicsHandle;
+            double targetRatio = (double)newWidth / (double)newHeight;
+            double newRatio = (double)originalImage.Width / (double)originalImage.Height;
+            int targetWidth = newWidth;
+            int targetHeight = newHeight;
+            int newOriginX = 0;
+            int newOriginY = 0;
+            System.Drawing.Image newImage = new System.Drawing.Bitmap(newWidth, newHeight);
+
+            if (newRatio > targetRatio)
+            {
+                targetWidth = (int)(originalImage.Width / ((double)originalImage.Height / newHeight));
+                newOriginX = (newWidth - targetWidth) / 2;
+            }
+            else
+            {
+                if (newRatio < targetRatio)
+                {
+                    targetHeight = (int)(originalImage.Height / ((double)originalImage.Width / newWidth));
+                    newOriginY = (newHeight - targetHeight) / 2;
+                }
+            }
+            graphicsHandle = System.Drawing.Graphics.FromImage(newImage);
+            graphicsHandle.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            graphicsHandle.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            graphicsHandle.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphicsHandle.DrawImage(originalImage, newOriginX, newOriginY, targetWidth, targetHeight);
+            return newImage;
         }
     }
 }

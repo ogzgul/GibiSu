@@ -1,12 +1,9 @@
 ﻿@model GibiSu.Models.Page
 @using Microsoft.EntityFrameworkCore
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Gibi Doğal Kaynak Suyu | Doğanın İyiliği ve Canlılığı";
     List<Content> contents = Model.Contents.OrderBy(c => c.Order).ToList();
 }
-<head>
-    <title>Gibi Doğal Kaynak Suyu | Doğanın İyiliği ve Canlılığı</title>
-</head>
 <div>
      @if (Model.Banner != null){
     <img class="responsive" loading="lazy" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)">
@@ -68,7 +65,7 @@
                         </p>
                     </div>
                 }
-                <div><a href="/neden-erikli" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
+                <div><a href="/neden-gibi" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
             </div>
         }
     </div>

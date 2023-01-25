@@ -50,6 +50,24 @@ namespace GibiSu
             app.UseAuthorization();
 
             app.MapControllerRoute(
+                name: "products",
+                pattern: "/urunlerimiz",
+                defaults: new { controller = "Products", action = "Index" });
+            app.MapRazorPages();
+
+            app.MapControllerRoute(
+                name: "orders",
+                pattern: "/siparislerim",
+                defaults: new { controller = "Orders", action = "Index" });
+            app.MapRazorPages();
+
+            app.MapControllerRoute(
+                name: "orderProducts",
+                pattern: "/sepetim",
+                defaults: new { controller = "OrderProducts", action = "Index" });
+            app.MapRazorPages();
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Pages}/{action=Index}/{id?}");
             app.MapControllerRoute(
