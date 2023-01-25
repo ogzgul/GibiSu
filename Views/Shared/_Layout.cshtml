@@ -136,7 +136,7 @@
                             <li class="nav-item menu-item--expanded dropdown">
                                 @if (menu.Name.Trim() != "footer")
                                 {
-                                    <a id="topMenu-@menu.Id.ToString()" class="box nav-link text-dark dropdown-toggle nav-link" onclick="mybtn(this.id)">
+                                    <a style="cursor:pointer;" id="topMenu-@menu.Id.ToString()" class="box nav-link text-dark dropdown-toggle nav-link" onclick="mybtn(this.id)">
                                         @menu.Name.Trim()
                                     </a>
                                 }
@@ -178,14 +178,16 @@
                     }
                 </a>
                 <div class="dropdown">
-                    <button onclick="OpenSearch()" class="btn btn-primary " data-toggle="dropdown" style="background-color:transparent;">
-                        <i style="color:white; " class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                    <button onclick="OpenSearch()" style="background-color:transparent; border:0;">
+                        <i style="color:white;margin-bottom:-15px; font-size:20px; " class="fa-sharp fa-solid fa-magnifying-glass"></i>
                     </button>
                     <form asp-controller="Products" asp-action="Index" >
                     <div class="dropdown-menu" id="searchmenu" style="display: none;">
-                        <label>Anahtar Kelimler</label>
-                        <input style="border-radius:3px;border: solid 1px grey;" placeholder="Ara" name="search" value="@ViewData["Search"]" />
-                        <input class="sub" type="submit" value="Search" />
+                        <label>Anahtar Kelimeler</label>
+                            <input style="border-radius:3px;border: solid 1px #215fac ;" placeholder=" Ara..." name="search" value="@ViewData["Search"]" />
+                            <div style="text-align:center;">
+                                <input class="sub" type="submit" value="Search" />
+                            </div>
                     </div>
                     </form>
                 </div>
