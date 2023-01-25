@@ -37,13 +37,13 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 card-row">
         @foreach (var item in Model)
         {
-            if (item.Description.Length<200)
+            if (item.Description.Length<100)
             {
                  content = item.Description;
             }
             else
             {
-                 content = item.Description.Substring(0, 200)+ "...";
+                 content = item.Description.Substring(0, 100)+ "...";
             }
        
             <div class="col">
@@ -53,7 +53,9 @@
                         <div style="text-align: center" class="product-card-title">
                             @item.Name
                         </div>
-                        <div class="product-card-price">@item.Price TL</div>
+                        <div class="product-card-price">
+                            @item.Price TL
+                        </div>
 
                         <p style="margin-top: 10px; text-align: center">
                             @content
