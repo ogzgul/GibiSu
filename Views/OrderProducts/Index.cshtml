@@ -75,9 +75,11 @@
     </div>
 </div>
 <div style="text-align: center">
-    <span>
-        <button onclick="location.href='/orders/edit/@orderId'" class="button-card-cart btn btn-primary">
+    @if (orderId != 0)
+    {
+        <span>
+            <button onclick="location.href='/orders/edit/@orderId'" class="button-card-cart btn btn-primary">
             <i class="fa-solid fa-cart-shopping"></i> Sepeti Onayla
         </button>
-    </span>
+    </span>}
 </div>
