@@ -365,9 +365,28 @@ body {
 }
 
     .dropdown-menu a {
-        color: #09193a!important;
+        color: #09193a !important;
     }
-    
+.dropdownitem {
+    display: block;
+    width: 100%;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+.dropdown-menu a:hover {
+    background-color: #215fac;
+    border-radius: 2px;
+    color: white !important;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:20px;
+    padding-right:20px;
 }
 .order-header-info {
     display: flex;
