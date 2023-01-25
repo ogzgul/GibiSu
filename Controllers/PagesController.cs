@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
 using Microsoft.Extensions.Hosting;
+using System.Security.Principal;
 
 namespace GibiSu.Controllers
 {
@@ -30,6 +31,7 @@ namespace GibiSu.Controllers
             }
             else if (a=="red")
             {
+                Response.Cookies.Delete("isim1");
             }
         }
 
