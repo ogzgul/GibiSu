@@ -384,6 +384,8 @@ body {
     text-decoration: none;
     white-space: nowrap;
     background-color: transparent;
+    margin-bottom: -7px;
+    margin-left: 10px;
 }
 .dropdown-menu a:hover {
     background-color: #215fac;
