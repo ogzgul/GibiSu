@@ -7,7 +7,26 @@ html {
         font-size: 16px;
     }
 }
-
+@media(max-width: 480px){
+    .product-details-img {
+        max-width: 340px;
+    }
+    .product-details-back-container-hr{
+        display:block;
+    }
+    .product-details-title{
+        text-align:center;  
+    }
+    .product-details-shareContainer{
+        margin-left:13px;
+    }
+}
+@media(max-width:1218px){
+    .product-details-back-container{
+        text-align:center;
+        float:none!important;
+    }
+}
 html {
     position: relative;
     min-height: 100%;
@@ -437,3 +456,89 @@ body {
     line-height: 38px;
     text-align: center;
 }
+
+/*Product-Details-Start*/
+.product-details-back-container {
+  color:antiquewhite; 
+  margin-right:20px; 
+  float:right;
+}
+.product-details-back-container a {
+    margin-left: 50px;
+    color: white;
+    font-size: 18px;
+}
+.product-details-img-col {
+    text-align: center;
+}
+
+.product-details-img {
+    height: 400px;
+    width: auto;
+    border-radius: 20px;
+}
+
+.product-details-price-container {
+    width: 150px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.product-details-price:hover {
+    background-color: #215fac;
+    color: aliceblue;
+    border: 2px solid #ffffff;
+}
+
+.product-details-price {
+    padding: 9px;
+    font-size: 20px;
+    color: aliceblue;
+    border: 2px solid #e2e2e2;
+    border-radius: 21px;
+    margin: 0px;
+    width: 100;
+}
+
+.product-details-title {
+    color: aliceblue;
+}
+
+.product-details-shareBtn i {
+    color: aliceblue;
+}
+
+.product-details-shareBtn span {
+    color: aliceblue;
+}
+
+.social-container {
+    text-align: center;
+}
+
+.social-icons {
+    list-style: none;
+    padding-top: 15px;
+}
+
+    .social-icons li {
+        display: inline-block;
+        margin: 0.15em;
+        font-size: 1.2em;
+        padding-right: 15px;
+    }
+
+    .social-icons i {
+        font-size: 40px;
+        color:white;
+    }
+
+.product-details-description {
+    font-weight: 400;
+    color: aliceblue;
+    font-size: 18px;
+}
+.product-details-back-container-hr{
+    color:white;
+}
+/*Product-Details-End*/
