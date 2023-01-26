@@ -491,12 +491,13 @@ body {
 }
 
 .product-details-price {
-    padding: 23px;
+    padding: 9px;
     font-size: 20px;
     color: aliceblue;
     border: 2px solid #e2e2e2;
-    border-radius: 30px;
-    margin: 15px;
+    border-radius: 21px;
+    margin: 0px;
+    width: 100;
 }
 
 .product-details-title {
