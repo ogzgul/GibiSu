@@ -11,9 +11,11 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GibiSu.Controllers
 {
+    [Authorize]
     public class OrderProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
