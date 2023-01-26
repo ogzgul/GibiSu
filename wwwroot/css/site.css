@@ -59,6 +59,13 @@ body {
     object-fit: cover;
     font-family: 'object-fit: cover;';
 }
+.col6Img2 {
+    display: block;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+    font-family: 'object-fit: cover;';
+}
 
 .content-container {
     position: relative;
@@ -377,6 +384,8 @@ body {
     text-decoration: none;
     white-space: nowrap;
     background-color: transparent;
+    margin-bottom: -7px;
+    margin-left: 10px;
 }
 .dropdown-menu a:hover {
     background-color: #215fac;
@@ -416,4 +425,15 @@ body {
     margin-right: 5%;
     border-top:none;
 
+}
+.close {
+    text-decoration:none;
+    position: absolute;
+    cursor: pointer;
+    right: 4px;
+    top: -12px;
+    z-index: 9999;
+    font-size: 15px;
+    line-height: 38px;
+    text-align: center;
 }

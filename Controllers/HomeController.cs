@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GibiSu.Controllers
 {
@@ -9,13 +11,17 @@ namespace GibiSu.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager)
 		{
+
+			if(roleManager.FindByNameAsync("Administrator").Result == null) 
+			{
+                IdentityRole identityRole = new IdentityRole("Administrator");
+                roleManager.CreateAsync(identityRole).Wait();
+            }
+
 			_logger = logger;
 		}
-
-
-
 
 		public IActionResult Index()
 		{
@@ -28,6 +34,7 @@ namespace GibiSu.Controllers
 			return View();
 		}
 
+		[Authorize(Roles ="Administrator")]
         public IActionResult Admin()
         {
             return View();

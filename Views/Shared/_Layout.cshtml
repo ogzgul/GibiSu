@@ -101,7 +101,7 @@
                     <div class="PrivacyText">
                             @foreach (var item in contentss)
                             {
-                                @if(item.PageUrl == "gizlilik-ayarlari"){
+                                @if(item.PageUrl == "Gizlilik-ayarlari"){
                                 @if (item.Text != null)
                                 {
                                     @Html.Raw(item.Text.Replace("\r\n","<br/>"))
@@ -262,12 +262,16 @@
     <button id="backtotop" @*style="display: inline-block;*@"> <a href="#">Back to top</a> </button>
     <a onclick="PrivacyClose()" tabindex="0" style="position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; cursor: pointer; line-height: 1.5; text-decoration: none; background: rgb(0, 107, 175); font-size: 0.75em; color: rgb(255, 255, 255); z-index: 2147483600; bottom: 0px; right: 1em; font-family: sans-serif;"><span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">Gizlilik Ayarları</span><img id="_evh-newvendor-indicator" src="//c.evidon.com/sitenotice/images/evidon-change-alert.png" alt="New vendors have been added to this site" style="display: none; position: absolute; left: -10px; top: -10px; width: 23px; height: 23px;"></a>
 
-    <div id="ghostt" tabindex="0" style="display:none; position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; line-height: 1.5; text-decoration: none; background: white; font-size: 0.75em; z-index: 2147483600; top: 50%; right: 50em; font-family: sans-serif;">
-        <span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">
+    <div id="ghostt" tabindex="0" style="display:none; width:auto; height:auto; border-radius:5px; position: fixed; padding:20px; border: 0px solid transparent; line-height: 1.5; text-decoration: none; background: white; font-size: 0.75em; z-index: 2147483600; top: 50%; right: 50em; font-family: sans-serif;">
+        <div>
+        <a onclick="ghostt()" href="#" class="close" role="button" aria-label="undefined" tabindex="0">x</a>
+        </div>
+        <div style="vertical-align: middle !important; margin-top:20px;">
             <p class="text-muted">
                 Web sitemizi nasıl buldunuz?
             </p>
-        </span>
+        </div>
+        <div style="justify-content: center; column-gap: 30px; display: flex; text-align: center;">
         <a>
             <i style="font-size: 25px; color: yellowgreen;" class="fa-solid fa-face-smile"></i>
         </a>
@@ -277,7 +281,9 @@
         <a>
             <i style="font-size: 25px; color: yellowgreen;" class="fa-solid fa-face-smile"></i>
         </a>
+        </div>
     </div>
+    
 
     <!--Barant004-->
     <div id="barantt" style="position: absolute; top: 73px; display: none; left: 47px; z-index: 2000;">
@@ -332,6 +338,7 @@
             var ghost = document.getElementById("ghosttt");
             var ghost2 = document.getElementById("ghostt");
             var bodyy = document.getElementById("body");
+            
             if (ghost.style.display != "none") {
                 ghost.style.display = "none";
                 bodyy.style.overflow = "visible";
@@ -383,6 +390,8 @@
             } 
            
         }
+        
+        
          function OpenSearch() {
             var menu = document.getElementById("searchmenu");
                 if (menu.style.display != "none") {
