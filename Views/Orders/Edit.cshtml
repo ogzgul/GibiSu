@@ -9,22 +9,21 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Order</h4>
+<h2 style="text-align:center;color:white;">Sepeti Onayla</h2>
 <hr />
 <div class="container my-4">
-    <div asp-for="OrderProducts" class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+    <div asp-for="OrderProducts" class="table">
         @foreach (var item in applicationDbContext)
         {
-            <div class="col">
-                <div class="product-card card shadow">
-                    <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Product.Image)' class="card-img-top" />
-                    <div class="card-body mt-2">
-                        <div style="text-align: center" class="product-card-title">
+            <div class="order">
+                <div class="order-header" style="justify-content: space-between;align-items: center;">
+                    <div style="display:flex; align-items: center;">
+                        <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Product.Image)' class="card-img-top" style="width: 90px; height: 80px;margin-right: 20px;" />
+                        <div style="font-size:17px;margin-right: 10px;" class="product-card-title">
                             @item.Product.Name
                         </div>
-                        <div class="product-card-price">@item.Price TL</div>
+                        <div style="margin-bottom:0;" class="product-card-price">@item.Price TL</div>
+                    </div>
                         <div style="text-align: center; margin-bottom: 10px">
                             <span>
                                 <input disabled id="PCount-@item.ProductId.ToString()"
@@ -34,34 +33,35 @@
                         </div>
                     </div>
                 </div>
-            </div>
         }
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
+
+<div class="row" style="justify-content:center;">
+    <div class="col-md-4" style="width:90%;">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+                <div class="form-group" style="color:white;">
                 <label asp-for="Address" class="control-label"></label>
-                <textarea asp-for="Address" class="form-control"></textarea>
+                <textarea asp-for="Address" class="form-control" ></textarea>
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
-            <div class="form-group">
+                <div class="form-group" style="color:white;">
                 <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control"></>
+                    <input asp-for="PhoneNumber" class="form-control" ></>
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
+                <div class="form-group" style="text-align: center;margin-top: 10px;">
                 <input type="submit" value="Siparişi Onayla" class="btn btn-primary" />
                 <a class="btn btn-primary" asp-controller="orderProducts" asp-action="Index">Sepete Dön</a>
-            </div>
+            
+                </div>
         </form>
     </div>
 </div>
 
 <div>
     <a asp-action="Index">Back to List</a>
+</div>
 </div>
 
 @section Scripts {
