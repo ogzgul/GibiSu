@@ -23,9 +23,6 @@ namespace GibiSu.Controllers
 			_logger = logger;
 		}
 
-
-
-
 		public IActionResult Index()
 		{
 

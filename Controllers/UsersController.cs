@@ -59,7 +59,7 @@ namespace GibiSu.Controllers
 
                 if (identityResult.Succeeded == true)
                 {
-                    return Redirect("~/");
+                        return Redirect("~/");
                 }
 
             }

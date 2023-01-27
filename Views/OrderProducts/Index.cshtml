@@ -37,18 +37,20 @@
 <h2 style="text-align:center;color:white;">Sepetim</h2>
 
 <div class="container my-4">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+    <div class="table">
         @foreach (var item in Model)
         {
-            <div id="PCard-@item.ProductId.ToString()" class="col">
-                <div class="product-card card shadow">
-                    <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Product.Image)' class="card-img-top" />
-                    <div class="card-body mt-2">
-                        <div style="text-align: center" class="product-card-title">
+            <div id="PCard-@item.ProductId.ToString()" class="order">
+                <div class="order-header" style="justify-content: space-between;align-items: center;">
+                    <div style="display:flex; align-items: center;">
+                        <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Product.Image)' class="card-img-top" style="width: 90px; height: 80px;margin-right: 20px;" />
+                        <div style="font-size:17px;margin-right: 10px;" class="product-card-title">
                             @item.Product.Name
                         </div>
-                        <div class="product-card-price">@item.Price TL</div>
-                        <div style="text-align: center; margin-bottom: 10px">
+                        <div style="margin-bottom:0;" class="product-card-price">@item.Price TL</div>
+                    </div>
+                    <div class="order-header-info" style="flex-direction:row;align-items:center;">
+                        <div style= "margin-right: 10px">
                             <button class="cart-count-btn btn btn-primary" onclick="CountDown(@item.ProductId)">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
@@ -61,10 +63,10 @@
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
-                        <div style="text-align: center">
+                        <div style="">
                             <span>
                                 <button onclick="DeleteProduct(@item.ProductId,@item.OrderId)" class="cart-count-btn btn btn-primary">
-                                    <i style="font-size:24px" class="fa fa-trash-o"></i>
+                                    <i class="fa fa-trash-o"></i>
                                 </button>
                             </span>
                         </div>
