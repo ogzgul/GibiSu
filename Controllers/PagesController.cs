@@ -31,7 +31,12 @@ namespace GibiSu.Controllers
             }
             else if (a=="red")
             {
+                var cookieOptions = new CookieOptions();
+                cookieOptions.Path = "/#";
                 Response.Cookies.Delete("isim1");
+                
+
+                
             }
         }
 
