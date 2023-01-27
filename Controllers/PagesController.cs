@@ -37,8 +37,6 @@ namespace GibiSu.Controllers
                 cookieOptions.Path = "/#";
                 Response.Cookies.Delete("isim1");
                 
-
-                
             }
         }
 
@@ -48,8 +46,9 @@ namespace GibiSu.Controllers
         Page page = _context.Pages.Include(p => p.Contents.OrderBy(c => c.Order)).Where(d => d.Url == "Index").FirstOrDefault();
         return View(page);
     }
+       
 
-    public async Task<IActionResult> Sayfalar()
+        public async Task<IActionResult> Sayfalar()
     {
         var applicationDbContext = _context.Pages.Include(p => p.Menu);
         return View(await applicationDbContext.ToListAsync());

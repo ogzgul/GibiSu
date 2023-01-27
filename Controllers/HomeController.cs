@@ -4,6 +4,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using GibiSu.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GibiSu.Controllers
 {
@@ -57,7 +59,11 @@ namespace GibiSu.Controllers
         [Authorize(Roles = "Administrator")]
         public IActionResult Admin()
         {
-            return View();
+			//var applicationDbContext = _context.Pages.Include(p => p.Menu);
+			//Page page = _context.Pages.Include(p => p.Contents.OrderBy(c => c.Order)).Where(d => d.Url == "Index").FirstOrDefault();
+			//return View(page);
+			return View();
+			
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
