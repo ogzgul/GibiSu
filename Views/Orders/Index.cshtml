@@ -59,21 +59,24 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </div>
         </div>*@
-        <div>
+        <table>
             @foreach (var item2 in item.OrderProducts)
             {
                     @foreach (var item3 in products)
                     {
                         if (item2.ProductId == item3.Id) {
-                                <div style="color:white;margin-bottom: 25px;">
+                                <tr style="color:white;margin-bottom: 10px;">
+                                    <td>
                                         @Html.DisplayFor(modelItem => item3.Name)
-
+                                    </td>
+                                    <td>
                                         <img style="width: 100px;height: auto; border-radius: 0; margin-left: 50px;" src='data:image/jpeg;base64,@Convert.ToBase64String(item3.Image)' class="card-img-top" />
-                                    </div>
+                                    </td>
+                                    </tr>
                         }
                     }  
             }
-        </div>
+        </table>
     </div>
 </div>
             }

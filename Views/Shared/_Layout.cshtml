@@ -45,6 +45,23 @@
         });
     }
 </script>
+ <script>
+        
+        function kukivarmi(a) {
+            if(a=="kabul"){
+            $.post("@Url.Action("kuki","Pages")?a="+a);
+            $("#cookiee").css("display", "none");
+            }
+            if (a=="red"){
+                 $.post("@Url.Action("kuki","Pages")?a="+a);
+                 $("#PrivacyTop").css("display","none");
+                 $("#PrivacyGhost").css("display","none");
+                 $("#cookiee").css("display", "block");
+                 alert("Cookieler Silindi.. Baran Bey'e Yönlendiriliyorsunuz.")
+                 
+            }  
+        }
+</script>
 <!--Title End-->
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +118,7 @@
                     <div class="PrivacyText">
                             @foreach (var item in contentss)
                             {
-                                @if(item.PageUrl == "gizlilik-ayarlari"){
+                                @if(item.PageUrl == "Gizlilik-ayarlari"){
                                 @if (item.Text != null)
                                 {
                                     @Html.Raw(item.Text.Replace("\r\n","<br/>"))
@@ -111,8 +128,11 @@
                     </div>
             </div>
         </div>
-        <div id="evidon-prefdiag-tabfooter" class="evidon-prefdiag-tabfooter" style="position: absolute; bottom: 13px; left: 214px; right: 3px; text-align: right; border-top: 1px solid rgb(211, 211, 211); padding: 4px 0px; background: rgb(255, 255, 255); display: block;"><button onclick="PrivacyClose()" id="evidon-prefdiag-decline" class="evidon-prefdiag-declinebtn" aria-label="İptal" style="margin: 0px; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; width: 50%; height: 100%; text-decoration: underline;">İptal</button><button onclick="kukivarmi('red')" id="evidon-prefdiag-accept" class="evidon-prefdiag-acceptbtn" aria-label="Çerez iznini geri al" style="display: inline-block; margin: 0px; width: 50%; height: 100%; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; text-decoration: underline;">Çerez iznini geri al</button></div>
+        <div  style="position: absolute; bottom: 13px; left: 214px; right: 3px; text-align: right; border-top: 1px solid rgb(211, 211, 211); padding: 4px 0px; background: rgb(255, 255, 255); display: block;"><button onclick="PrivacyClose()" id="evidon-prefdiag-decline" class="evidon-prefdiag-declinebtn" aria-label="İptal" style="margin: 0px; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; width: 50%; height: 100%; text-decoration: underline;">İptal</button><button onclick="PrivacyGhost()" id="evidon-prefdiag-accept" class="evidon-prefdiag-acceptbtn" aria-label="Çerez iznini geri al" style="display: inline-block; margin: 0px; width: 50%; height: 100%; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; text-decoration: underline;">Çerez iznini geri al</button></div>
+        <div  id="PrivacyGhost" style="position: absolute; display: none; width: 50%; top: 10%; left: 25%; background: rgb(255, 255, 255); color: rgb(51, 51, 51); border: 1px solid rgb(170, 170, 170); box-shadow: rgb(170, 170, 170) 1px 1px; z-index: 999999;"><button onclick="PrivacyGhost()"  style="display: block; position: absolute; top: 8px; right: 8px; height: 12px; width: 12px; cursor: pointer; z-index: 100; border: 0px; padding: 0px; background: transparent;">x</button><div id="evidon-withdraw-consent-title" style="display: block; text-align: center; margin: 0px 0px 0.75em; font-size: 0.9em; font-weight: 600; font-family: sans-serif; color: rgb(0, 0, 0); line-height: 1.5;">Bilgi ve Çerez İzni Tercihleriniz</div><div id="evidon-withdraw-consent-message" style="display: block; margin: 0px 0px 0.75em; font-size: 0.8em; line-height: 1.5; color: rgb(0, 0, 0); font-family: sans-serif; text-align: left; padding: 0px 1em !important;">Web sitemizi ziyaret eden kullanıcılarıın ve müşterilerimizin gizliliğini ve güvenliğini oldukça önemsiyoruz. Eğer ne tür bilgi topladığımızı öğrenmek ve kontrol etmek isterseniz çerez onayına erişebilir ve verdiğiniz çerez iznini dilediğiniz zaman iptal edebilirsiniz. Çerezleri engellemek veya silmek kullanıcı deneyiminiz etkilenebilir ve sitemizin bazı fonksiyonlardan (sitede çevrimiçi kalmak gibi) yararlanmanıza engel olabilir. Çerezleri engellediğinizde, başka sitelerde reklamlarımızı görmeye devam edebilirsiniz fakat bu reklamların mesajı ve içeriği ilgi alanınıza göre olmayabilir.</div><div id="" style="display: block; padding: 12px; text-align: center; margin: 18px auto;"><button onclick="PrivacyGhost()" aria-label="Hayır, izin ver" style="display: inline-block; margin: 0px; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; width: 50%; height: 100%; text-decoration: underline;">Hayır, izin ver</button><button  aria-label="Evet, çerez iznini geri al" style="display: inline-block; margin: 0px; width: 50%; height: 100%; padding: 1em; color: rgb(0, 0, 0); background: rgb(255, 255, 255); cursor: pointer; border: 0px solid rgb(255, 255, 255); font-family: sans-serif; font-size: 0.85em; text-decoration: underline;"> <a href="https://www.instagram.com/barant004/" onclick="kukivarmi('red')" href="#">Evet, çerez iznini geri al</a> </button></div></div>
+        
     </div>
+
     <!--Privacy End-->
     <div class="position-relative">
         <div class="position-fixed " style="z-index:1000; right:0px; top:75px;">
@@ -123,7 +143,7 @@
     <header class="fixed-top">
         <nav id="navbar-main" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid ">
-                <a onclick="Barant()" class="navbar-brand py-1" @*asp-area="" asp-controller="Home" asp-action="Index"*@> <img width="60" src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt=""> </a>
+                <a onclick="Barant()" class="navbar-brand py-1" asp-area="" asp-controller="Pages" asp-action="Index"> <img width="60" src="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" alt=""> </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -262,12 +282,16 @@
     <button id="backtotop" @*style="display: inline-block;*@"> <a href="#">Back to top</a> </button>
     <a onclick="PrivacyClose()" tabindex="0" style="position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; cursor: pointer; line-height: 1.5; text-decoration: none; background: rgb(0, 107, 175); font-size: 0.75em; color: rgb(255, 255, 255); z-index: 2147483600; bottom: 0px; right: 1em; font-family: sans-serif;"><span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">Gizlilik Ayarları</span><img id="_evh-newvendor-indicator" src="//c.evidon.com/sitenotice/images/evidon-change-alert.png" alt="New vendors have been added to this site" style="display: none; position: absolute; left: -10px; top: -10px; width: 23px; height: 23px;"></a>
 
-    <div id="ghostt" tabindex="0" style="display:none; position: fixed; padding: 0.5em 0.75em; border: 0px solid transparent; line-height: 1.5; text-decoration: none; background: white; font-size: 0.75em; z-index: 2147483600; top: 50%; right: 50em; font-family: sans-serif;">
-        <span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">
+    <div id="ghostt" tabindex="0" style="display:none; width:auto; height:auto; border-radius:5px; position: fixed; padding:20px; border: 0px solid transparent; line-height: 1.5; text-decoration: none; background: white; font-size: 0.75em; z-index: 2147483600; top: 50%; right: 50em; font-family: sans-serif;">
+        <div>
+        <a onclick="ghostt()" href="#" class="close" role="button" aria-label="undefined" tabindex="0">x</a>
+        </div>
+        <div style="vertical-align: middle !important; margin-top:20px;">
             <p class="text-muted">
                 Web sitemizi nasıl buldunuz?
             </p>
-        </span>
+        </div>
+        <div style="justify-content: center; column-gap: 30px; display: flex; text-align: center;">
         <a>
             <i style="font-size: 25px; color: yellowgreen;" class="fa-solid fa-face-smile"></i>
         </a>
@@ -277,15 +301,6 @@
         <a>
             <i style="font-size: 25px; color: yellowgreen;" class="fa-solid fa-face-smile"></i>
         </a>
-    </div>
-
-    <!--Barant004-->
-    <div id="barantt" style="position: absolute; top: 73px; display: none; left: 47px; z-index: 2000;">
-        <div class="card" style="width: 18rem;">
-            <a asp-area="" asp-controller="Pages" asp-action="Index"><img height="383px" src="https://i.ibb.co/f8xkSm0/Whats-App-Image-2023-01-13-at-10-22-53.jpg"></a>
-            <div class="card-body layout-card-body">
-                <p style="color:blueviolet;">#Barant004-Tek Seferlik Değil Ömürlük Lezzet..</p>
-            </div>
         </div>
     </div>
         @if (askCookie==true)
@@ -312,12 +327,7 @@
 
         }
     
-    <script>
-        function kukivarmi(a) {
-            $.post("@Url.Action("kuki","Pages")?a="+a);
-            $("#cookiee").css("display", "none");
-        }
-    </script>
+   
     <!--Cookie End-->
     <script>
         let docTitle = document.title;
@@ -332,6 +342,7 @@
             var ghost = document.getElementById("ghosttt");
             var ghost2 = document.getElementById("ghostt");
             var bodyy = document.getElementById("body");
+            
             if (ghost.style.display != "none") {
                 ghost.style.display = "none";
                 bodyy.style.overflow = "visible";
@@ -373,16 +384,19 @@
             }
         }
 
-        function Barant() {
-            var barant = document.getElementById("barantt");
-            if (barant.style.display != "none") {
-                barant.style.display = "none";
+        function PrivacyGhost() {
+            var PrivacyGhost = document.getElementById("PrivacyGhost");
+            if (PrivacyGhost.style.display != "none") {
+                PrivacyGhost.style.display = "none";
 
             } else {
-                barant.style.display = "block";
-            } 
-           
+                PrivacyGhost.style.display = "block";
+            }            
         }
+
+
+        
+        
          function OpenSearch() {
             var menu = document.getElementById("searchmenu");
                 if (menu.style.display != "none") {

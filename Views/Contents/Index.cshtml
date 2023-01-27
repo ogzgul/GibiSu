@@ -25,6 +25,9 @@
                 @Html.DisplayNameFor(model => model.Order)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Page)
             </th>
             <th></th>
@@ -47,6 +50,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Page.Url)

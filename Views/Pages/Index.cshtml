@@ -10,7 +10,10 @@
      }
 </div>
 
-@foreach (var item in contents){
+@foreach (var item in contents)
+{
+    @if(item.Type == 1)
+    {
 <div class="row mid-content" style="--bs-gutter-x: 0rem;">
         @if(item.Order %2== 1)
         {
@@ -33,7 +36,7 @@
             </p>
         </div>
             }
-        <div><a href="/neden-erikli" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
+        <div><a href="/@item.Title" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
         </div>
             @if (item.Image != null){
             <div class="col-6">
@@ -41,7 +44,7 @@
             </div>
             }
         }
-        else if(item.Order !=50 && item.Order != 100)
+        else
         {
             @if (item.Image != null){
             <div class="col-6">
@@ -65,37 +68,51 @@
                         </p>
                     </div>
                 }
-                <div><a href="/neden-gibi" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
+                <div><a href="/#" class="btn btn-light --bs-light --bs-light-rgb">Devam</a></div>
             </div>
         }
+    
     </div>
+}
+}
 
-if(item.Order == 50){
+@foreach (var item3 in contents)
+{
+if(item3.Type == 2){
 <div class="container-fluid" style="background-color:white">
     <div class="row justify-content-center">
-        @if (item.Text != null){
+        @if (item3.Text != null){
         <div class="col-10">
-            <p class="text-align-center textMid text-muted"><strong>@item.Text</strong></p>
+            <p class="text-align-center textMid text-muted"><strong>@item3.Text</strong></p>
         </div>
         }
     </div>
 </div>
     }
 }
+}
 
 <div class="container">
     <div class="row" style="--bs-gutter-x:0rem; margin-top:8px;">
         @foreach (var item1 in contents)
         {
-            if (item1.Order == 100)
+            if (item1.Type == 3)
             {
         <div class="col-4">
             <div class="card mt-3 mb-3">
-                <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/grid_system/public/2021-10/1_0.jpg?itok=a_xSeR_R" />
+                @if(item1.Image != null)
+                {
+                  <img src="data:image/jpeg;base64, @Convert.ToBase64String(item1.Image)" width="372" height="440" alt="forest" loading="lazy" class="col6Img2" typeof="foaf:Image">
+                }
+                else
+                {
+                  <img src="https://www.erikli.com.tr/sites/g/files/xknfdk2096/files/styles/grid_system/public/2021-10/1_0.jpg?itok=a_xSeR_R"  width="372" height="440" alt="forest" loading="lazy" class="col6Img2"/>
+                            
+                }
                 <div class="card-body layout-card-body">
-                        <h5 class="card-title"><a href="/">@item1.Title</a></h5>
-                        <p class="card-text">@item1.Text</p>
-                        <a href="/neden-erikli" class="btn btn-primary ">Devam</a>
+                    <h5 class="card-title"><a href="/">@item1.Title</a></h5>
+                    <p class="card-text">@item1.Text</p>
+                    <a href="/#" class="btn btn-primary ">Devam</a>
                 </div>
             </div>
         </div>

@@ -57,7 +57,7 @@ namespace GibiSu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Text,FormImage,Order,PageUrl")] Content content)
+        public async Task<IActionResult> Create([Bind("Id,Title,Text,FormImage,Order,PageUrl,Type")] Content content)
         {
             MemoryStream memoryStream;
             ModelState.Remove("Image");
@@ -99,15 +99,23 @@ namespace GibiSu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Text,Image,Order,PageUrl")] Content content)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Text,Image,Order,PageUrl,Type")] Content content)
         {
             if (id != content.Id)
             {
                 return NotFound();
             }
+            MemoryStream memoryStream;
+            ModelState.Remove("Image");
 
             if (ModelState.IsValid)
             {
+                if (content.FormImage != null)
+                {
+                    memoryStream = new MemoryStream();
+                    content.FormImage.CopyTo(memoryStream);
+                    content.Image = memoryStream.ToArray();
+                }
                 try
                 {
                     _context.Update(content);

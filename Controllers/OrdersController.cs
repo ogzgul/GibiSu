@@ -9,9 +9,11 @@ using GibiSu.Data;
 using GibiSu.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GibiSu.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +23,7 @@ namespace GibiSu.Controllers
             _context = context;
         }
 
+        
         // GET: Orders
         public async Task<IActionResult> Index()
         {

@@ -51,7 +51,7 @@
                     <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Image)' class="card-img-top" />
                     <div class="card-body mt-2">
                         <div style="text-align: center" class="product-card-title">
-                            @item.Name
+                            <a style="text-decoration: none;" asp-controller="Products" asp-route-id="@item.Id" asp-action="Details">@item.Name</a>             
                         </div>
                         <div class="product-card-price">
                             @item.Price TL
