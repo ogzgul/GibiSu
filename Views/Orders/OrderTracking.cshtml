@@ -1,0 +1,92 @@
+﻿@model IEnumerable<GibiSu.Models.Order>
+@using Microsoft.EntityFrameworkCore;
+@using GibiSu.Data;
+@inject ApplicationDbContext context;
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Index";
+    string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var products = context.Products;
+    var orderProducts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.UserId == userName);
+}
+
+<h1 style="text-align:center;color:white;margin-bottom:50px;">Bekleyen Siparişler</h1>
+<div class="table">
+    @foreach (var item in Model)
+    {
+        <div class="order">
+            <div class="order-header">
+                <span class="order-header-info">
+                    @Html.DisplayNameFor(model => model.OrderDate)<b>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </b>
+                </span>
+                <div class="order-header-info">
+                    @Html.DisplayNameFor(model => model.DeliveryDate)<b>
+                        @Html.DisplayFor(modelItem => item.DeliveryDate)
+                    </b>
+                </div>
+
+                <div class="order-header-info">
+                    @Html.DisplayNameFor(model => model.Address)<b>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </b>
+                </div>
+
+                <div class="order-header-info">
+                    @Html.DisplayNameFor(model => model.PhoneNumber)<b>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </b>
+                </div>
+
+                <div class="order-header-info">
+                    @Html.DisplayNameFor(model => model.UserId)<b>
+                        @Html.DisplayFor(modelItem => item.User.Name)
+                    </b>
+                </div>
+            </div>
+            <div>
+                @*<div>
+            <div>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </div>
+            </div>*@
+                <table>
+                    @foreach (var item2 in item.OrderProducts)
+                    {
+                        @foreach (var item3 in products)
+                        {
+                            if (item2.ProductId == item3.Id)
+                            {
+                                <tr style="color:white;margin-bottom: 10px;">
+                                    <td style="width: 20%;">
+                                        @Html.DisplayFor(modelItem => item3.Name)
+                                    </td>
+                                    <td style="width: 20%;padding-right:70px">
+                                        <img style="width: 100px;height: auto; border-radius: 0; margin-left: 50px;" src='data:image/jpeg;base64,@Convert.ToBase64String(item3.Image)' class="card-img-top" />
+                                    </td>
+                                    <td style=" width: 20%;color:white;padding-right:70px">
+                                        X @item2.Amount
+                                    </td>
+                                    <td style=" width: 20%;color:white;">
+                                        <strong>@item2.TotalPrice TL</strong>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </table>
+            </div>
+            <div style="text-align: end;">
+                <span style="background-color:white;padding:2px;">
+                    @Html.DisplayNameFor(model => model.TotalPrice) :<b>
+                        @Html.DisplayFor(modelItem => item.TotalPrice) TL
+                    </b>
+                </span>
+            </div>
+        </div>
+    }
+</div>

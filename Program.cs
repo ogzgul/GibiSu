@@ -25,6 +25,7 @@ namespace GibiSu
             builder.Services.AddControllersWithViews();
             builder.Services.ConfigureApplicationCookie(options => options.LoginPath = new PathString("/Users/Login"));
             builder.Services.AddRazorPages();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

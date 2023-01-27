@@ -9,6 +9,8 @@ using GibiSu.Data;
 using GibiSu.Models;
 using System.IO;
 using System.Drawing;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace GibiSu.Controllers
 {
@@ -63,6 +65,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -108,6 +111,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
@@ -159,6 +163,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Products == null)

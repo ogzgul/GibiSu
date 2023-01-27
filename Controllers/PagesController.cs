@@ -9,6 +9,8 @@ using GibiSu.Data;
 using GibiSu.Models;
 using Microsoft.Extensions.Hosting;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace GibiSu.Controllers
 {
@@ -71,11 +73,11 @@ namespace GibiSu.Controllers
         {
             return NotFound();
         }
-
-        return View(page);
+            return View(page);
     }
 
-    // GET: Pages/Create
+        // GET: Pages/Create
+    [Authorize(Roles = "Administrator")]
     public IActionResult Create()
     {
         ViewData["MenuId"] = new SelectList(_context.Menus, "Id", "Name");
@@ -111,7 +113,8 @@ namespace GibiSu.Controllers
         return View(page);
     }
 
-    // GET: Pages/Edit/5
+        // GET: Pages/Edit/5
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Edit(string id)
     {
         if (id == null || _context.Pages == null)
@@ -165,6 +168,7 @@ namespace GibiSu.Controllers
     }
 
     // GET: Pages/Delete/5
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Delete(string id)
     {
         if (id == null || _context.Pages == null)

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace GibiSu.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class MenusController : Controller
     {
         private readonly ApplicationDbContext _context;
