@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GibiSu.Data;
 using GibiSu.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace GibiSu.Controllers
 {
@@ -46,6 +48,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: Contents/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url");
@@ -78,6 +81,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: Contents/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null || _context.Contents == null)
@@ -139,6 +143,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: Contents/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null || _context.Contents == null)
