@@ -47,10 +47,9 @@
                         <div style="font-size:17px;margin-right: 10px;" class="product-card-title">
                             @item.Product.Name
                         </div>
-                        <div style="margin-bottom:0;" class="product-card-price">@item.Price TL</div>
                     </div>
                     <div class="order-header-info" style="flex-direction:row;align-items:center;">
-                        <div style= "margin-right: 10px">
+                        <div style= "margin-right: 10em;">
                             <button class="cart-count-btn btn btn-primary" onclick="CountDown(@item.ProductId)">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
@@ -63,10 +62,13 @@
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
+                        <div style="color:#0d6efd;margin-right: 10em;">
+                       @item.TotalPrice TL
+                    </div>
                         <div style="">
                             <span>
                                 <button onclick="DeleteProduct(@item.ProductId,@item.OrderId)" class="cart-count-btn btn btn-primary">
-                                    <i class="fa fa-trash-o"></i>
+                                    <i class="fa fa-trash-o"  style="font-size: 13px;"></i>
                                 </button>
                             </span>
                         </div>
