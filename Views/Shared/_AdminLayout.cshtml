@@ -1,11 +1,25 @@
 ﻿
 @{
-   ViewData["Title"] = "Admin";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GibiSu.styles.css" asp-append-version="true" />
+    <link rel="icon" sizes="16x16" href="https://i.ibb.co/JtdRzwR/Whats-App-Image-2023-01-10-at-12-54-28-removebg-preview.png" />
+    <link href="~/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 border-end" style="display: grid; justify-content: end; align-items: center; justify-items: start;">
-            <h2>Admin Paneli</h2>
+        <div class="col-2 border-end" style="display: grid; align-items: center; justify-items: start;">
+            <h2><a  asp-controller="Admin" asp-action="Index" >Admin Paneli</a></h2>
             <hr />
             <ul style="list-style-type: disclosure-closed;">
                 <li>
@@ -46,17 +60,14 @@
                 </li>
             </ul>
         </div>
-@*        <div class="col-10">
-             @foreach (var item in contentss)
-                            {
-                                @if(item.PageUrl == "Gizlilik-ayarlari"){
-                                @if (item.Text != null)
-                                {
-                                    @Html.Raw(item.Text.Replace("\r\n","<br/>"))
-                                }
-                                }
-                            }
-        </div>*@
+        <div class="col-10">
+             @RenderBody()
+        </div>
 
     </div>
 </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>

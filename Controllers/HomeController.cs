@@ -4,14 +4,17 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using GibiSu.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GibiSu.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly ApplicationDbContext _context;
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager)
+		public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager , ApplicationDbContext context)
 		{
 
 			if(roleManager.FindByNameAsync("Administrator").Result == null) 
@@ -21,6 +24,7 @@ namespace GibiSu.Controllers
             }
 
 			_logger = logger;
+			_context = context;
 		}
 
 		public IActionResult Index()
@@ -28,7 +32,7 @@ namespace GibiSu.Controllers
 
             return View();
 		}
-
+		
 		public IActionResult Privacy()
 		{
 			return View();
@@ -37,7 +41,11 @@ namespace GibiSu.Controllers
 		[Authorize(Roles ="Administrator")]
         public IActionResult Admin()
         {
-            return View();
+			//var applicationDbContext = _context.Pages.Include(p => p.Menu);
+			//Page page = _context.Pages.Include(p => p.Contents.OrderBy(c => c.Order)).Where(d => d.Url == "Index").FirstOrDefault();
+			//return View(page);
+			return View();
+			
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
