@@ -2,70 +2,47 @@
 @using Microsoft.EntityFrameworkCore;
 @using GibiSu.Data;
 @inject ApplicationDbContext context;
-@using System.Security.Claims;
+
 @{
-    ViewData["Title"] = "SellingProducts";
-    string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var products = context.Products;
-    var orderProducts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.UserId == userName);
+    ViewData["Title"] = "Index";
+    var products = context.Products.Join(context.OrderProducts, p => p.Id, o => o.ProductId, (p, o) => new
+    {
+        Name = p.Name, Image = p.Image, Amount = o.Amount, TotalPrice = o.TotalPrice, Id= p.Id
+    });
+    var orderProducts = context.OrderProducts.GroupBy(p => p.ProductId).Select(cl => new OrderProduct
+            {
+                Amount = cl.Sum(o => o.Amount),
+                TotalPrice = cl.Sum(o => o.TotalPrice),
+            }).ToList();
+    var products2 = context.Products;
 }
 
-<h1 style="text-align:center;color:white;margin-bottom:50px;">Satışı Yapılan Siparişler</h1>
-@*
-<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
-<table class="table">
-    <thead style="color:white;">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeliveryDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Name)
-            </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
-        </tr>
-}
-    </tbody>
+<h1 style="text-align:center;color:white;margin-bottom:50px;">Satışlarım</h1>
+<table>
+
+    @foreach (var item3 in orderProducts)
+    {
+        @foreach (var item in products2)
+                    {
+                        if (item3.ProductId == item.Id) {
+                <tr style="color:white;margin-bottom: 10px;">
+                    <td style="width: 20%;">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td style="width: 20%;padding-right:70px">
+                        <img style="width: 100px;height: auto; border-radius: 0; margin-left: 50px;" src='data:image/jpeg;base64,@Convert.ToBase64String(item.Image)' class="card-img-top" />
+                    </td>
+                        
+                    <td style=" width: 20%;color:white;padding-right:70px">
+                        X @item3.Amount
+                    </td>
+                        <td style=" width: 20%;color:white;">
+                            <strong>@products.Sum(i=> i.TotalPrice) TL</strong>
+                        </td>
+
+                </tr>
+            }
+        }
+    }
+    
 </table>

@@ -28,7 +28,7 @@ namespace GibiSu.Controllers
         public async Task<IActionResult> Index()
         {
             string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var applicationDbContext = _context.Orders.Include(o => o.User).Include(o=>o.OrderProducts).Where(o => o.UserId == userName);
+            var applicationDbContext = _context.Orders.Include(o => o.User).Include(o=>o.OrderProducts).Where(o => o.UserId == userName).Where(o=> o.OrderDate!=null);
             return View(await applicationDbContext.ToListAsync());
         } 
         public async Task<IActionResult> OrderTracking(string? state)
@@ -38,7 +38,7 @@ namespace GibiSu.Controllers
         }
         public async Task<IActionResult> SellingProducts()
         {
-            var applicationDbContext = _context.Orders.Include(o => o.User).Include(o => o.OrderProducts).Where(o => o.DeliveryDate != null);
+            var applicationDbContext = _context.Orders.Include(o => o.User).Include(o => o.OrderProducts).Where(o => o.OrderDate != null);
                 return View(await applicationDbContext.ToListAsync());
         }
 
