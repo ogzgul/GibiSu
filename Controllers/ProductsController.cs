@@ -65,7 +65,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: Products/Create
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();

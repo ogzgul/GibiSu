@@ -36,6 +36,50 @@ namespace GibiSu.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<PartialViewResult> Reports(int? SelectProductId, string? SelectUser, DateTime? FirstOrderDate, DateTime? LastOrderDate)
+        {
+
+            List<OrderProduct> orderProducts = new List<OrderProduct>();
+            if (SelectUser != "Seçiniz" || SelectProductId != null || FirstOrderDate != null || LastOrderDate != null)
+            {
+                if (SelectProductId != null && SelectUser == "Seçiniz" && FirstOrderDate == null && LastOrderDate == null) {
+                    var applicationDbContext = _context.OrderProducts.Where(o => o.ProductId == SelectProductId).GroupBy(o => o.ProductId)
+                         .Select(g => new { ProductId = g.Key, SumAmount = g.Sum(o => o.Amount), SumTotalPrice = g.Sum(o => o.TotalPrice) });
+
+                    foreach (var item in applicationDbContext)
+                    {
+                        OrderProduct order = new OrderProduct();
+                        order.ProductId = item.ProductId;
+                        order.Amount = item.SumAmount;
+                        order.TotalPrice = item.SumTotalPrice;
+                        orderProducts.Add(order);
+                    }
+                }
+                if (SelectProductId == null && SelectUser != null && FirstOrderDate == null && LastOrderDate == null)
+                {
+                    var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Where(o => o.Order.UserId == SelectUser)
+                        .GroupBy(op=>op.ProductId).Select(g => new {SumAmount = g.Sum(o => o.Amount), SumTotalPrice = g.Sum(o => o.TotalPrice),g.Key });
+
+                    foreach (var item in applicationDbContext)
+                    {
+                        OrderProduct order = new OrderProduct();
+                        order.ProductId = item.Key;
+                        order.Amount = item.SumAmount;
+                        order.TotalPrice = item.SumTotalPrice;
+                        orderProducts.Add(order);
+                    }
+                    
+                }
+            }
+            
+            return PartialView(orderProducts);
+        }
+
+        public async Task<IActionResult> SellingProducts()
+        {
+            return View();
+        }
+
         // GET: OrderProducts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
