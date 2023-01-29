@@ -9,40 +9,36 @@
     {
         Name = p.Name, Image = p.Image, Amount = o.Amount, TotalPrice = o.TotalPrice, Id= p.Id
     });
-    var orderProducts = context.OrderProducts.GroupBy(p => p.ProductId).Select(cl => new OrderProduct
-            {
-                Amount = cl.Sum(o => o.Amount),
-                TotalPrice = cl.Sum(o => o.TotalPrice),
-            }).ToList();
-    var products2 = context.Products;
+    var orderProducts = context.OrderProducts.GroupBy(o=> o.ProductId)
+                 .Select(g => new { ProductId = g.Key, SumAmount = g.Sum(o => o.Amount), SumTotalPrice = g.Sum(o => o.TotalPrice) });
+    var products2 = products.AsEnumerable().GroupBy(p => p.Id).Select(grp => grp.First()).ToList();
 }
 
 <h1 style="text-align:center;color:white;margin-bottom:50px;">Satışlarım</h1>
 <table>
 
-    @foreach (var item3 in orderProducts)
+    @foreach (var item3 in products2)
     {
-        @foreach (var item in products2)
-                    {
-                        if (item3.ProductId == item.Id) {
-                <tr style="color:white;margin-bottom: 10px;">
+        <tr style="color:white;margin-bottom: 10px;">
                     <td style="width: 20%;">
-                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item3.Name)
                     </td>
                     <td style="width: 20%;padding-right:70px">
-                        <img style="width: 100px;height: auto; border-radius: 0; margin-left: 50px;" src='data:image/jpeg;base64,@Convert.ToBase64String(item.Image)' class="card-img-top" />
+                        <img style="width: 100px;height: auto; border-radius: 0; margin-left: 50px;" src='data:image/jpeg;base64,@Convert.ToBase64String(item3.Image)' class="card-img-top" />
                     </td>
-                        
+            @foreach(var item in orderProducts)
+            {
+                @if(item.ProductId == item3.Id){
+          
                     <td style=" width: 20%;color:white;padding-right:70px">
-                        X @item3.Amount
+                        X @item.SumAmount
                     </td>
-                        <td style=" width: 20%;color:white;">
-                            <strong>@products.Sum(i=> i.TotalPrice) TL</strong>
-                        </td>
-
-                </tr>
+                    <td style=" width: 20%;color:white;">
+                            <strong>@item.SumTotalPrice TL</strong>
+                    </td>
+                }
             }
-        }
+                </tr>
     }
     
 </table>
