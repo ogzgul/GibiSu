@@ -51,7 +51,6 @@ namespace GibiSu.Controllers
             return PartialView(await userCases.ToListAsync());
 
             }
-
             var userCasess = _signInManager.UserManager.Users.Where(x => x.Deleted == false);
             List<ApplicationUser> members = new List<ApplicationUser>();
             foreach (ApplicationUser member in userCasess)
@@ -63,10 +62,6 @@ namespace GibiSu.Controllers
             }
             return PartialView(members);
             
-
-            
-
-
         }
 
         [HttpPost]
