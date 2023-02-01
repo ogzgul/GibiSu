@@ -53,7 +53,15 @@ namespace GibiSu.Controllers
             }
 
             var userCasess = _signInManager.UserManager.Users.Where(x => x.Deleted == false);
-            return PartialView(await userCasess.ToListAsync());
+            List<ApplicationUser> members = new List<ApplicationUser>();
+            foreach (ApplicationUser member in userCasess)
+            {
+                if (_signInManager.UserManager.GetRolesAsync(member).Result.Count == 0)
+                {
+                    members.Add(member);
+                }
+            }
+            return PartialView(members);
             
 
             
