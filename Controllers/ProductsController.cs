@@ -70,7 +70,7 @@ namespace GibiSu.Controllers
             return View(await _context.Products.ToListAsync());
         }
         // GET: Products/Create
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();

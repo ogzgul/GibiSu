@@ -1,0 +1,34 @@
+﻿@model List<OrderProduct>
+@using Microsoft.EntityFrameworkCore;
+@using GibiSu.Data;
+@inject ApplicationDbContext context;
+
+@{
+    var products = context.Products;
+}
+@foreach (var item in Model)
+{
+    @foreach (var item3 in products)
+    {
+        @if (item.ProductId == item3.Id)
+        {
+            <tr style="color:white;margin-bottom: 10px;">
+                <td style="width: 20%;">
+                    @Html.DisplayFor(modelItem => item3.Name)
+                </td>
+                <td style="width: 20%;padding-right:70px">
+                    <img style="width: 100px;height: auto; border-radius: 0; margin-left: 50px;" src='data:image/jpeg;base64,@Convert.ToBase64String(item3.Image)' class="card-img-top" />
+                </td>
+
+
+                <td style=" width: 20%;color:white;padding-right:70px">
+                    X @item.Amount
+                </td>
+                <td style=" width: 20%;color:white;">
+                    <strong>@item.TotalPrice TL</strong>
+                </td>
+
+            </tr>
+        }
+    }
+}
