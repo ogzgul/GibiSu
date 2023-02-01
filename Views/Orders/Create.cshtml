@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <link href="~/css/siteorder.css" rel="stylesheet" />
-<div style="background-color:#fff;height: 67vh;">
+<div style="background-color:#fff;height: 100vh;">
     <br /> <br /> <br /> <br />
 <h3>Sipariş</h3>
 <div class="row1">
@@ -15,7 +16,7 @@
                 <label asp-for="Address" class="control-label"></label>
                 <textarea asp-for="Address" class="form-control" ></textarea>
                 <span asp-validation-for="Address" class="text-danger"></span>
-            </div> 
+            </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber" class="control-label"></label>
                 <input asp-for="PhoneNumber" class="form-control" ></>

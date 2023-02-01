@@ -64,6 +64,11 @@ namespace GibiSu.Controllers
             return View(product);
         }
 
+        public async Task<IActionResult> ProductsEdit()
+        {
+
+            return View(await _context.Products.ToListAsync());
+        }
         // GET: Products/Create
         [Authorize(Roles = "Administrator")]
         public IActionResult Create()
@@ -132,7 +137,7 @@ namespace GibiSu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Image,IsInactive,Volume,Material")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,FormImage,IsInactive,Volume,Material")] Product product)
         {
             if (id != product.Id)
             {

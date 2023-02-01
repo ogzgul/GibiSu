@@ -15,13 +15,13 @@ namespace GibiSu.Controllers
 
         public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
-
             if (roleManager.FindByNameAsync("Administrator").Result == null)
             {
                 IdentityRole identityRole = new IdentityRole("Administrator");
                 roleManager.CreateAsync(identityRole).Wait();
 
                 var user = new ApplicationUser();
+                
                 user.UserName = "Kralperen";
                 user.Email = "kralperen@gmail.com";
                 user.Name = "Kralp";

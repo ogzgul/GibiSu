@@ -1,6 +1,7 @@
 ﻿
 @{
     Layout = null;
+    
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -17,51 +18,87 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-2 border-end" style="display: grid; align-items: center; justify-items: start;">
-            <h2><a  asp-controller="Admin" asp-action="Index" >Admin Paneli</a></h2>
+    <div class="row" style="height:100vh;">
+        <div class="list-group adminpanel col-2 border-end" >
+            <h2><a  asp-controller="Admin" asp-action="Index" style="text-decoration: none;">Admin Paneli</a></h2>
             <hr />
-            <ul style="list-style-type: disclosure-closed;">
-                <li>
-                    <label>Menüler</label>
-                    <a asp-controller="Menus" asp-action="Create">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                     </a>
-                     <a asp-controller="Menus" asp-action="Index">
-                         <i class="fa fa-list" aria-hidden="true"></i>
-                     </a>                     
-                </li>
-                <li>
-                    <label>Sayfalar</label>
-                    <a asp-controller="Pages" asp-action="Create">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                     </a>
-                     <a asp-controller="Pages" asp-action="Index">
-                         <i class="fa fa-list" aria-hidden="true"></i>
-                     </a>
-                </li>
-                <li>
-                    <label>İçerikler</label>
-                    <a asp-controller="Contents" asp-action="Create">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                     </a>
-                     <a asp-controller="Contents" asp-action="Index">
-                         <i class="fa fa-list" aria-hidden="true"></i>
-                     </a>
-                </li>
-                <li>
-                    <label>Ürünler</label>
-                    <a asp-controller="Products" asp-action="Create">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                     </a>
-                     <a asp-controller="Products" asp-action="Index">
-                         <i class="fa fa-list" aria-hidden="true"></i>
-                     </a>
-                </li>
-            </ul>
+            <div class="dropdown">
+                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Menüler
+                </button>
+                <ul class="dropdown-menu AdminUl" >
+                    <li><a class="dropdown-item" asp-controller="Menus" asp-action="Create">Create</a>
+                    <li> <a class="dropdown-item" asp-controller="Menus" asp-action="Index">Index</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sayfalar
+                </button>
+                <ul class="dropdown-menu AdminUl">
+                    <li><a class="dropdown-item" asp-controller="Pages" asp-action="Create">Create</a>
+                    <li> <a class="dropdown-item" asp-controller="Pages" asp-action="Sayfalar" >Index</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    İçerikler
+                </button>
+                <ul class="dropdown-menu AdminUl">
+                    <li><a class="dropdown-item" asp-controller="Contents" asp-action="Create">Create</a>
+                    <li> <a class="dropdown-item" asp-controller="Contents" asp-action="Index">Index</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Ürünler
+                </button>
+                <ul class="dropdown-menu AdminUl">
+                    <li><a class="dropdown-item" asp-controller="Products" asp-action="Create">Create</a>
+                    <li> <a class="dropdown-item" asp-controller="Products" asp-action="Index">Index</a>
+                    </li>
+                    <li> <a class="dropdown-item" asp-controller="Products" asp-action="ProductsEdit">Edit</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Siparişler
+                </button>
+                <ul class="dropdown-menu AdminUl">
+                    <li><a class="dropdown-item" asp-controller="Orders" asp-action="Create">Create</a>
+                    <li> <a class="dropdown-item" asp-controller="Orders" asp-action="Index">Index</a>
+                    </li>
+                </ul>
+            </div>
+             <div class="dropdown">
+                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    OrderProducts
+                </button>
+                <ul class="dropdown-menu AdminUl">
+                    <li><a class="dropdown-item" asp-controller="OrderProducts" asp-action="Create">Create</a>
+                    <li> <a class="dropdown-item" asp-controller="OrderProducts" asp-action="Index">Index</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Üyeler
+                </button>
+                <ul class="dropdown-menu AdminUl">
+                    <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Üyeler</a>
+                </ul>
+            </div>
+
+            <i class="fa-solid fa-gear" style="bottom: 0; position: absolute; right: 0; font-size: 22px; margin-right: 5px; margin-bottom:5px;"></i>
+            
+            
         </div>
-        <div class="col-10">
-             @RenderBody()
+        <div class="col-10" style="position: absolute; right: 0; background-color:white;">
+             <center>@RenderBody()</center>
         </div>
 
     </div>

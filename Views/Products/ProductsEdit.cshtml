@@ -1,15 +1,13 @@
-﻿@model IEnumerable<GibiSu.Models.Menu>
+﻿@model IEnumerable<GibiSu.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ürünler";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid" style="background-color: white; height:100vh;">
-<h1>Menüler</h1>
+<h1>Ürünler</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary btn-sm">Menü Oluştur</a>
-</p>
+
 <table class="table">
     <thead class="table-light">
         <tr>

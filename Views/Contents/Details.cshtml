@@ -2,13 +2,14 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container-fluid" style="background-color: white;">
-<h1>Details</h1>
+<h1>Detaylar</h1>
 
 <div>
-    <h4>Content</h4>
+    <h4>İçerik</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -44,7 +45,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary btn-sm" style="margin-bottom:10px;">Edit</a>
-    <a asp-action="Index" class="btn btn-warning btn-sm" style="margin-bottom:10px;">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary btn-sm" style="margin-bottom:10px;">Güncelle</a>
+    <a asp-action="Index" class="btn btn-warning btn-sm" style="margin-bottom:10px;">Listeye Geri Dön</a>
 </div>
 </div>
