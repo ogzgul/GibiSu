@@ -39,79 +39,79 @@ namespace GibiSu.Controllers
         public async Task<PartialViewResult> Reports(int? SelectProductId, string? SelectUser, DateTime? FirstOrderDate, DateTime? LastOrderDate)
         {
             //Seçili herhangi bir seçenek varsa
-            if (SelectUser != "Seçiniz" || SelectProductId != null || FirstOrderDate != null || LastOrderDate != null)
+            if (SelectUser != "undefined" || SelectProductId != null || FirstOrderDate != null || LastOrderDate != null)
             {
                 //Sadece Ürün Seçiliyse
-                if (SelectProductId != null && SelectUser == "Seçiniz" && FirstOrderDate == null && LastOrderDate == null) {
+                if (SelectProductId != null && SelectUser == "undefined" && FirstOrderDate == null && LastOrderDate == null) {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.ProductId == SelectProductId).Where(o=>o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Kullanıcı Seçiliyse
-                if (SelectProductId == null && SelectUser != "Seçiniz" && FirstOrderDate == null && LastOrderDate == null)
+                if (SelectProductId == null && SelectUser != "undefined" && FirstOrderDate == null && LastOrderDate == null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.UserId == SelectUser).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Başlangıç Tarihi Seçiliyse
-                if (SelectProductId == null && SelectUser == "Seçiniz" && FirstOrderDate != null && LastOrderDate == null)
+                if (SelectProductId == null && SelectUser == "undefined" && FirstOrderDate != null && LastOrderDate == null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.OrderDate >= FirstOrderDate).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Bitiş Tarihi Seçiliyse
-                if (SelectProductId == null && SelectUser == "Seçiniz" && FirstOrderDate == null && LastOrderDate != null)
+                if (SelectProductId == null && SelectUser == "undefined" && FirstOrderDate == null && LastOrderDate != null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.OrderDate <= LastOrderDate).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Kullanıcı ve Ürün Seçiliyse
-                if (SelectProductId != null && SelectUser != "Seçiniz" && FirstOrderDate == null && LastOrderDate == null)
+                if (SelectProductId != null && SelectUser != "undefined" && FirstOrderDate == null && LastOrderDate == null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.UserId == SelectUser).Where(o => o.ProductId == SelectProductId).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Kullanıcı ve Başlangıç Tarihi Seçiliyse
-                if (SelectProductId == null && SelectUser != "Seçiniz" && FirstOrderDate != null && LastOrderDate == null)
+                if (SelectProductId == null && SelectUser != "undefined" && FirstOrderDate != null && LastOrderDate == null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.UserId == SelectUser).Where(o => o.Order.OrderDate >= FirstOrderDate).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Kullanıcı ve Bitiş Tarihi Seçiliyse
-                if (SelectProductId == null && SelectUser != "Seçiniz" && FirstOrderDate == null && LastOrderDate != null)
+                if (SelectProductId == null && SelectUser != "undefined" && FirstOrderDate == null && LastOrderDate != null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.UserId == SelectUser).Where(o => o.Order.OrderDate <= LastOrderDate).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Ürün ve Başlangıç Tarihi Seçiliyse
-                if (SelectProductId != null && SelectUser == "Seçiniz" && FirstOrderDate != null && LastOrderDate == null)
+                if (SelectProductId != null && SelectUser == "undefined" && FirstOrderDate != null && LastOrderDate == null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.ProductId == SelectProductId).Where(o => o.Order.OrderDate >= FirstOrderDate).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Ürün ve Bitiş Tarihi Seçiliyse
-                if (SelectProductId != null && SelectUser == "Seçiniz" && FirstOrderDate == null && LastOrderDate != null)
+                if (SelectProductId != null && SelectUser == "undefined" && FirstOrderDate == null && LastOrderDate != null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.ProductId == SelectProductId).Where(o => o.Order.OrderDate <= LastOrderDate).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Başlangıç ve Bitiş Tarihi Seçiliyse
-                if (SelectProductId == null && SelectUser == "Seçiniz" && FirstOrderDate != null && LastOrderDate != null)
+                if (SelectProductId == null && SelectUser == "undefined" && FirstOrderDate != null && LastOrderDate != null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.OrderDate >= FirstOrderDate).Where(o => o.Order.OrderDate <= LastOrderDate).Where(o => o.Order.OrderDate != null);
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Kullanıcı, Ürün, Başlangıç Tarihi Seçiliyse
-                if (SelectProductId != null && SelectUser != "Seçiniz" && FirstOrderDate != null && LastOrderDate == null)
+                if (SelectProductId != null && SelectUser != "undefined" && FirstOrderDate != null && LastOrderDate == null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.UserId == SelectUser).Where(o => o.ProductId == SelectProductId)
@@ -119,7 +119,7 @@ namespace GibiSu.Controllers
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Kullanıcı, Ürün, Bitiş Tarihi Seçiliyse
-                if (SelectProductId != null && SelectUser != "Seçiniz" && FirstOrderDate == null && LastOrderDate != null)
+                if (SelectProductId != null && SelectUser != "undefined" && FirstOrderDate == null && LastOrderDate != null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.UserId == SelectUser).Where(o => o.ProductId == SelectProductId)
@@ -127,7 +127,7 @@ namespace GibiSu.Controllers
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Ürün, Başlangıç ve Bitiş Tarihi Seçiliyse
-                if (SelectProductId != null && SelectUser == "Seçiniz" && FirstOrderDate != null && LastOrderDate != null)
+                if (SelectProductId != null && SelectUser == "undefined" && FirstOrderDate != null && LastOrderDate != null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.OrderDate >= FirstOrderDate).Where(o => o.Order.OrderDate <= LastOrderDate)
@@ -135,7 +135,7 @@ namespace GibiSu.Controllers
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Kullanıcı, Başlangıç ve Bitiş Tarihi Seçiliyse
-                if (SelectProductId == null && SelectUser != "Seçiniz" && FirstOrderDate != null && LastOrderDate != null)
+                if (SelectProductId == null && SelectUser != "undefined" && FirstOrderDate != null && LastOrderDate != null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.UserId == SelectUser).Where(o => o.Order.OrderDate <= LastOrderDate)
@@ -143,7 +143,7 @@ namespace GibiSu.Controllers
                     return PartialView(await applicationDbContext.ToListAsync());
                 }
                 //Sadece Kullanıcı, Ürün, Başlangıç ve Bitiş Tarihi Seçiliyse
-                if (SelectProductId != null && SelectUser != "Seçiniz" && FirstOrderDate != null && LastOrderDate != null)
+                if (SelectProductId != null && SelectUser != "undefined" && FirstOrderDate != null && LastOrderDate != null)
                 {
                     var applicationDbContext = _context.OrderProducts.Include(o => o.Order).Include(o => o.Order.User)
                         .Where(o => o.Order.UserId == SelectUser).Where(o => o.Order.OrderDate <= LastOrderDate)

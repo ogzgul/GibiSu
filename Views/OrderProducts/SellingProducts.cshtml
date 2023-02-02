@@ -20,8 +20,10 @@
 }
 <script>
     function GetSellingProduct(){
-        var selectProduct = document.getElementById("SelectedProduct").value;
-        var selectUser = document.getElementById("SelectedUser").value;
+        var selectP = $('#SelectedProduct').val();
+        var selectProduct = $('#SelectedP [value="' + selectP + '"]').data('value');
+        var selectU = $('#SelectedUser').val();
+        var selectUser = $('#SelectedU [value="' + selectU + '"]').data('value');
         var inputFirstDate = document.getElementById("FirstDate").value;
         var inputLastDate = document.getElementById("LastDate").value;
         $("#GetReport").load("@Url.Action("Reports","OrderProducts")?SelectProductId=" + selectProduct + "&SelectUser=" + selectUser + "&FirstOrderDate=" + inputFirstDate + "&LastOrderDate=" + inputLastDate);
@@ -32,24 +34,22 @@
     <div class="col-md-4">
         <form enctype="multipart/form-data">
             <div class="form-group">
-                <label  class="control-label">Ürünler</label>
-                <select id="SelectedProduct" class="form-control">
-                    <option  class="form-control" value="Seçiniz" selected>Seçiniz</option>
+                <input id="SelectedProduct" class="form-control" type="text" list="SelectedP" placeholder="Ürün Adını Giriniz..." />
+                <datalist id="SelectedP" >
                     @foreach (var item3 in products)
                     {
-                        <option  value="@item3.Id" class="form-control">@item3.Name</option>
+                        <option data-value="@item3.Id" value="@item3.Name" class="form-control"></option>
                     }
-                </select>
+                </datalist>
             </div>
             <div class="form-group">
-                <label class="control-label">Müşteriler</label>
-                <select id="SelectedUser" class="form-control">
-                    <option class="form-control" value="Seçiniz" selected >Seçiniz</option>
+                <input id="SelectedUser" class="form-control" type="text" list="SelectedU" placeholder="Müşteri Adını Giriniz..." />
+                <datalist id="SelectedU" >
                     @foreach (var item3 in users)
                     {
-                        <option value="@item3.Id" class="form-control">@item3.Name</option>
+                        <option data-value="@item3.Id" value="@item3.Name" class="form-control"> </option>
                     }
-                </select>
+                </datalist>
             </div>
             <div class="form-group">
                 <label class="control-label">Başlangıç Tarihi</label>
@@ -69,4 +69,3 @@
 <table class="table" id="GetReport">
    
 </table>
-
