@@ -82,6 +82,23 @@ namespace GibiSu.Controllers
             return View(order);
         }
 
+        public async Task<IActionResult> PostOrder(long? postOrderId)
+        {
+            if (postOrderId == null || _context.Orders == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(postOrderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.DeliveryDate = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return View();
+        }
+
         // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {

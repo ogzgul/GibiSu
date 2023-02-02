@@ -1,4 +1,4 @@
-﻿@model List<OrderProduct>
+﻿@model IEnumerable<GibiSu.Models.OrderProduct>
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.EntityFrameworkCore;
 @using GibiSu.Data;
@@ -20,9 +20,11 @@
 }
 <script>
     function GetSellingProduct(){
-        var inputProduct = document.getElementById("SelectedProduct").value;
-        var inputUser = document.getElementById("SelectedUser").value;
-        $("#GetReport").load("@Url.Action("Reports","OrderProducts")?SelectProductId=" + inputProduct + "&SelectUser=" + inputUser);
+        var selectProduct = document.getElementById("SelectedProduct").value;
+        var selectUser = document.getElementById("SelectedUser").value;
+        var inputFirstDate = document.getElementById("FirstDate").value;
+        var inputLastDate = document.getElementById("LastDate").value;
+        $("#GetReport").load("@Url.Action("Reports","OrderProducts")?SelectProductId=" + selectProduct + "&SelectUser=" + selectUser + "&FirstOrderDate=" + inputFirstDate + "&LastOrderDate=" + inputLastDate);
     }
 </script>
 <h1 style="text-align:center;color:white;margin-bottom:50px;">Satışlarım</h1>
@@ -32,7 +34,7 @@
             <div class="form-group">
                 <label  class="control-label">Ürünler</label>
                 <select id="SelectedProduct" class="form-control">
-                    <option  class="form-control" value="Seçiniz" selected disabled>Seçiniz</option>
+                    <option  class="form-control" value="Seçiniz" selected>Seçiniz</option>
                     @foreach (var item3 in products)
                     {
                         <option  value="@item3.Id" class="form-control">@item3.Name</option>
@@ -42,12 +44,20 @@
             <div class="form-group">
                 <label class="control-label">Müşteriler</label>
                 <select id="SelectedUser" class="form-control">
-                    <option class="form-control" value="Seçiniz" selected disabled>Seçiniz</option>
+                    <option class="form-control" value="Seçiniz" selected >Seçiniz</option>
                     @foreach (var item3 in users)
                     {
                         <option value="@item3.Id" class="form-control">@item3.Name</option>
                     }
                 </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Başlangıç Tarihi</label>
+                <input id="FirstDate" type="date" class="form-control" />
+                <span class="text-danger"></span>
+                <label class="control-label">Bitiş Tarihi</label>
+                <input id="LastDate" type="date" class="form-control" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input onclick="GetSellingProduct()"  type="button" value="Raporu Getir" class="btn btn-primary" />
@@ -56,7 +66,7 @@
     </div>
 </div>
 
-<table id="GetReport">
-    
+<table class="table" id="GetReport">
+   
 </table>
 

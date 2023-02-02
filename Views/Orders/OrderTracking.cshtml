@@ -6,15 +6,26 @@
 
 @{
     ViewData["Title"] = "Index";
-    string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
     var products = context.Products;
-    var orderProducts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.UserId == userName);
+    var orderProducts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.OrderDate != null);
 }
-
+<script>
+    function PostOrder(orderId){
+        $.get("@Url.Action("PostOrder","Orders")?postOrderId=" + orderId);
+        alert("Sipariş Gönderildi");
+        setTimeout(
+                  function() 
+                  {
+                document.location.reload();
+                  }, 0551);
+    }
+</script>
 <h1 style="text-align:center;color:white;margin-bottom:50px;">Bekleyen Siparişler</h1>
 <div class="table">
     @foreach (var item in Model)
     {
+        @if (item.OrderDate != null)
+        {
         <div class="order">
             <div class="order-header">
                 <span class="order-header-info">
@@ -47,19 +58,12 @@
                 </div>
             </div>
             <div>
-                @*<div>
-            <div>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </div>
-            </div>*@
                 <table>
                     @foreach (var item2 in item.OrderProducts)
                     {
                         @foreach (var item3 in products)
                         {
-                            if (item2.ProductId == item3.Id)
+                            @if (item2.ProductId == item3.Id)
                             {
                                 <tr style="color:white;margin-bottom: 10px;">
                                     <td style="width: 20%;">
@@ -81,6 +85,9 @@
                 </table>
             </div>
             <div style="text-align: end;">
+                <span style="text-align: start;" class="form-group">
+                    <input style="background-color:white; color:black" onclick="PostOrder(@item.Id)" type="button" value="Siparişi Gönder" class="btn btn-primary" />
+                </span>
                 <span style="background-color:white;padding:2px;">
                     @Html.DisplayNameFor(model => model.TotalPrice) :<b>
                         @Html.DisplayFor(modelItem => item.TotalPrice) TL
@@ -88,5 +95,6 @@
                 </span>
             </div>
         </div>
+    }
     }
 </div>
