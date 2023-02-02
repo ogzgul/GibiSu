@@ -54,10 +54,10 @@ namespace GibiSu.Controllers
         return View(await applicationDbContext.ToListAsync());
     }
 
-  
+
 
     // GET: Pages/Details/5
-    public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id)
     {
         ViewData["pageName"] = id;
         Page page = _context.Pages.Where(p => p.Url == id).Include(p => p.Contents.OrderBy(c => c.Order)).FirstOrDefault();

@@ -33,7 +33,7 @@ html {
 }
 
 body {
-    background-color: #215fac !important;
+    background-color: #215fac ;
 }
 
 .box-shadow[b-ba0w5qqfzh] {
@@ -562,4 +562,48 @@ body {
     -ms-transform: translateY(-50%) !important;
     transform: translateY(-50%) !important;
 }
+.adminpanel {
+    background-color: white;
+    padding-top: 20px;
+    position: fixed;
+    height: 100vh;
+}
+.adminpanel h2{
+    margin-left:5px;
+}
+.adminpanel ul li {
+    justify-content: space-around;
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    margin-bottom:10px;
+}
+.list-group {
+    border-radius:0!important;
+}
+.list-group-item:hover{
+    background-color:darkslategrey;
+    transition:0.4s ease-in-out;
+    color:white;
+}
+.list-group-item a:hover{
+    color:white;
+}
 
+.btnAdmin {
+    justify-content: space-between;
+    display: flex;
+    column-gap: 4px;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+    margin-left:5px;
+}
+
+.AdminUl{
+    margin:0!important;
+    padding:0!important;
+}
+.table .Baslýk tr th{
+    width:15%;
+}
