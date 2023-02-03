@@ -21,7 +21,6 @@ namespace GibiSu.Controllers
         System.Drawing.Imaging.ImageCodecInfo[] allCoDecs;
         System.Drawing.Imaging.EncoderParameters encoderParameters;
         System.Drawing.Imaging.ImageCodecInfo jPEGCodec;
-        String basePath;
         System.Drawing.Image streamImage;
         System.Drawing.Image bLogImage;
 
@@ -81,7 +80,7 @@ namespace GibiSu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,IsInactive,Volume,Material,FormImage")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,IsInactive,Volume,Material,FormImage,SmallFormImage")] Product product)
         {
             qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
             allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
@@ -94,18 +93,25 @@ namespace GibiSu.Controllers
                 }
             }
             MemoryStream memoryStream =  new MemoryStream(); 
+            MemoryStream memoryStream2 =  new MemoryStream();
+
             encoderParameters.Param[0] = qualityParameter;
-            if (product.FormImage != null)
+            if (product.FormImage != null && product.SmallFormImage != null)
             {
                 product.FormImage.CopyTo(memoryStream);
+                product.SmallFormImage.CopyTo(memoryStream2);
                 streamImage = System.Drawing.Image.FromStream(memoryStream);
                 bLogImage = ReSize(streamImage, 300, 250);
-                ImageConverter _imageConverter = new ImageConverter();
-                byte[] xByte = (byte[])_imageConverter.ConvertTo(bLogImage, typeof(byte[]));
+                bLogImage.Save(memoryStream, jPEGCodec, encoderParameters);
+                streamImage = System.Drawing.Image.FromStream(memoryStream2);
+                bLogImage = ReSize(streamImage, 80, 80);
+                bLogImage.Save(memoryStream2, jPEGCodec, encoderParameters);
                 ModelState.Remove("Image");
+                ModelState.Remove("SmallImage");
                 if (ModelState.IsValid)
                 {
-                    product.Image = xByte;
+                    product.Image = memoryStream.ToArray();
+                    product.SmallImage = memoryStream2.ToArray();
                     _context.Add(product);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

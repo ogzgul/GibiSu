@@ -9,13 +9,20 @@ using GibiSu.Data;
 using GibiSu.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Drawing.Imaging;
 
 namespace GibiSu.Controllers
 {
     public class ContentsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        System.Drawing.Imaging.EncoderParameter qualityParameter;
+        System.Drawing.Imaging.ImageCodecInfo[] allCoDecs;
+        System.Drawing.Imaging.EncoderParameters encoderParameters;
+        System.Drawing.Imaging.ImageCodecInfo jPEGCodec;
+        System.Drawing.Image streamImage;
+        System.Drawing.Image bLogImage;
         public ContentsController(ApplicationDbContext context)
         {
             _context = context;
@@ -48,7 +55,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: Contents/Create
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url");
@@ -62,22 +69,70 @@ namespace GibiSu.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Text,FormImage,Order,PageUrl,Type")] Content content)
         {
-            MemoryStream memoryStream;
-            ModelState.Remove("Image");
-            if (ModelState.IsValid)
+            qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+            allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+            encoderParameters = new System.Drawing.Imaging.EncoderParameters(1);
+            foreach (System.Drawing.Imaging.ImageCodecInfo coDec in allCoDecs)
             {
-                if(content.FormImage != null)
+                if (coDec.FormatDescription == "JPEG")
                 {
-                    memoryStream = new MemoryStream();
-                    content.FormImage.CopyTo(memoryStream);
-                    content.Image = memoryStream.ToArray();
+                    jPEGCodec = coDec;
                 }
-                _context.Add(content);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
+
+            ModelState.Remove("Image");
+
+            MemoryStream memoryStream = new MemoryStream();
+            encoderParameters.Param[0] = qualityParameter;
+            if (content.FormImage != null)
+            {
+                content.FormImage.CopyTo(memoryStream);
+                streamImage = System.Drawing.Image.FromStream(memoryStream);
+                bLogImage = ReSize(streamImage, 435, 595);
+                bLogImage.Save(memoryStream, jPEGCodec, encoderParameters);
+                if (ModelState.IsValid)
+                {
+                    content.Image = memoryStream.ToArray();
+                    _context.Add(content);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
             ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url", content.PageUrl);
             return View(content);
+        }
+
+        private System.Drawing.Image ReSize(System.Drawing.Image originalImage, int newWidth, int newHeight)
+        {
+            System.Drawing.Graphics graphicsHandle;
+            double targetRatio = (double)newWidth / (double)newHeight;
+            double newRatio = (double)originalImage.Width / (double)originalImage.Height;
+            int targetWidth = newWidth;
+            int targetHeight = newHeight;
+            int newOriginX = 0;
+            int newOriginY = 0;
+            System.Drawing.Image newImage = new System.Drawing.Bitmap(newWidth, newHeight);
+
+            if (newRatio > targetRatio)
+            {
+                targetWidth = (int)(originalImage.Width / ((double)originalImage.Height / newHeight));
+                newOriginX = (newWidth - targetWidth) / 2;
+            }
+            else
+            {
+                if (newRatio < targetRatio)
+                {
+                    targetHeight = (int)(originalImage.Height / ((double)originalImage.Width / newWidth));
+                    newOriginY = (newHeight - targetHeight) / 2;
+                }
+            }
+            graphicsHandle = System.Drawing.Graphics.FromImage(newImage);
+            graphicsHandle.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            graphicsHandle.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            graphicsHandle.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphicsHandle.DrawImage(originalImage, newOriginX, newOriginY, targetWidth, targetHeight);
+            return newImage;
         }
 
         // GET: Contents/Edit/5

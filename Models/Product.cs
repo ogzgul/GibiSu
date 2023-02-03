@@ -33,6 +33,15 @@ namespace GibiSu.Models
         [Column(TypeName = "image")]
         public byte[] Image { get; set; }
 
+        [NotMapped]
+        [Required(ErrorMessage = "Bu alan zorunludur.")]
+        [DisplayName("Küçük Görsel")]
+        public IFormFile SmallFormImage { get; set; }
+
+        [Required(ErrorMessage = "Bu alan zorunludur.")]
+        [Column(TypeName = "image")]
+        public byte[] SmallImage { get; set; }
+
         [Required(ErrorMessage = "Bu alan zorunludur.")]
         [DisplayName("Satışa Kapalı")]
         public bool IsInactive { get; set; }

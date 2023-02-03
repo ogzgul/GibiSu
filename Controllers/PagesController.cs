@@ -11,12 +11,20 @@ using Microsoft.Extensions.Hosting;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace GibiSu.Controllers
 {
     public class PagesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        System.Drawing.Imaging.EncoderParameter qualityParameter;
+        System.Drawing.Imaging.ImageCodecInfo[] allCoDecs;
+        System.Drawing.Imaging.EncoderParameters encoderParameters;
+        System.Drawing.Imaging.ImageCodecInfo jPEGCodec;
+        System.Drawing.Image streamImage;
+        System.Drawing.Image bLogImage;
         public PagesController(ApplicationDbContext context)
         {
             _context = context;
@@ -77,7 +85,7 @@ namespace GibiSu.Controllers
     }
 
         // GET: Pages/Create
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     public IActionResult Create()
     {
         ViewData["MenuId"] = new SelectList(_context.Menus, "Id", "Name");
@@ -91,30 +99,73 @@ namespace GibiSu.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Url,FormImage,MenuId,Title")] Page page)
     {
-        ModelState.Remove("Banner");
+            qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+            allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+            encoderParameters = new System.Drawing.Imaging.EncoderParameters(1);
+            foreach (System.Drawing.Imaging.ImageCodecInfo coDec in allCoDecs)
+            {
+                if (coDec.FormatDescription == "JPEG")
+                {
+                    jPEGCodec = coDec;
+                }
+            }
+            ModelState.Remove("Banner");
         ModelState.Remove("Contents");
 
-        MemoryStream memoryStream;
-
-        if (ModelState.IsValid)
-        {
+        MemoryStream memoryStream = new MemoryStream();
+            encoderParameters.Param[0] = qualityParameter;
             if (page.FormImage != null)
             {
-                memoryStream = new MemoryStream();
                 page.FormImage.CopyTo(memoryStream);
-                page.Banner = memoryStream.ToArray();
+                streamImage = System.Drawing.Image.FromStream(memoryStream);
+                bLogImage = ReSize(streamImage, 1175, 540);
+                bLogImage.Save(memoryStream, jPEGCodec, encoderParameters);
+                if (ModelState.IsValid)
+                {
+                    page.Banner = memoryStream.ToArray();
+                    _context.Add(page);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-
-            _context.Add(page);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
         ViewData["MenuId"] = new SelectList(_context.Menus, "Id", "Name", page.MenuId);
         return View(page);
     }
 
+        private System.Drawing.Image ReSize(System.Drawing.Image originalImage, int newWidth, int newHeight)
+        {
+            System.Drawing.Graphics graphicsHandle;
+            double targetRatio = (double)newWidth / (double)newHeight;
+            double newRatio = (double)originalImage.Width / (double)originalImage.Height;
+            int targetWidth = newWidth;
+            int targetHeight = newHeight;
+            int newOriginX = 0;
+            int newOriginY = 0;
+            System.Drawing.Image newImage = new System.Drawing.Bitmap(newWidth, newHeight);
+
+            if (newRatio > targetRatio)
+            {
+                targetWidth = (int)(originalImage.Width / ((double)originalImage.Height / newHeight));
+                newOriginX = (newWidth - targetWidth) / 2;
+            }
+            else
+            {
+                if (newRatio < targetRatio)
+                {
+                    targetHeight = (int)(originalImage.Height / ((double)originalImage.Width / newWidth));
+                    newOriginY = (newHeight - targetHeight) / 2;
+                }
+            }
+            graphicsHandle = System.Drawing.Graphics.FromImage(newImage);
+            graphicsHandle.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            graphicsHandle.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            graphicsHandle.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphicsHandle.DrawImage(originalImage, newOriginX, newOriginY, targetWidth, targetHeight);
+            return newImage;
+        }
+
         // GET: Pages/Edit/5
-    [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Edit(string id)
     {
         if (id == null || _context.Pages == null)
