@@ -58,7 +58,7 @@
                 </button>
                 <ul class="dropdown-menu AdminUl">
                     <li><a class="dropdown-item" asp-controller="Products" asp-action="Create">Create</a>
-                    <li> <a class="dropdown-item" asp-controller="Products" asp-action="Index">Index</a>
+                    <li> <a class="dropdown-item" asp-controller="Products" asp-action="AdminUrunler">Index</a>
                     </li>
                     <li> <a class="dropdown-item" asp-controller="Products" asp-action="ProductsEdit">Edit</a>
                     </li>
@@ -66,21 +66,19 @@
             </div>
             <div class="dropdown">
                 <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Siparişler
+                    Bekleyen Siparişler
                 </button>
                 <ul class="dropdown-menu AdminUl">
-                    <li><a class="dropdown-item" asp-controller="Orders" asp-action="Create">Create</a>
-                    <li> <a class="dropdown-item" asp-controller="Orders" asp-action="Index">Index</a>
+                    <li><a class="dropdown-item" asp-controller="Orders" asp-action="OrderTracking">Bekleyen Siparişler</a>
                     </li>
                 </ul>
             </div>
              <div class="dropdown">
                 <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    OrderProducts
+                    Raporlar
                 </button>
                 <ul class="dropdown-menu AdminUl">
-                    <li><a class="dropdown-item" asp-controller="OrderProducts" asp-action="Create">Create</a>
-                    <li> <a class="dropdown-item" asp-controller="OrderProducts" asp-action="Index">Index</a>
+                    <li><a class="dropdown-item" asp-controller="OrderProducts" asp-action="SellingProducts">Sipariş Raporları</a>
                     </li>
                 </ul>
             </div>
@@ -90,6 +88,14 @@
                 </button>
                 <ul class="dropdown-menu AdminUl">
                     <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Üyeler</a>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Kullanıcılar
+                </button>
+                <ul class="dropdown-menu AdminUl">
+                    <li><a class="dropdown-item" asp-controller="Users" asp-action="AdminList">Kullanıcılar</a>
                 </ul>
             </div>
 
