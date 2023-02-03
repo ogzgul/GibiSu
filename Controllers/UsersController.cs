@@ -105,7 +105,8 @@ namespace GibiSu.Controllers
                 
                 if (identityResult.Succeeded == true)
                 {
-                        return Redirect("~/");
+                    //return Redirect(Request.Headers["Referer"].ToString());
+                    return Redirect("~/");
                 }
 
             }
@@ -145,7 +146,14 @@ namespace GibiSu.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
         
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Redirect("~/");
+        }
     }
 
 }
