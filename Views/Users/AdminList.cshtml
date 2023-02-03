@@ -1,0 +1,93 @@
+﻿@model IEnumerable<GibiSu.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    string aktif = "Aktif", silindi = "Silinenler";
+
+}
+
+<div class="container-fluid" style="background-color: white;">
+<h1>Üyeler</h1>
+<script>
+    function UserCase(){
+        var UserSelected = document.getElementById("UserSelect").value;
+        $("#UserCase").load("@Url.Action("UserCases","Users")?Deleted="+UserSelected);
+    }
+</script>
+
+<table class="table" >
+    <thead class="Baslık">
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                <form asp-controller="Users" asp-action="Index">
+                <input type="value" placeholder="Ara..." name="search" value="@ViewData["Search"]" />
+                <input class="sub" type="submit" value="Search" />
+                </form>
+            </th>
+            <th>
+                <select id="UserSelect" class="form-control" onchange="UserCase(this.value)">
+                    <option class="form-control" value="seçiniz"  selected disabled>Filtrele</option>
+                        @foreach(var item2 in Model)
+                        {
+                            @if (item2.Deleted == true)
+                            {
+                                <option value="@item2.Deleted">@silindi</option>
+                            }
+                            else
+                            {
+                                <option value="@item2.Deleted">@aktif</option>
+                            }
+
+                        }
+                    </select>
+           </th>
+          
+        </tr>
+    </thead>
+    <tbody id="UserCase">
+
+        @foreach (var item3 in Model)
+        {
+                <tr>
+                    @if (item3.Deleted != true)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.NormalizedUserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item3.PhoneNumber)
+                        </td>
+                        <td>
+                            <a asp-controller="Users" asp-action="Delete" asp-route-id="@item3.Id" class="btn btn-danger btn-sm" style="width: 70px;">Sil</a>
+                            <a asp-controller="Users" asp-action="Edit" asp-route-id="@item3.Id" class="btn btn-warning btn-sm" style="width: 70px;">Düzenle</a>
+                </td>
+                }
+                
+            </tr>
+       }
+        
+    </tbody>
+</table>
+
+
+
+

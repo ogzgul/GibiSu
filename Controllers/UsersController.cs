@@ -39,6 +39,28 @@ namespace GibiSu.Controllers
             return View(members);
         }
 
+        public IActionResult AdminList(string search)
+        {
+            ViewData["Search"] = search;
+            var user = from b in _signInManager.UserManager.Users
+                       select b;
+            List<ApplicationUser> members = new List<ApplicationUser>();
+            foreach (ApplicationUser member in user)
+            {
+                if (_signInManager.UserManager.GetRolesAsync(member).Result.Count == 1)
+                {
+                    members.Add(member);
+                }
+               
+            }
+            if (!String.IsNullOrEmpty(search))
+            {
+                members = members.Where(x => x.Name.Contains(search) || x.Address.Contains(search) || x.Email.Contains(search) || x.PhoneNumber.Contains(search) || x.UserName.Contains(search)).ToList();
+
+            }
+            return View(members);
+        }
+
         public IActionResult Create()
         {
             return View();
