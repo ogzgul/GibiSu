@@ -1,34 +1,105 @@
-﻿@model List<OrderProduct>
+﻿@model IEnumerable<GibiSu.Models.OrderProduct>
 @using Microsoft.EntityFrameworkCore;
 @using GibiSu.Data;
 @inject ApplicationDbContext context;
 
 @{
     var products = context.Products;
+    float totalPrice = 0;
+    float totalLitre = 0;
 }
-@foreach (var item in Model)
+@if (Model.Count() == 0)
+{
+    <div>
+        Sonuç Bulunamadı!
+    </div>
+}
+@if (Model.Count() != 0)
+{
+    <thead style="text-align: start;">
+        <tr>
+            <th style="padding-left:5%;">@Html.DisplayNameFor(model => model.Order.OrderDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Order.User.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Product.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Amount)</th>
+            <th style="text-align: end;padding-right:5%;">@Html.DisplayNameFor(model => model.TotalPrice)</th>
+        </tr>
+    </thead>
+    <tbody style="text-align: start;">
+    @foreach (var item in Model)
 {
     @foreach (var item3 in products)
     {
         @if (item.ProductId == item3.Id)
         {
             <tr style="color:white;margin-bottom: 10px;">
+                
+                <td style="width: 25%;padding-left:5%;">
+                    @Html.DisplayFor(modelItem => item.Order.OrderDate)
+                </td>
                 <td style="width: 20%;">
-                    @Html.DisplayFor(modelItem => item3.Name)
+                        @Html.DisplayFor(modelItem => item.Order.User.Name)
                 </td>
-                <td style="width: 20%;padding-right:70px">
-                    <img style="width: 100px;height: auto; border-radius: 0; margin-left: 50px;" src='data:image/jpeg;base64,@Convert.ToBase64String(item3.Image)' class="card-img-top" />
+                <td style="width: 25%;">
+                     @Html.DisplayFor(modelItem => item3.Name)
                 </td>
 
-
-                <td style=" width: 20%;color:white;padding-right:70px">
+                <td style=" width: 10%;color:white;">
                     X @item.Amount
                 </td>
-                <td style=" width: 20%;color:white;">
+                <td style="text-align:end; width: 20%;color:white;padding-right:5%;">
                     <strong>@item.TotalPrice TL</strong>
                 </td>
 
             </tr>
         }
-    }
+    } 
 }
+        <tr style="border-color:#215fac">
+            <td style=" width: 25%;padding-left:5%;color:white;">
+             </td>
+
+            <td style=" width: 20%;color:white;">
+            </td>
+
+            <td style="width: 25%;">
+               
+            </td>
+
+            <td style=" width: 10%;color:white;">
+            </td>
+
+            <td style="padding-right:5%;text-align: end; color:black; width: 20%; background-color:white;">
+                @foreach (var item in Model)
+                {
+                     totalPrice += item.TotalPrice;
+                }
+                Genel Toplam: <strong>@totalPrice.ToString() TL</strong>
+                
+            </td>
+        </tr>
+        <tr style="border-color:#215fac">
+            <td style=" width: 25%;padding-left:5%;color:white;">
+            </td>
+
+            <td style=" width: 20%;color:white;">
+            </td>
+
+            <td style="width: 25%;">
+               
+            </td>
+
+            <td style=" width: 10%;color:white;">
+            </td>
+
+            <td style="padding-right:5%;text-align: end; color:black; width: 20%; background-color:white;">
+                @foreach (var item in Model)
+                {
+                    totalLitre += item.Product.Volume;
+                }
+                @totalLitre.ToString() L
+
+            </td>
+        </tr>
+ </tbody>
+ }
