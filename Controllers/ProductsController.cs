@@ -240,5 +240,17 @@ namespace GibiSu.Controllers
             graphicsHandle.DrawImage(originalImage, newOriginX, newOriginY, targetWidth, targetHeight);
             return newImage;
         }
+
+        public async Task<IActionResult> AdminUrunler(string search)
+        {
+            ViewData["Search"] = search;
+            var urun = from b in _context.Products
+                       select b;
+            if (!String.IsNullOrEmpty(search))
+            {
+                urun = urun.Where(x => x.Name.Contains(search) || x.Volume.ToString().Contains(search) || x.Price.ToString().Contains(search));
+            }
+            return View(urun);
+        }
     }
 }

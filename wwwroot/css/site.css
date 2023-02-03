@@ -607,3 +607,6 @@ body {
 .table .Baslýk tr th{
     width:15%;
 }
+.Order tr td{
+    color:black!important;
+}

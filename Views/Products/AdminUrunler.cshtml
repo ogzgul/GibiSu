@@ -3,7 +3,7 @@
 @using Microsoft.EntityFrameworkCore;
 @{
     ViewData["Title"] = "Index";string content;
-    
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <script>
     function SepeteEkle(id) {
@@ -36,26 +36,26 @@
 
 <div class="container my-4">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 card-row">
-        @foreach (var item in Model)
+        @foreach (var item2 in Model)
         {
-            if (item.Description.Length<100)
+            if (item2.Description.Length<100)
             {
-                 content = item.Description;
+                 content = item2.Description;
             }
             else
             {
-                 content = item.Description.Substring(0, 100)+ "...";
+                 content = item2.Description.Substring(0, 100)+ "...";
             }
        
             <div class="col">
                 <div class="product-card card shadow">
-                    <img src='data:image/jpeg;base64,@Convert.ToBase64String(item.Image)' class="card-img-top" />
+                    <img src='data:image/jpeg;base64,@Convert.ToBase64String(item2.Image)' class="card-img-top" />
                     <div class="card-body mt-2">
                         <div style="text-align: center" class="product-card-title">
-                            <a style="text-decoration: none;" asp-controller="Products" asp-route-id="@item.Id" asp-action="Details">@item.Name</a>             
+                            <a style="text-decoration: none;" asp-controller="Products" asp-route-id="@item2.Id" asp-action="Details">@item2.Name</a>             
                         </div>
                         <div class="product-card-price">
-                            @item.Price TL
+                            @item2.Price TL
                         </div>
 
                         <p style="margin-top: 10px; text-align: center">
@@ -63,24 +63,7 @@
                         </p>
                         <div class="product-cart-count">
                             <div style="text-align: center; margin-bottom: 10px">
-                                <button class="cart-count-btn btn btn-primary" onclick="CountDown(@item.Id)">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                                <span>
-                                    <input id="PCount-@item.Id.ToString()" disabled type="number"
-                                       style="width: 50px; border-radius: 10px" value="1" />
-                                </span>
-                                <button class="cart-count-btn btn btn-primary" onclick="CountUp(@item.Id)">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </div>
-                            <div style="text-align: center">
-                                <span>
-                                    <button class="button-card-cart btn btn-primary" onclick="SepeteEkle(@item.Id)">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                        Sepete Ekle
-                                    </button>
-                                </span>
+                               
                             </div>
                         </div>
                         

@@ -79,6 +79,7 @@
                         <td>
                             <a asp-controller="Users" asp-action="Delete" asp-route-id="@item3.Id" class="btn btn-danger btn-sm" style="width: 70px;">Sil</a>
                             <a asp-controller="Users" asp-action="Edit" asp-route-id="@item3.Id" class="btn btn-warning btn-sm" style="width: 70px;">Düzenle</a>
+                            <a asp-controller="Users" asp-action="IsAdmin" asp-route-id="@item3.Id" class="btn btn-success btn-sm" style="width: 70px;">Rol Ver</a>
                 </td>
                 }
                 @if(item3.Deleted == true){

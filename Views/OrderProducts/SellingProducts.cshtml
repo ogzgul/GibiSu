@@ -7,6 +7,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     //var orderProducts = context.OrderProducts.GroupBy(o=> o.ProductId)
     //             .Select(g => new { ProductId = g.Key, SumAmount = g.Sum(o => o.Amount), SumTotalPrice = g.Sum(o => o.TotalPrice) });
     var products = context.Products;
@@ -29,7 +30,7 @@
         $("#GetReport").load("@Url.Action("Reports","OrderProducts")?SelectProductId=" + selectProduct + "&SelectUser=" + selectUser + "&FirstOrderDate=" + inputFirstDate + "&LastOrderDate=" + inputLastDate);
     }
 </script>
-<h1 style="text-align:center;color:white;margin-bottom:50px;">Satışlarım</h1>
+<h1 style="text-align:center;color:black;margin-bottom:50px;">Satışlarım</h1>
 <div class="row">
     <div class="col-md-4">
         <form enctype="multipart/form-data">

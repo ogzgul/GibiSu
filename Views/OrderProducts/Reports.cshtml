@@ -8,6 +8,7 @@
     float totalPrice = 0;
     float totalLitre = 0;
 }
+
 @if (Model.Count() == 0)
 {
     <div>
@@ -25,7 +26,7 @@
             <th style="text-align: end;padding-right:5%;">@Html.DisplayNameFor(model => model.TotalPrice)</th>
         </tr>
     </thead>
-    <tbody style="text-align: start;">
+    <tbody class="Order" style="text-align: start;">
     @foreach (var item in Model)
 {
     @foreach (var item3 in products)

@@ -162,11 +162,15 @@ namespace GibiSu.Controllers
             ModelState.Remove("Orders");
             
             var Users = await _signInManager.UserManager.FindByIdAsync(id);
-
             if (Users != null)
             {
+                
                 Users.Name = applicationUser.Name;
                 Users.Address = applicationUser.Address;
+                Users.UserName = applicationUser.UserName;
+                Users.PhoneNumber = applicationUser.PhoneNumber;
+                Users.Password = applicationUser.Password;
+                Users.Email = applicationUser.Email;
                 await _signInManager.UserManager.UpdateAsync(Users);
             }
 
@@ -183,6 +187,15 @@ namespace GibiSu.Controllers
             return Redirect("~/");
         }
 
+        public async Task<IActionResult> IsAdmin(string id)
+        {
+            
+            var Users = await _signInManager.UserManager.FindByIdAsync(id);
+            
+            var result1 = _signInManager.UserManager.AddToRoleAsync(Users, "Administrator").Result;
+
+            return Redirect("~/");
+        }
     }
 
 }
