@@ -1,4 +1,5 @@
-﻿using GibiSu.Models;
+﻿using GibiSu.Data;
+using GibiSu.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,11 +11,11 @@ namespace GibiSu.Controllers
     {
 
         SignInManager<ApplicationUser> _signInManager;
-        
 
         public UsersController(SignInManager<ApplicationUser> signInManager)
         {
             _signInManager = signInManager;
+
         }
 
         public IActionResult Index(string search)
@@ -145,7 +146,34 @@ namespace GibiSu.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var Users = await _signInManager.UserManager.FindByIdAsync(id);
+            return View(Users);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id,[Bind("Id,Name,UserName,Password,Email,ConfirmPassword,Agreed,Address,PhoneNumber")] ApplicationUser applicationUser)
+        {
+            ModelState.Remove("Orders");
+            
+            var Users = await _signInManager.UserManager.FindByIdAsync(id);
+
+            if (Users != null)
+            {
+                Users.Name = applicationUser.Name;
+                Users.Address = applicationUser.Address;
+                await _signInManager.UserManager.UpdateAsync(Users);
+            }
+
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
     }
 
 }
