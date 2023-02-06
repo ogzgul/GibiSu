@@ -65,7 +65,10 @@ namespace GibiSu.Controllers
         {
             return View();
         }
-
+        public IActionResult CreateAdmin()
+        {
+            return View();
+        }
         public async Task<PartialViewResult> UserCases(bool Deleted)
         {
             if (Deleted == true)
@@ -102,6 +105,24 @@ namespace GibiSu.Controllers
             return View(applicationUser);
 
         }
+
+        //Admin Create User Start
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAdmin([Bind("Id,Name,UserName,Password,Email,ConfirmPassword,Agreed,Address,PhoneNumber")] ApplicationUser applicationUser)
+        {
+            ModelState.Remove("Orders");
+
+            if (ModelState.IsValid)
+            {
+                _signInManager.UserManager.CreateAsync(applicationUser, applicationUser.Password).Wait();
+                return Redirect("~/");
+            }
+
+            return View(applicationUser);
+
+        }
+        //Admin Create User End
 
         public IActionResult Login()
         {

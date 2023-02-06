@@ -14,6 +14,7 @@
     <thead class="table-light">
         <tr>
             <th>
+                
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th style="width: 25%;"></th>
@@ -22,6 +23,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                @if(item.Name.Trim() != "footer"){
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -30,6 +32,7 @@
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm" style="width: 70px;">Detaylar</a> 
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" style="width: 70px;">Sil</a>
             </td>
+                        }
         </tr>
 }
     </tbody>

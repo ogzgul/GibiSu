@@ -6,6 +6,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     var products = context.Products;
     var orderProducts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.OrderDate != null);
 }
@@ -20,7 +21,7 @@
                   }, 0551);
     }
 </script>
-<h1 style="text-align:center;color:white;margin-bottom:50px;">Bekleyen Siparişler</h1>
+<h1 style="text-align:center;color:black;margin-bottom:50px;">Bekleyen Siparişler</h1>
 <div class="table">
     @foreach (var item in Model)
     {
