@@ -116,9 +116,10 @@ namespace GibiSu.Controllers
             if (ModelState.IsValid)
             {
                 _signInManager.UserManager.CreateAsync(applicationUser, applicationUser.Password).Wait();
-                return Redirect("~/");
+                var result1 = _signInManager.UserManager.AddToRoleAsync(applicationUser, "Administrator").Result;
+                return Redirect("/Users/AdminList");
             }
-
+           
             return View(applicationUser);
 
         }
@@ -126,7 +127,7 @@ namespace GibiSu.Controllers
 
         public IActionResult Login()
         {
-
+            
             return View();
         }
 
@@ -149,7 +150,10 @@ namespace GibiSu.Controllers
                 
                 if (identityResult.Succeeded == true)
                 {
-                    //return Redirect(Request.Headers["Referer"].ToString());
+                    if(_signInManager.UserManager.IsInRoleAsync(users, "Administrator").Result == true)
+                    {
+                        return Redirect("~/Admin/Index");
+                    }
                     return Redirect("~/");
                 }
 

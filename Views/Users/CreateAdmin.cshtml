@@ -3,11 +3,11 @@
     ViewData["Title"] = "CreateAdmin";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<h4 style=" padding-left: 50px;">Üye Ekle</h4>
+<h4 style=" padding-left: 50px;">Kullanıcı Oluştur</h4>
 <hr />
 <div class="row">
     <div>
-        <form id="registerForm" asp-action="Create" method="post">
+        <form id="registerForm" asp-action="CreateAdmin" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
