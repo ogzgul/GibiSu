@@ -21,7 +21,7 @@ namespace GibiSu.Controllers
         public IActionResult Index(string search)
         {
             ViewData["Search"] = search;
-            var user = from b in _signInManager.UserManager.Users
+            var user = from b in _signInManager.UserManager.Users.OrderBy(c => c.Deleted == true)
                        select b;
             List<ApplicationUser> members = new List<ApplicationUser>();
             foreach (ApplicationUser member in user)

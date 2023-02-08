@@ -29,28 +29,27 @@
                 </td>
                 }
             
-            @foreach (var item1 in Model)
-        {
-                @if(item1.Deleted == true){
+            
+                @if(item.Deleted == true){
                     
                 <td>
-                    @Html.DisplayFor(modelItem => item1.NormalizedUserName)
+                    @Html.DisplayFor(modelItem => item.NormalizedUserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item1.Name)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item1.Email)
+                    @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item1.PhoneNumber)
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
                 <a class="btn btn-danger btn-sm" style="width: 70px;">Silindi.</a>
                 </td>
                 
                 }
-        }
+        
             </tr>
             }
 

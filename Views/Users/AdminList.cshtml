@@ -43,19 +43,7 @@
             <th>
                 <select id="UserSelect" class="form-control" onchange="UserCase(this.value)">
                     <option class="form-control" value="seçiniz"  selected disabled>Filtrele</option>
-                        @foreach(var item2 in Model)
-                        {
-                            @if (item2.Deleted == true)
-                            {
-                                <option value="@item2.Deleted">@silindi</option>
-                            }
-                            else
-                            {
-                                <option value="@item2.Deleted">@aktif</option>
-                            }
-
-                        }
-                    </select>
+                </select>
            </th>
           
         </tr>
