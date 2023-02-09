@@ -127,7 +127,6 @@ namespace GibiSu.Controllers
 
         public IActionResult Login()
         {
-            
             return View();
         }
 
@@ -145,7 +144,6 @@ namespace GibiSu.Controllers
                     
                     return Redirect("~/");
                 }
-
                 identityResult = _signInManager.PasswordSignInAsync(userName, password, false, false).Result;
                 
                 if (identityResult.Succeeded == true)
@@ -156,6 +154,7 @@ namespace GibiSu.Controllers
                     }
                     return Redirect("~/");
                 }
+               
 
             }
 

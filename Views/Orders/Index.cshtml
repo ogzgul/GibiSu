@@ -6,7 +6,6 @@
 
 @{
     ViewData["Title"] = "Index"; 
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
     var products = context.Products;
     var orderProducts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.UserId == userName);

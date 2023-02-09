@@ -87,7 +87,8 @@
             </div>
             <div style="text-align: end;">
                 <span style="text-align: start;" class="form-group">
-                    <input style="background-color:white; color:black" onclick="PostOrder(@item.Id)" type="button" value="Siparişi Gönder" class="btn btn-primary" />
+                    <input style="color:black:" onclick="PostOrder(@item.Id)" 
+                    type="button" value="Siparişi Gönder"  />
                 </span>
                 <span style="background-color:white;padding:2px;">
                     @Html.DisplayNameFor(model => model.TotalPrice) :<b>
