@@ -83,20 +83,14 @@
                 </ul>
             </div>
             <div class="dropdown">
-                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Üyeler
-                </button>
-                <ul class="dropdown-menu AdminUl">
-                    <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Üyeler</a>
-                </ul>
+                <a class="btn btn-secondary btnAdmin" type="button" href="/Users/Index" aria-expanded="false">
+                   Üyeler
+                </a>
             </div>
             <div class="dropdown">
-                <button class="btn btn-secondary btnAdmin dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="/Users/AdminList" class="btn btn-secondary btnAdmin" type="button" aria-expanded="false">
                     Kullanıcılar
-                </button>
-                <ul class="dropdown-menu AdminUl">
-                    <li><a class="dropdown-item" asp-controller="Users" asp-action="AdminList">Kullanıcılar</a>
-                </ul>
+                </a>
             </div>
                 
 
