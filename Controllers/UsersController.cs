@@ -216,7 +216,9 @@ namespace GibiSu.Controllers
                 Users.Address = applicationUser.Address;
                 Users.UserName = applicationUser.UserName;
                 Users.PhoneNumber = applicationUser.PhoneNumber;
+                Users.PasswordHash = _signInManager.UserManager.PasswordHasher.HashPassword(applicationUser, applicationUser.Password);
                 Users.Password = applicationUser.Password;
+                Users.ConfirmPassword = applicationUser.ConfirmPassword;
                 Users.Email = applicationUser.Email;
                 await _signInManager.UserManager.UpdateAsync(Users);
             }
