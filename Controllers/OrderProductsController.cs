@@ -189,7 +189,7 @@ namespace GibiSu.Controllers
         }
 
         // GET: OrderProducts/Create
-        public IActionResult AddCart(int productId, int amount)
+        public void AddCart(int productId, int amount)
         {
             string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Order newOrder = _context.Orders.Include(o=> o.OrderProducts).Where(o => o.UserId == userName).Where(o => o.OrderDate == null).FirstOrDefault();
@@ -232,8 +232,7 @@ namespace GibiSu.Controllers
             }
             orderProduct.TotalPrice = product.Price * orderProduct.Amount;
             _context.SaveChanges();
-
-            return View();
+            Response.Redirect("/urunlerimiz");
         }
 
         // POST: OrderProducts/Create

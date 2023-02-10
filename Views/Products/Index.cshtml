@@ -8,7 +8,11 @@
 <script>
     function SepeteEkle(id) {
         var input = document.getElementById("PCount-" + id).value;
-        $.get("@Url.Action("AddCart","OrderProducts")?productId=" + id+"&amount="+ input);
+        $.get("@Url.Action("AddCart","OrderProducts")?productId=" + id + "&amount=" + input).fail(function (data, status, xhr) {
+            if (status == 'error'){
+                window.location = "Users/Login?ReturnUrl=%2FOrderProducts/AddCart?productId=" + id + "%26amount=" + input;
+            }
+        });
         setTimeout(
                   function() 
                   {

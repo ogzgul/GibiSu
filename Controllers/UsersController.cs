@@ -3,6 +3,7 @@ using GibiSu.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace GibiSu.Controllers
@@ -103,15 +104,16 @@ namespace GibiSu.Controllers
 
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl = null)
         {
+            ViewData["returnUrl"] = ReturnUrl;
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string userName, string password)
+        public void Login(string userName, string password, string returnUrl)
         {
             Microsoft.AspNetCore.Identity.SignInResult identityResult;
 
@@ -121,21 +123,25 @@ namespace GibiSu.Controllers
                 if (users.Deleted == true)
                 {
                     
-                    return Redirect("~/");
+                    Response.Redirect("~/");
                 }
 
                 identityResult = _signInManager.PasswordSignInAsync(userName, password, false, false).Result;
                 
                 if (identityResult.Succeeded == true)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        Response.Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        Response.Redirect("~/");
+                    }
                     //return Redirect(Request.Headers["Referer"].ToString());
-                    return Redirect("~/");
                 }
 
             }
-
-            return View();
-
         }
         public async Task<IActionResult> Delete(string id)
         {

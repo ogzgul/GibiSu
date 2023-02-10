@@ -4,23 +4,23 @@
     ViewData["Title"] = "Login";
 }
 
-
 <h4 style="padding-left: 50px;">Giriş Yap</h4>
 <hr />
 <div class="row">
     <div>
-        <form id="registerForm" asp-action="Login" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form id="registerForm" method="post" asp-action="Login" >
+            <input  type="hidden" name="returnUrl" value="@ViewData["returnUrl"]"/>
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input name="UserName" class="form-control" />
+                <div class="text-danger"></div>
+                <label class="control-label"></label>
+                <input id="UserName" name="userName" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input name="Password" type="password" class="form-control" />
+                <label class="control-label"></label>
+                <input id="Password" name="password" type="password" class="form-control" />
             </div>
             <div class="form-group logsub">
-                <input type="submit" value="Giriş Yap" class="btn btn-primary" />
+                <input type="submit" class="btn btn-primary" value="Giriş Yap"/>
             </div>
         </form>
     </div>
