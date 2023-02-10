@@ -2,7 +2,7 @@
 @using Microsoft.EntityFrameworkCore;
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
     long orderId = Model.Select(o => o.OrderId).FirstOrDefault();
 }
 <script>

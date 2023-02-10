@@ -258,5 +258,23 @@ namespace GibiSu.Controllers
             }
             return View(urun);
         }
+
+        // GET: Products/Details/5
+        public async Task<IActionResult> DetailsProductAdmin(int? id)
+        {
+            if (id == null || _context.Products == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
     }
 }

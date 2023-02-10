@@ -1,0 +1,32 @@
+﻿@model GibiSu.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div style="margin-top:111px ">
+   
+    <div class="container my-4">
+        <div class="row mt-9">
+            <div class="col-md-6 col-lg-6 product-details-img-col mb-4">
+                <img src='data:image/jpeg;base64,@Convert.ToBase64String(Model.Image)' class="product-details-img" />
+                <div class="product-details-price-container my-md-4 my-4">
+                    <div style="color:black!important;border:1px solid black;" >@Html.DisplayFor(model => model.Price) TL</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <h1 style="color:black!important;text-align:center" class="product-details-title">
+                    @Html.DisplayFor(model => model.Name)
+                </h1>
+               
+                <div style="color:black!important;" class="mt-4 product-details-description">
+                    @Html.DisplayFor(model => model.Description)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

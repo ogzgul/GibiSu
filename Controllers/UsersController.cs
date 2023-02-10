@@ -22,7 +22,7 @@ namespace GibiSu.Controllers
         public IActionResult Index(string search)
         {
             ViewData["Search"] = search;
-            var user = from b in _signInManager.UserManager.Users
+            var user = from b in _signInManager.UserManager.Users.OrderBy(c => c.Deleted == true)
                        select b;
             List<ApplicationUser> members = new List<ApplicationUser>();
             foreach (ApplicationUser member in user)
@@ -66,7 +66,10 @@ namespace GibiSu.Controllers
         {
             return View();
         }
-
+        public IActionResult CreateAdmin()
+        {
+            return View();
+        }
         public async Task<PartialViewResult> UserCases(bool Deleted)
         {
             if (Deleted == true)
@@ -104,6 +107,25 @@ namespace GibiSu.Controllers
 
         }
 
+        //Admin Create User Start
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAdmin([Bind("Id,Name,UserName,Password,Email,ConfirmPassword,Agreed,Address,PhoneNumber")] ApplicationUser applicationUser)
+        {
+            ModelState.Remove("Orders");
+
+            if (ModelState.IsValid)
+            {
+                _signInManager.UserManager.CreateAsync(applicationUser, applicationUser.Password).Wait();
+                var result1 = _signInManager.UserManager.AddToRoleAsync(applicationUser, "Administrator").Result;
+                return Redirect("/Users/AdminList");
+            }
+           
+            return View(applicationUser);
+
+        }
+        //Admin Create User End
+
         public IActionResult Login(string ReturnUrl = null)
         {
             ViewData["returnUrl"] = ReturnUrl;
@@ -125,11 +147,15 @@ namespace GibiSu.Controllers
                     
                     Response.Redirect("~/");
                 }
-
                 identityResult = _signInManager.PasswordSignInAsync(userName, password, false, false).Result;
                 
                 if (identityResult.Succeeded == true)
                 {
+                    if(_signInManager.UserManager.IsInRoleAsync(users, "Administrator").Result == true)
+                    {
+                        return Redirect("~/Admin/Index");
+                    }
+                    return Redirect("~/");
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
                         Response.Redirect(returnUrl);
@@ -140,6 +166,7 @@ namespace GibiSu.Controllers
                     }
                     //return Redirect(Request.Headers["Referer"].ToString());
                 }
+               
 
             }
         }
@@ -197,7 +224,9 @@ namespace GibiSu.Controllers
                 Users.Address = applicationUser.Address;
                 Users.UserName = applicationUser.UserName;
                 Users.PhoneNumber = applicationUser.PhoneNumber;
+                Users.PasswordHash = _signInManager.UserManager.PasswordHasher.HashPassword(applicationUser, applicationUser.Password);
                 Users.Password = applicationUser.Password;
+                Users.ConfirmPassword = applicationUser.ConfirmPassword;
                 Users.Email = applicationUser.Email;
                 await _signInManager.UserManager.UpdateAsync(Users);
             }

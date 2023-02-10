@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     string aktif = "Aktif", silindi = "Silinenler";
-
+    
 }
 
 <div class="container-fluid" style="background-color: white;">
@@ -40,19 +40,9 @@
             <th>
                 <select id="UserSelect" class="form-control" onchange="UserCase(this.value)">
                     <option class="form-control" value="seçiniz"  selected disabled>Filtrele</option>
-                        @foreach(var item2 in Model)
-                        {
-                            @if (item2.Deleted == true)
-                            {
-                                <option value="@item2.Deleted">@silindi</option>
-                            }
-                            else
-                            {
-                                <option value="@item2.Deleted">@aktif</option>
-                            }
-
-                        }
-                    </select>
+                    <option value="true">@silindi</option>
+                    <option value="false">@aktif</option>
+                </select>
            </th>
           
         </tr>
@@ -80,8 +70,8 @@
                             <a asp-controller="Users" asp-action="Delete" asp-route-id="@item3.Id" class="btn btn-danger btn-sm" style="width: 70px;">Sil</a>
                             <a asp-controller="Users" asp-action="Edit" asp-route-id="@item3.Id" class="btn btn-warning btn-sm" style="width: 70px;">Düzenle</a>
                             <a asp-controller="Users" asp-action="IsAdmin" asp-route-id="@item3.Id" class="btn btn-success btn-sm" style="width: 70px;">Rol Ver</a>
-                </td>
-                }
+                        </td>
+                         }
                 @if(item3.Deleted == true){
                 <td>
                     @Html.DisplayFor(modelItem => item3.NormalizedUserName)
@@ -96,7 +86,7 @@
                     @Html.DisplayFor(modelItem => item3.PhoneNumber)
                 </td>
                 <td>
-                <a class="btn btn-danger btn-sm" style="width: 70px;">Silindi.</a>
+                <a class="btn btn-danger btn-sm" style="width: 70px; cursor:default;">Silindi.</a>
                 </td>
                 }
             </tr>

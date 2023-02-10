@@ -7,7 +7,10 @@
 }
 
 <div class="container-fluid" style="background-color: white;">
-<h1>Üyeler</h1>
+<h1>Kullanıcılar</h1>
+<p>
+    <a asp-action="CreateAdmin" class="btn btn-primary btn-sm">Kullanıcı Ekle</a>
+</p>
 <script>
     function UserCase(){
         var UserSelected = document.getElementById("UserSelect").value;
@@ -40,19 +43,7 @@
             <th>
                 <select id="UserSelect" class="form-control" onchange="UserCase(this.value)">
                     <option class="form-control" value="seçiniz"  selected disabled>Filtrele</option>
-                        @foreach(var item2 in Model)
-                        {
-                            @if (item2.Deleted == true)
-                            {
-                                <option value="@item2.Deleted">@silindi</option>
-                            }
-                            else
-                            {
-                                <option value="@item2.Deleted">@aktif</option>
-                            }
-
-                        }
-                    </select>
+                </select>
            </th>
           
         </tr>
