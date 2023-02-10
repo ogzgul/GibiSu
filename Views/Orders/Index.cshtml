@@ -9,11 +9,13 @@
     string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
     var products = context.Products;
     var orderProducts = context.OrderProducts.Include(o => o.Order).Include(o => o.Product).Where(o => o.Order.UserId == userName);
+    float totalPrice = 0;
 }
 
 <h1 style="text-align:center;color:white;margin-bottom:50px;">Siparişlerim</h1>
 <div class="table">
         @foreach (var item in Model){
+            totalPrice = 0;
             <div class="order">
     <div class="order-header">
             <span class="order-header-info">
@@ -45,13 +47,7 @@
             </div>
         </div>
     <div>
-        <div>
-          @*  <div>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </div>*@
-        </div>
+        <div></div>
         <table>
             @foreach (var item2 in item.OrderProducts)
             {
@@ -79,9 +75,12 @@
     </div>
       <div style="text-align: end;">
           <span style="background-color:white;padding:2px;">
-						@Html.DisplayNameFor(model => model.TotalPrice) :<b>
-							@Html.DisplayFor(modelItem => item.TotalPrice) TL
-						</b>
+		    @Html.DisplayNameFor(model => model.TotalPrice) :
+                    @foreach (var item3 in item.OrderProducts)
+                    {
+                        totalPrice += item3.TotalPrice;
+                    }
+                    <strong>@totalPrice.ToString() TL</strong>
           </span>
       </div>
 </div>
