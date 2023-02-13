@@ -282,7 +282,7 @@ body {
 
 .product-card {
     max-width: 400px;
-    height:600px;
+    height:685px;
     border: none;
     border-radius: 30px;
     margin-bottom: 15px;
@@ -321,6 +321,7 @@ body {
     left: 0;
     right: 0;
     margin: 0 auto;
+    margin-top:18%;
 }
 .cart-count-btn {
     border-radius: 50px;
