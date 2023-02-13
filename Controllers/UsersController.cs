@@ -155,8 +155,9 @@ namespace GibiSu.Controllers
                 {
                     if(_signInManager.UserManager.IsInRoleAsync(users, "Administrator").Result == true)
                     {
-                        Response.Redirect("~/Admin/Index");
+                        Response.Redirect("/Admin/Index");
                     }
+                    else { 
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
                         Response.Redirect(returnUrl);
@@ -164,6 +165,7 @@ namespace GibiSu.Controllers
                     else
                     {
                         Response.Redirect("/");
+                    }
                     }
                     //return Redirect(Request.Headers["Referer"].ToString());
                 }
