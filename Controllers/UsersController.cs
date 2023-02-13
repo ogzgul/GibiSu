@@ -169,10 +169,9 @@ namespace GibiSu.Controllers
                 }
                 else
                 {
-                    //ViewData["LoginFlag"] = "Kullanıcı Adı veya Parola Hatalı!";
-                    string decodedUrl = HttpUtility.UrlDecode(returnUrl);
+                    string encodedUrl = HttpUtility.UrlEncode(returnUrl);
 
-                    Response.Redirect("/Users/Login?ReturnUrl="+ decodedUrl +"&error=Kullan%c4%b1c%c4%b1+Ad%c4%b1+veya+Parola+Hatal%c4%b1");
+                    Response.Redirect("/Users/Login?error=Kullan%c4%b1c%c4%b1+Ad%c4%b1+veya+Parola+Hatal%c4%b1&ReturnUrl=" + encodedUrl);
                 }
             }
             else
