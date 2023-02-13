@@ -10,14 +10,14 @@
         var input = document.getElementById("PCount-" + id).value;
         $.get("@Url.Action("AddCart","OrderProducts")?productId=" + id + "&amount=" + input).fail(function (data, status, xhr) {
             if (status == 'error'){
-                window.location = "Users/Login?ReturnUrl=%2FOrderProducts/AddCart?productId=" + id + "%26amount=" + input;
+                window.location = "Users/Login?ReturnUrl=%2FOrderProducts%2FAddCart%3FproductId%3D" + id + "%26amount%3D" + input;
             }
         });
         setTimeout(
                   function() 
                   {
                 document.location.reload();
-            }, 0151);
+            }, 0951);
     }
     function CountUp(pId) {
         var input= document.getElementById("PCount-"+pId);

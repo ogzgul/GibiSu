@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Policy;
+using System.Web;
 
 namespace GibiSu.Controllers
 {
@@ -126,26 +128,26 @@ namespace GibiSu.Controllers
         }
         //Admin Create User End
 
-        public IActionResult Login(string ReturnUrl = null)
+        public IActionResult Login(string ReturnUrl = null, string error = null)
         {
             ViewData["returnUrl"] = ReturnUrl;
-
+            ViewData["LoginFlag"] = error;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public void Login(string userName, string password, string returnUrl)
+        public void Login(string userName, string password, string? returnUrl, string? error)
         {
             Microsoft.AspNetCore.Identity.SignInResult identityResult;
 
             if (ModelState.IsValid)
             {
                 var users = _signInManager.UserManager.FindByNameAsync(userName).Result;
-                if (users.Deleted == true)
+                if (users != null && users.Deleted == true )
                 {
                     
-                    Response.Redirect("~/");
+                    Response.Redirect("/");
                 }
                 identityResult = _signInManager.PasswordSignInAsync(userName, password, false, false).Result;
                 
@@ -161,12 +163,21 @@ namespace GibiSu.Controllers
                     }
                     else
                     {
-                        Response.Redirect("~/");
+                        Response.Redirect("/");
                     }
                     //return Redirect(Request.Headers["Referer"].ToString());
                 }
-               
+                else
+                {
+                    //ViewData["LoginFlag"] = "Kullanıcı Adı veya Parola Hatalı!";
+                    string decodedUrl = HttpUtility.UrlDecode(returnUrl);
 
+                    Response.Redirect("/Users/Login?ReturnUrl="+ decodedUrl +"&error=Kullan%c4%b1c%c4%b1+Ad%c4%b1+veya+Parola+Hatal%c4%b1");
+                }
+            }
+            else
+            {
+                Response.Redirect("/Login");
             }
         }
         public async Task<IActionResult> Delete(string id)
