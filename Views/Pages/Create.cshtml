@@ -10,8 +10,9 @@
     }
     function Preview(){
         var formData = $("#pageForm").serialize();
-        alert(formData);
-        $("#PagePreview").load("@Url.Action("Preview","Pages")",formData);
+        var image = document.getElementById("FormImage").value;
+        var contentsFormImage = document.getElementById("Contents_0__FormImage").value;
+        $("#PagePreview").load("@Url.Action("Preview","Pages")", formData);
 
     }
     function NewContent() {
