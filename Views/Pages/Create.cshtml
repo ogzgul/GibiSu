@@ -3,17 +3,28 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="container-fluid" style="background-color: white; height:100vh;">
+<script>
+    function GetPageUrl(url){
+        document.getElementById("Contents_0__PageUrl").value = url;
+    }
+    function Preview(){
+        var formData = $("#pageForm").serialize();
+        alert(formData);
+        $("#PagePreview").load("@Url.Action("Preview","Pages")",formData);
+
+    }
+</script>
+<div class="container-fluid" style="background-color: white; margin-bottom:25px">
 <h1>Sayfa Oluştur</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" enctype = "multipart/form-data">
+        <form asp-action="Create" enctype = "multipart/form-data" id="pageForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
+                <input asp-for="Url" onchange="GetPageUrl(this.value)" class="form-control" />
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -32,14 +43,50 @@
                     <option asp-for ="MenuId" class="form-control" value="Seçiniz" selected disabled>Seçiniz</option>
                 </select>
             </div>
-            <div class="form-group" style="margin-bottom: 10px; margin-top: 10px;">
-                <input type="submit" value="Oluştur" class="btn btn-primary btn-sm" />
-                 <a asp-action="Sayfalar" class="btn btn-warning btn-sm">Listeye Geri Dön</a>
-            </div>
-        </form>
+                <div class="form-group">
+                    <label asp-for="Contents[0].Title" class="control-label"></label>
+                    <input asp-for="Contents[0].Title" class="form-control" />
+                    <span asp-validation-for="Contents[0].Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contents[0].Text" class="control-label"></label>
+                    <textarea asp-for="Contents[0].Text" class="form-control"></textarea>
+                    <span asp-validation-for="Contents[0].Text" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contents[0].FormImage" class="control-label"></label>
+                    <input asp-for="Contents[0].FormImage" class="form-control" />
+                    <span asp-validation-for="Contents[0].FormImage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contents[0].Type" class="control-label"></label>
+                    <input asp-for="Contents[0].Type" class="form-control" />
+                    <span asp-validation-for="Contents[0].Type" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contents[0].Order" class="control-label"></label>
+                    <input asp-for="Contents[0].Order" class="form-control" />
+                    <span asp-validation-for="Contents[0].Order" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input hidden asp-for="Contents[0].PageUrl" value="" class="form-control" />
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 10px; margin-top: 10px;">
+                    <input type="submit" value="Oluştur" class="btn btn-primary btn-sm" />
+                    <input type="button" onclick="Preview()" value="Önizleme" class="btn btn-success btn-sm" />
+                    <a asp-action="Index" class="btn btn-warning btn-sm">İçerikler Listesine Geri Dön</a>
+                    <a asp-action="Sayfalar" class="btn btn-warning btn-sm">Sayfalar Listesine Geri Dön</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+<div id="PagePreview">
+
 </div>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

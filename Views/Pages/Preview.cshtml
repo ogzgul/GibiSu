@@ -1,0 +1,54 @@
+﻿@model GibiSu.Models.Page
+@using Microsoft.EntityFrameworkCore
+
+@{
+    
+}
+    <div class="Banner container-fluid">
+        @if (Model.Banner != null)
+        {
+            <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Banner)" />
+        }
+    </div>
+    @foreach (var item in Model.Contents)
+    {
+        <div class="container-fluid" style="background-color:white;">
+            @if (item.Title != null)
+            {
+                <div class="Title">
+                    <div class="container">
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-10">
+                                <h1> @item.Title </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (item.Text != null)
+            {
+                <div class="Text">
+                    <div class="container">
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-10">
+                                <p> @item.Text </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (item.Image != null)
+            {
+                <div class="Image">
+                    <div class="container">
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-10">
+                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.Image)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+

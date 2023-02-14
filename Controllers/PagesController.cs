@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection.Metadata;
 
 namespace GibiSu.Controllers
 {
@@ -62,9 +63,71 @@ namespace GibiSu.Controllers
         return View(await applicationDbContext.ToListAsync());
     }
 
+        public async Task<PartialViewResult> Preview([Bind("Url,FormImage,MenuId,Title,Contents")] Page page )
+        {
+            ViewData["pageName"] = Url;
+            qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+            allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+            encoderParameters = new System.Drawing.Imaging.EncoderParameters(1);
+            foreach (System.Drawing.Imaging.ImageCodecInfo coDec in allCoDecs)
+            {
+                if (coDec.FormatDescription == "JPEG")
+                {
+                    jPEGCodec = coDec;
+                }
+            }
+            ModelState.Remove("Banner");
+            ModelState.Remove("Contents");
 
+            MemoryStream memoryStream = new MemoryStream();
+            encoderParameters.Param[0] = qualityParameter;
+            if (page.FormImage != null)
+            {
+                page.FormImage.CopyTo(memoryStream);
+                streamImage = System.Drawing.Image.FromStream(memoryStream);
+                bLogImage = ReSize(streamImage, 1175, 540);
+                bLogImage.Save(memoryStream, jPEGCodec, encoderParameters);
+                if (ModelState.IsValid)
+                {
+                    page.Banner = memoryStream.ToArray();
+                    foreach (Content content in page.Contents)
+                    {
+                        qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+                        allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+                        encoderParameters = new System.Drawing.Imaging.EncoderParameters(1);
+                        foreach (System.Drawing.Imaging.ImageCodecInfo coDec in allCoDecs)
+                        {
+                            if (coDec.FormatDescription == "JPEG")
+                            {
+                                jPEGCodec = coDec;
+                            }
+                        }
 
-    // GET: Pages/Details/5
+                        ModelState.Remove("Image");
+                        MemoryStream memoryStream2 = new MemoryStream();
+                        encoderParameters.Param[0] = qualityParameter;
+                        if (content.FormImage != null)
+                        {
+                            content.FormImage.CopyTo(memoryStream2);
+                            streamImage = System.Drawing.Image.FromStream(memoryStream2);
+                            bLogImage = ReSize(streamImage, 435, 595);
+                            bLogImage.Save(memoryStream2, jPEGCodec, encoderParameters);
+                            //content.PageUrl = page.Url;
+                            if (ModelState.IsValid)
+                            {
+                                content.Image = memoryStream2.ToArray();
+                                //page.Contents.Add(content);
+                            }
+                        }
+
+                        ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url", content.PageUrl);
+                    }
+                }
+            }
+            return PartialView(page);
+        }
+
+        // GET: Pages/Details/5
         public async Task<IActionResult> Details(string id)
     {
         ViewData["pageName"] = id;
@@ -97,7 +160,7 @@ namespace GibiSu.Controllers
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Url,FormImage,MenuId,Title")] Page page)
+    public async Task<IActionResult> Create([Bind("Url,FormImage,MenuId,Title,Contents")] Page page)
     {
             qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
             allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
@@ -123,6 +186,38 @@ namespace GibiSu.Controllers
                 if (ModelState.IsValid)
                 {
                     page.Banner = memoryStream.ToArray();
+                    foreach (Content content in page.Contents)
+                    {
+                        qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+                        allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+                        encoderParameters = new System.Drawing.Imaging.EncoderParameters(1);
+                        foreach (System.Drawing.Imaging.ImageCodecInfo coDec in allCoDecs)
+                        {
+                            if (coDec.FormatDescription == "JPEG")
+                            {
+                                jPEGCodec = coDec;
+                            }
+                        }
+
+                        ModelState.Remove("Image");
+                        MemoryStream memoryStream2 = new MemoryStream();
+                        encoderParameters.Param[0] = qualityParameter;
+                        if (content.FormImage != null)
+                        {
+                            content.FormImage.CopyTo(memoryStream2);
+                            streamImage = System.Drawing.Image.FromStream(memoryStream2);
+                            bLogImage = ReSize(streamImage, 435, 595);
+                            bLogImage.Save(memoryStream2, jPEGCodec, encoderParameters);
+                            //content.PageUrl = page.Url;
+                            if (ModelState.IsValid)
+                            {
+                                content.Image = memoryStream2.ToArray();
+                                //page.Contents.Add(content);
+                            }
+                        }
+
+                        ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url", content.PageUrl);
+                    }
                     _context.Add(page);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
