@@ -16,8 +16,10 @@
 
     }
     function NewContent() {
+        var formData2 = $("#pageForm").serialize();
+        $("#ContentNew").load("@Url.Action("NewContent","Pages")", formData2);
         //i++;
-        alert("fsd");
+       // alert("fsd");
     }
 </script>
 <div class="container-fluid" style="background-color: white; margin-bottom:25px">
