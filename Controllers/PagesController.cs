@@ -79,6 +79,7 @@ namespace GibiSu.Controllers
             ModelState.Remove("Banner");
             ModelState.Remove("Contents");
 
+            page.Contents[0].PageUrl=page.Url;
             MemoryStream memoryStream = new MemoryStream();
             encoderParameters.Param[0] = qualityParameter;
             if (page.FormImage != null)

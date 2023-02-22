@@ -8,15 +8,9 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    //var orderProducts = context.OrderProducts.GroupBy(o=> o.ProductId)
-    //             .Select(g => new { ProductId = g.Key, SumAmount = g.Sum(o => o.Amount), SumTotalPrice = g.Sum(o => o.TotalPrice) });
     var products = context.Products;
 
     var users = _signInManager.UserManager.Users;
-    //.Join(orderProducts, p => p.Id, o => o.ProductId, (p, o) => new
-    //{
-    //    Name = p.Name, Image = p.Image, Amount = o.SumAmount, TotalPrice = o.SumTotalPrice, Id= p.Id
-    //});
     
 }
 <script>
