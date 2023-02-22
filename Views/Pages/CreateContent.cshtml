@@ -1,0 +1,31 @@
+﻿@model GibiSu.Models.Page
+@{
+    
+
+}
+                <div class="form-group">
+                    <label asp-for="Contents[1].Title" class="control-label"></label>
+                    <input asp-for="Contents[1].Title" class="form-control" />
+                    <span asp-validation-for="Contents[1].Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contents[1].Text" class="control-label"></label>
+                    <textarea asp-for="Contents[1].Text" class="form-control"></textarea>
+                    <span asp-validation-for="Contents[1].Text" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contents[1].FormImage" class="control-label"></label>
+                    <input asp-for="Contents[1].FormImage" class="form-control" />
+                    <span asp-validation-for="Contents[1].FormImage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contents[1].Type" class="control-label"></label>
+                    <input asp-for="Contents[1].Type" class="form-control" />
+                    <span asp-validation-for="Contents[1].Type" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contents[1].Order" class="control-label"></label>
+                    <input asp-for="Contents[1].Order" class="form-control" />
+                    <span asp-validation-for="Contents[1].Order" class="text-danger"></span>
+                </div>
+                
