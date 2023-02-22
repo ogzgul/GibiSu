@@ -2,22 +2,38 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    int i = 0;
+    int contentCount = 1;
 }
 <script>
-    function GetPageUrl(url){
-        document.getElementById("Contents_0__PageUrl").value = url;
-    }
+    var myJsVar = "@contentCount";
     function Preview(){
-        var formData = $("#pageForm").serialize();
-        var image = document.getElementById("FormImage").value;
-        var contentsFormImage = document.getElementById("Contents_0__FormImage").value;
-        $("#PagePreview").load("@Url.Action("Preview","Pages")", formData);
+        var con0=document.getElementById("Contents_0__PageUrl");
+        var pUrl=document.getElementById("Url");
+
+        con0.value=pUrl.value;
+       
+        var formData = new FormData($("#pageForm")[0]);
+        $.ajax({
+            url: '@Url.Action("Preview","Pages")', // point to server-side controller method
+            dataType: 'html', // what to expect back from the server
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            type: 'post',
+            success: function (response) {
+                $('#PagePreview').html(response); // display success response from the server
+            },
+            error: function (response) {
+                $('#PagePreview').html(response); // display error response from the server
+            }
+        });
 
     }
     function NewContent() {
-        //i++;
-        alert("fsd");
+        //@contentCount++;
+        alert("@contentCount");
+        //$("#ContentNew").load("@Url.Action("NewContent","Pages")?i=" + myJsVar);
     }
 </script>
 <div class="container-fluid" style="background-color: white; margin-bottom:25px">
@@ -30,7 +46,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" onchange="GetPageUrl(this.value)" class="form-control" />
+                <input asp-for="Url" class="form-control" />
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,6 +65,7 @@
                     <option asp-for ="MenuId" class="form-control" value="Seçiniz" selected disabled>Seçiniz</option>
                 </select>
             </div>
+            @for (int i = 0; i < contentCount; i++){
                 <div class="form-group">
                     <label asp-for="Contents[i].Title" class="control-label"></label>
                     <input asp-for="Contents[i].Title" class="form-control" />
@@ -77,7 +94,14 @@
                 <div class="form-group">
                     <input hidden asp-for="Contents[i].PageUrl" value="" class="form-control" />
                 </div>
+            }
                 
+                <div id="ContentNew">
+
+                </div>
+                <div>
+                    <input type="button" onclick="NewContent()" value="+" class="btn btn-success btn-sm" />
+                </div>
                 <div class="form-group" style="margin-bottom: 10px; margin-top: 10px;">
                     <input type="submit" value="Oluştur" class="btn btn-primary btn-sm" />
                     <input type="button" onclick="Preview()" value="Önizleme" class="btn btn-success btn-sm" />
@@ -87,9 +111,6 @@
             </form>
         </div>
     </div>
-</div>
-<div id="ContentNew">
-    <input type="button" onclick="NewContent()" value="Yeni" class="btn btn-success btn-sm" />
 </div>
 <div id="PagePreview">
 
