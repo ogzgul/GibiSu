@@ -1,16 +1,22 @@
 ﻿@model GibiSu.Models.Page
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    int contentCount = 1;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; 
 }
 <script>
-    var myJsVar = "@contentCount";
+    var contentCount = 0;
     function Preview(){
-        var con0=document.getElementById("Contents_0__PageUrl");
-        var pUrl=document.getElementById("Url");
-
-        con0.value=pUrl.value;
+        var con;
+        var pUrl = document.getElementById("Url");
+        alert("geldi2");
+        for(let i=0; i<contentCount+1; i++){
+            con = document.getElementById("Contents_"+i.toString()+"__PageUrl");
+            alert(i);
+            con.value = pUrl.value;
+            alert("geldi");
+        }
+        alert("geldi3");
+        //con0.value=pUrl.value;
        
         var formData = new FormData($("#pageForm")[0]);
         $.ajax({
@@ -31,9 +37,12 @@
 
     }
     function NewContent() {
-        //@contentCount++;
-        alert("@contentCount");
-        //$("#ContentNew").load("@Url.Action("NewContent","Pages")?i=" + myJsVar);
+        contentCount++;
+        var contentNew = document.createElement("div");
+        contentNew.id="contentNew-"+contentCount.toString();
+        var contentAll= document.getElementById("ContentNew");
+        contentAll.appendChild(contentNew);
+        $("#"+contentNew.id).load("@Url.Action("NewContent","Pages")?i=" + contentCount);
     }
 </script>
 <div class="container-fluid" style="background-color: white; margin-bottom:25px">
@@ -65,7 +74,6 @@
                     <option asp-for ="MenuId" class="form-control" value="Seçiniz" selected disabled>Seçiniz</option>
                 </select>
             </div>
-            @for (int i = 0; i < contentCount; i++){
                 <div class="form-group">
                     <label asp-for="Contents[0].Title" class="control-label"></label>
                     <input asp-for="Contents[0].Title" class="form-control" />
@@ -94,7 +102,6 @@
                 <div class="form-group">
                     <input hidden asp-for="Contents[0].PageUrl" value="" class="form-control" />
                 </div>
-            }
                 
                 <div id="ContentNew">
 

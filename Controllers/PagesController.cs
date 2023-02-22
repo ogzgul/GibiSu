@@ -62,6 +62,11 @@ namespace GibiSu.Controllers
         var applicationDbContext = _context.Pages.Include(p => p.Menu);
         return View(await applicationDbContext.ToListAsync());
     }
+        public async Task<PartialViewResult> NewContent(int i)
+        {
+            ViewData["contentCount"] = i;
+            return PartialView();
+        }
 
         public async Task<PartialViewResult> Preview([Bind("Url,FormImage,MenuId,Title,Contents")] Page page )
         {
@@ -79,7 +84,7 @@ namespace GibiSu.Controllers
             ModelState.Remove("Banner");
             ModelState.Remove("Contents");
 
-            page.Contents[0].PageUrl=page.Url;
+            //page.Contents[0].PageUrl=page.Url;
             MemoryStream memoryStream = new MemoryStream();
             encoderParameters.Param[0] = qualityParameter;
             if (page.FormImage != null)
