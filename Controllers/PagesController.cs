@@ -63,12 +63,6 @@ namespace GibiSu.Controllers
         return View(await applicationDbContext.ToListAsync());
     }
 
-        public async Task<PartialViewResult> NewContent(int i)
-        {
-            ViewData["ContentNumber"] = i;
-            return PartialView();
-        }
-
         public async Task<PartialViewResult> Preview([Bind("Url,FormImage,MenuId,Title,Contents")] Page page )
         {
             ViewData["pageName"] = Url;

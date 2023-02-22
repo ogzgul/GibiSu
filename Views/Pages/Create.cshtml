@@ -67,32 +67,32 @@
             </div>
             @for (int i = 0; i < contentCount; i++){
                 <div class="form-group">
-                    <label asp-for="Contents[i].Title" class="control-label"></label>
-                    <input asp-for="Contents[i].Title" class="form-control" />
+                    <label asp-for="Contents[0].Title" class="control-label"></label>
+                    <input asp-for="Contents[0].Title" class="form-control" />
                     <span asp-validation-for="Contents[0].Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Contents[i].Text" class="control-label"></label>
-                    <textarea asp-for="Contents[i].Text" class="form-control"></textarea>
-                    <span asp-validation-for="Contents[i].Text" class="text-danger"></span>
+                    <label asp-for="Contents[0].Text" class="control-label"></label>
+                    <textarea asp-for="Contents[0].Text" class="form-control"></textarea>
+                    <span asp-validation-for="Contents[0].Text" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Contents[i].FormImage" class="control-label"></label>
-                    <input asp-for="Contents[i].FormImage" class="form-control" />
-                    <span asp-validation-for="Contents[i].FormImage" class="text-danger"></span>
+                    <label asp-for="Contents[0].FormImage" class="control-label"></label>
+                    <input asp-for="Contents[0].FormImage" class="form-control" />
+                    <span asp-validation-for="Contents[0].FormImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Contents[i].Type" class="control-label"></label>
-                    <input asp-for="Contents[i].Type" class="form-control" />
-                    <span asp-validation-for="Contents[i].Type" class="text-danger"></span>
+                    <label asp-for="Contents[0].Type" class="control-label"></label>
+                    <input asp-for="Contents[0].Type" class="form-control" />
+                    <span asp-validation-for="Contents[0].Type" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Contents[i].Order" class="control-label"></label>
-                    <input asp-for="Contents[i].Order" class="form-control" />
-                    <span asp-validation-for="Contents[i].Order" class="text-danger"></span>
+                    <label asp-for="Contents[0].Order" class="control-label"></label>
+                    <input asp-for="Contents[0].Order" class="form-control" />
+                    <span asp-validation-for="Contents[0].Order" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input hidden asp-for="Contents[i].PageUrl" value="" class="form-control" />
+                    <input hidden asp-for="Contents[0].PageUrl" value="" class="form-control" />
                 </div>
             }
                 
