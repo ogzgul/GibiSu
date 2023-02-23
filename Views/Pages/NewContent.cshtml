@@ -1,8 +1,7 @@
 ﻿@model GibiSu.Models.Page
 @{
-    int i = (int)@ViewData["contentCount"];
+    int i = (int)ViewData["contentCount"];
 }
-<div id="Con_@i">
     <div class="form-group">
         <label asp-for="Contents[i].Title" class="control-label"></label>
         <input asp-for="Contents[i].Title" class="form-control" />
@@ -33,9 +32,8 @@
     </div>
     <div style="">
         <span>
-            <button type="button" onclick="DeleteContent(contentCount)" class="cart-count-btn btn btn-primary" >
+            <button id="button-@i" onclick="DeleteContent(this.value)" value="@i" class="cart-count-btn btn btn-primary" >
                - </button>
 
         </span>
     </div>
-</div>

@@ -5,24 +5,59 @@
 }
 <script>
     var contentCount = 0;
-    function DeleteContent(contentNumber){
-        contentCount--;
-        var deletedContent = document.getElementById("Con_"+contentNumber);
-        alert(contentNumber);
+    function DeleteContent(contentNumber) {
+        var deletedContent = document.getElementById("contentNew-"+contentNumber);
         deletedContent.remove();
-        alert("geldi");
+        var j=0;
+        var toplam=0;
+        for(let i=0; i<=contentCount; i++){
+            if(i > contentNumber){
+                toplam = contentNumber + j;
+                deletedContent = document.getElementById("Contents_"+i+"__Title");
+                deletedContent.id = "Contents_" + toplam + "__Title";
+                deletedContent.setAttribute('name', "Contents[" + toplam + "].Title");
+
+                deletedContent = document.getElementById("Contents_" + i + "__Text");
+                deletedContent.id = "Contents_" + toplam + "__Text";
+                deletedContent.setAttribute('name', "Contents[" + toplam + "].Text");
+                
+                deletedContent = document.getElementById("Contents_" + i + "__FormImage");
+                deletedContent.id = "Contents_" + toplam + "__FormImage";
+                deletedContent.setAttribute('name', "Contents[" + toplam + "].FormImage");
+
+                deletedContent = document.getElementById("Contents_" + i + "__Type");
+                deletedContent.id = "Contents_" + toplam + "__Type";
+                deletedContent.setAttribute('name', "Contents[" + toplam + "].Type");
+
+                deletedContent = document.getElementById("Contents_" + i + "__Order");
+                deletedContent.id = "Contents_" + toplam + "__Order";
+                deletedContent.setAttribute('name', "Contents[" + toplam + "].Order");
+
+                deletedContent = document.getElementById("Contents_" + i + "__PageUrl");
+                deletedContent.id = "Contents_" + toplam + "__PageUrl";
+                deletedContent.setAttribute('name', "Contents[" + toplam + "].PageUrl");
+
+                deletedContent = document.getElementById("contentNew-" + i);
+                deletedContent.id = "contentNew-" + toplam;
+
+                deletedContent = document.getElementById("button-" + i);
+                deletedContent.setAttribute ( "value", toplam);
+                j++;
+            }
+        }
+        contentCount--;
     }
     function Preview(){
         var con;
         var pUrl = document.getElementById("Url");
-        for(let i=0; i<contentCount+1; i++){
+        for(let i=0; i<=contentCount; i++){
             con = document.getElementById("Contents_"+i.toString()+"__PageUrl");
             alert(i);
             con.value = pUrl.value;
         }
-        //con0.value=pUrl.value;
-       
         var formData = new FormData($("#pageForm")[0]);
+        //con0.value=pUrl.value;
+       alert(contentCount);
         $.ajax({
             url: '@Url.Action("Preview","Pages")', // point to server-side controller method
             dataType: 'html', // what to expect back from the server
@@ -78,45 +113,43 @@
                     <option asp-for ="MenuId" class="form-control" value="Seçiniz" selected disabled>Seçiniz</option>
                 </select>
             </div>
-            <div id="Con_0">
-                <div class="form-group">
-                    <label asp-for="Contents[0].Title" class="control-label"></label>
-                    <input asp-for="Contents[0].Title" class="form-control" />
-                    <span asp-validation-for="Contents[0].Title" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Contents[0].Text" class="control-label"></label>
-                    <textarea asp-for="Contents[0].Text" class="form-control"></textarea>
-                    <span asp-validation-for="Contents[0].Text" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Contents[0].FormImage" class="control-label"></label>
-                    <input asp-for="Contents[0].FormImage" class="form-control" />
-                    <span asp-validation-for="Contents[0].FormImage" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Contents[0].Type" class="control-label"></label>
-                    <input asp-for="Contents[0].Type" class="form-control" />
-                    <span asp-validation-for="Contents[0].Type" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Contents[0].Order" class="control-label"></label>
-                    <input asp-for="Contents[0].Order" class="form-control" />
-                    <span asp-validation-for="Contents[0].Order" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input hidden asp-for="Contents[0].PageUrl" value="" class="form-control" />
-                </div>
-                <div style="">
-                    <span>
-                        <button onclick="DeleteContent(contentCount)" class="cart-count-btn btn btn-primary">
-                            -
-                        </button>
-                    </span>
-                </div>
-            </div>
                 <div id="ContentNew">
-
+                    <div id="contentNew-0">
+                        <div class="form-group">
+                            <label asp-for="Contents[0].Title" class="control-label"></label>
+                            <input asp-for="Contents[0].Title" class="form-control" />
+                            <span asp-validation-for="Contents[0].Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Contents[0].Text" class="control-label"></label>
+                            <textarea asp-for="Contents[0].Text" class="form-control"></textarea>
+                            <span asp-validation-for="Contents[0].Text" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Contents[0].FormImage" class="control-label"></label>
+                            <input asp-for="Contents[0].FormImage" class="form-control" />
+                            <span asp-validation-for="Contents[0].FormImage" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Contents[0].Type" class="control-label"></label>
+                            <input asp-for="Contents[0].Type" class="form-control" />
+                            <span asp-validation-for="Contents[0].Type" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Contents[0].Order" class="control-label"></label>
+                            <input asp-for="Contents[0].Order" class="form-control" />
+                            <span asp-validation-for="Contents[0].Order" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input hidden asp-for="Contents[0].PageUrl" value="" class="form-control" />
+                        </div>
+                        <div style="">
+                            <span>
+                                <button id="button-0" onclick="DeleteContent(this.value)" value="0" class="cart-count-btn btn btn-primary">
+                                    - </button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <input type="button" onclick="NewContent()" value="+" class="btn btn-success btn-sm" />

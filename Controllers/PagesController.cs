@@ -192,37 +192,39 @@ namespace GibiSu.Controllers
                 if (ModelState.IsValid)
                 {
                     page.Banner = memoryStream.ToArray();
-                    foreach (Content content in page.Contents)
-                    {
-                        qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
-                        allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
-                        encoderParameters = new System.Drawing.Imaging.EncoderParameters(1);
-                        foreach (System.Drawing.Imaging.ImageCodecInfo coDec in allCoDecs)
+                    if (page.Contents != null) {
+                        foreach (Content content in page.Contents)
                         {
-                            if (coDec.FormatDescription == "JPEG")
+                            qualityParameter = new System.Drawing.Imaging.EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 60L);
+                            allCoDecs = System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders();
+                            encoderParameters = new System.Drawing.Imaging.EncoderParameters(1);
+                            foreach (System.Drawing.Imaging.ImageCodecInfo coDec in allCoDecs)
                             {
-                                jPEGCodec = coDec;
+                                if (coDec.FormatDescription == "JPEG")
+                                {
+                                    jPEGCodec = coDec;
+                                }
                             }
-                        }
 
-                        ModelState.Remove("Image");
-                        MemoryStream memoryStream2 = new MemoryStream();
-                        encoderParameters.Param[0] = qualityParameter;
-                        if (content.FormImage != null)
-                        {
-                            content.FormImage.CopyTo(memoryStream2);
-                            streamImage = System.Drawing.Image.FromStream(memoryStream2);
-                            bLogImage = ReSize(streamImage, 435, 595);
-                            bLogImage.Save(memoryStream2, jPEGCodec, encoderParameters);
-                            //content.PageUrl = page.Url;
-                            if (ModelState.IsValid)
+                            ModelState.Remove("Image");
+                            MemoryStream memoryStream2 = new MemoryStream();
+                            encoderParameters.Param[0] = qualityParameter;
+                            if (content.FormImage != null)
                             {
-                                content.Image = memoryStream2.ToArray();
-                                //page.Contents.Add(content);
+                                content.FormImage.CopyTo(memoryStream2);
+                                streamImage = System.Drawing.Image.FromStream(memoryStream2);
+                                bLogImage = ReSize(streamImage, 435, 595);
+                                bLogImage.Save(memoryStream2, jPEGCodec, encoderParameters);
+                                //content.PageUrl = page.Url;
+                                if (ModelState.IsValid)
+                                {
+                                    content.Image = memoryStream2.ToArray();
+                                    //page.Contents.Add(content);
+                                }
                             }
-                        }
 
-                        ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url", content.PageUrl);
+                            ViewData["PageUrl"] = new SelectList(_context.Pages, "Url", "Url", content.PageUrl);
+                        }
                     }
                     _context.Add(page);
                     await _context.SaveChangesAsync();
