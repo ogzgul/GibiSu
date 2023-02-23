@@ -5,17 +5,21 @@
 }
 <script>
     var contentCount = 0;
+    function DeleteContent(contentNumber){
+        contentCount--;
+        var deletedContent = document.getElementById("Con_"+contentNumber);
+        alert(contentNumber);
+        deletedContent.remove();
+        alert("geldi");
+    }
     function Preview(){
         var con;
         var pUrl = document.getElementById("Url");
-        alert("geldi2");
         for(let i=0; i<contentCount+1; i++){
             con = document.getElementById("Contents_"+i.toString()+"__PageUrl");
             alert(i);
             con.value = pUrl.value;
-            alert("geldi");
         }
-        alert("geldi3");
         //con0.value=pUrl.value;
        
         var formData = new FormData($("#pageForm")[0]);
@@ -74,6 +78,7 @@
                     <option asp-for ="MenuId" class="form-control" value="Seçiniz" selected disabled>Seçiniz</option>
                 </select>
             </div>
+            <div id="Con_0">
                 <div class="form-group">
                     <label asp-for="Contents[0].Title" class="control-label"></label>
                     <input asp-for="Contents[0].Title" class="form-control" />
@@ -102,7 +107,14 @@
                 <div class="form-group">
                     <input hidden asp-for="Contents[0].PageUrl" value="" class="form-control" />
                 </div>
-                
+                <div style="">
+                    <span>
+                        <button onclick="DeleteContent(contentCount)" class="cart-count-btn btn btn-primary">
+                            -
+                        </button>
+                    </span>
+                </div>
+            </div>
                 <div id="ContentNew">
 
                 </div>
