@@ -89,7 +89,7 @@ namespace GibiSu.Controllers
             {
                 if (coDec.FormatDescription == "JPEG")
                 {
-                    jPEGCodec = coDec;
+                    jPEGCodec = coDec;  
                 }
             }
             MemoryStream memoryStream =  new MemoryStream(); 
